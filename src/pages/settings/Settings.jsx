@@ -44,23 +44,15 @@ class Settings extends Component {
       cronLoading: false,
       importLoading: false,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
   }
 
-  handleChange(e, name) {
+  handleChange = (e, name) => {
     this.setState({
       [name]: e.target.value,
     });
   }
 
-  // handleChange = (e, name) => {
-  //   this.setState({
-  //     [name]: e.target.value,
-  //   });
-  // }
-
-  handleSave(btn) {
+  handleSave = (btn) => {
     if (btn === 'cron') {
       this.setState({ cronLoading: true });
       runCron().then(() => {

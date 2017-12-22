@@ -31,21 +31,18 @@ class ButtonAppBar extends Component {
       loginOpen: false,
       menuOpen: false,
     };
-    this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
-  handleClickOpen() {
+  handleClickOpen = () => {
     this.setState({ loginOpen: true });
   }
 
-  handleRequestClose() {
+  handleRequestClose = () => {
     this.setState({ loginOpen: false });
     // this.props.loadUser(requestExpenses(null));
   }
 
-  toggleDrawer() {
+  toggleDrawer = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   }
 

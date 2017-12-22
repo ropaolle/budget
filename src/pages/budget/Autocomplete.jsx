@@ -102,25 +102,21 @@ class IntegrationAutosuggest extends Component {
       value: props.defaultValue,
       suggestions: [],
     };
-
-    this.handleSuggestionsFetchRequested = this.handleSuggestionsFetchRequested.bind(this);
-    this.handleSuggestionsClearRequested = this.handleSuggestionsClearRequested.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSuggestionsFetchRequested({ value }) {
+  handleSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value, this.props.suggestions),
     });
   }
 
-  handleSuggestionsClearRequested() {
+  handleSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     });
   }
 
-  handleChange(event, { newValue }) {
+  handleChange = (event, { newValue }) => {
     this.setState({
       value: newValue,
     });

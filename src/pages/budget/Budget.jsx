@@ -57,14 +57,6 @@ class Budget extends Component {
     };
 
     this.expensesRef = database.collection(DB_EXSPENSES_COLL);
-
-    this.handleClickAdd = this.handleClickAdd.bind(this);
-    this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleRequestSave = this.handleRequestSave.bind(this);
-    this.handleRequestDelete = this.handleRequestDelete.bind(this);
-    this.handleRequestChange = this.handleRequestChange.bind(this);
-    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
 
@@ -113,11 +105,11 @@ class Budget extends Component {
       });
   }
 
-  handleClickAdd() {
+  handleClickAdd = () => {
     this.setState({ dialogOpen: true, expense: defaultExpense });
   }
 
-  handleClickOpen(expenseId) {
+  handleClickOpen = (expenseId) => {
     const { expenses } = this.props;
     this.setState({
       dialogOpen: true,
@@ -125,11 +117,11 @@ class Budget extends Component {
     });
   }
 
-  handleRequestClose() {
+  handleRequestClose = () => {
     this.setState({ dialogOpen: false });
   }
 
-  handleRequestChange(e, name) {
+  handleRequestChange = (e, name) => {
     const value = e.target.value;
     this.setState((prevState) => {
       const expense = Object.assign({}, prevState.expense);
@@ -139,7 +131,7 @@ class Budget extends Component {
     });
   }
 
-  handleRequestSave(expense) {
+  handleRequestSave = (expense) => {
     // Clone expense and change date from string to Date.
     const exp = { ...expense, date: new Date(expense.date) };
 
@@ -155,12 +147,12 @@ class Budget extends Component {
     this.setState({ dialogOpen: false });
   }
 
-  handleRequestDelete(expenseId) {
+  handleRequestDelete = (expenseId) => {
     this.expensesRef.doc(expenseId).delete();
     this.setState({ dialogOpen: false });
   }
 
-  handleLoadMore() {
+  handleLoadMore = () => {
     const { fetchExpenses } = this.props;
     fetchExpenses(20);
   }

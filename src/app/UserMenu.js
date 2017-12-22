@@ -28,20 +28,17 @@ class UserMenu extends Component {
     this.state = {
       anchorEl: null,
     };
-    this.handleMenu = this.handleMenu.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleRequestLogout = this.handleRequestLogout.bind(this);
   }
 
-  handleMenu(event) {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   }
 
-  handleRequestClose() {
+  handleRequestClose = () => {
     this.setState({ anchorEl: null });
   }
 
-  handleRequestLogout() {
+  handleRequestLogout = () => {
     this.handleRequestClose();
     logout();
   }
