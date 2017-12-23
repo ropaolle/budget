@@ -46,13 +46,13 @@ class Settings extends Component {
     };
   }
 
-  handleChange = (e, name) => {
+  handleChange = name => (e) => {
     this.setState({
       [name]: e.target.value,
     });
   }
 
-  handleSave = (btn) => {
+  handleSave = btn => () => {
     if (btn === 'cron') {
       this.setState({ cronLoading: true });
       runCron().then(() => {
@@ -87,7 +87,7 @@ class Settings extends Component {
             rows="5"
             fullWidth
             value={this.state.multiline}
-            onChange={e => this.handleChange(e, 'multiline')}
+            onChange={this.handleChange('multiline')}
             className={classes.textField}
             margin="normal"
           />
@@ -95,7 +95,7 @@ class Settings extends Component {
             <Button
               raised
               color="primary"
-              onClick={() => this.handleSave('import')}
+              onClick={this.handleSave('import')}
               disabled={importLoading}
               className={classes.button}
             >
@@ -107,7 +107,7 @@ class Settings extends Component {
             <Button
               raised
               color="primary"
-              onClick={() => this.handleSave('cron')}
+              onClick={this.handleSave('cron')}
               disabled={cronLoading}
               className={classes.button}
             >
