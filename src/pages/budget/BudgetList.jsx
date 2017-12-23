@@ -28,7 +28,7 @@ const styles = theme => ({
 
 class BudgetList extends Component {
   render() {
-    const { classes, expenses, handleClickOpen, categories } = this.props;
+    const { classes, expenses, categories, handleClickOpen } = this.props;
 
     const listIcon = (type) => {
       switch (type) {
@@ -59,10 +59,11 @@ class BudgetList extends Component {
       return `${date} - ${kronor} (${service})`;
     };
 
+
     const expenseItems = Object.keys(expenses).map((id) => {
       const item = expenses[id];
       return (
-        <ListItem button key={id} onClick={() => handleClickOpen(id)}>
+        <ListItem button key={id} onClick={handleClickOpen(id)}>
           <ListItemIcon>
             {listIcon(item.type)}
           </ListItemIcon>
@@ -76,7 +77,6 @@ class BudgetList extends Component {
         </ListItem>
       );
     });
-
     return (
       <div className={classes.root}>
         <List className={classes.list}>

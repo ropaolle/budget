@@ -109,7 +109,7 @@ class Budget extends Component {
     this.setState({ dialogOpen: true, expense: defaultExpense });
   }
 
-  handleClickOpen = (expenseId) => {
+  handleClickOpen = expenseId => () => {
     const { expenses } = this.props;
     this.setState({
       dialogOpen: true,
