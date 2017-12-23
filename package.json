@@ -62,7 +62,10 @@
   },
   "scripts": {
     "start": "BROWSER=none node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && cp -r build/** firebase/build",
+    "build:firebase": "cd firebase && firebase deploy --only hosting && cd ..",
+    "deploy": "npm run build && npm run build:firebase",
+    "backup": "firestore-backup --accountCredentials ./backup/fb.json --backupPath ./backup --prettyPrint",
     "test": "node scripts/test.js --env=jsdom",
     "test:cov": "node scripts/test.js --env=jsdom --coverage"
   },

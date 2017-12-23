@@ -13,7 +13,7 @@ const Home = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Typography type="display2" gutterBottom>Home</Typography>
+      <Typography type="display2" gutterBottom>Home 23 dec</Typography>
     </div>
   );
 };
