@@ -76,7 +76,7 @@ class UserMenu extends Component {
             horizontal: 'right',
           }}
           open={open}
-          onRequestClose={this.handleRequestClose}
+          onClose={this.handleRequestClose}
         >
           {/* TODO: MenuItem with link gets a colord border in Chrome. */}
           <Link to="/settings" className={classes.link}>

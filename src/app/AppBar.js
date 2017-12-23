@@ -72,7 +72,7 @@ class ButtonAppBar extends Component {
               </Button>
               <LoginDialog
                 open={this.state.loginOpen}
-                onRequestClose={this.handleRequestClose}
+                onClose={this.handleRequestClose}
               />
             </div>}
             {/* User menu */}

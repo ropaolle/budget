@@ -35,7 +35,7 @@ const defaultExpense = {
   category: 0,
   comment: '',
   cost: 0,
-  date: new Date().toLocaleDateString(),
+  date: new Date().toLocaleDateString('sv-SE'),
   description: '',
   service: '',
   type: 1,
@@ -123,7 +123,6 @@ class Budget extends Component {
 
   handleRequestChange = (e, name) => {
     const value = e.target.value;
-    console.log(e.target);
     this.setState((prevState) => {
       const expense = Object.assign({}, prevState.expense);
       const convertToNumber = ['cost'];
@@ -134,7 +133,11 @@ class Budget extends Component {
 
   handleRequestSave = (expense) => {
     // Clone expense and change date from string to Date.
-    const exp = { ...expense, date: new Date(expense.date) };
+    const exp = {
+      ...expense,
+      date: new Date(expense.date),
+      recurrent: (expense.recurrent) ? new Date(expense.recurrent) : null,
+    };
 
     // Add or update
     if (expense.id) {
@@ -172,7 +175,7 @@ class Budget extends Component {
           <AddIcon />
         </Button>
         <Typography type="display2" gutterBottom>Budget</Typography>
-        <EditDialog
+        {open && <EditDialog
           open={dialogOpen}
           expense={expense}
           types={types}
@@ -182,7 +185,7 @@ class Budget extends Component {
           handleRequestSave={this.handleRequestSave}
           handleRequestDelete={this.handleRequestDelete}
           handleRequestChange={this.handleRequestChange}
-        />
+        />}
         {<BudgetList
           handleClickOpen={this.handleClickOpen}
           expenses={expenses}

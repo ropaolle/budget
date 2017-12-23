@@ -60,7 +60,7 @@ function EditDialog(props) {
     <div>
       <Dialog
         open={open}
-        onRequestClose={handleRequestClose}
+        onClose={handleRequestClose}
         transition={Transition}
       >
         <DialogTitle>Expense</DialogTitle>

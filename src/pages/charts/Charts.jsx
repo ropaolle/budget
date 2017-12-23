@@ -8,7 +8,7 @@ import { red, blue, yellow, green/* , purple, orange, blueGrey */ } from 'materi
 // https://www.materialui.co/colors
 // http://www.chartjs.org/docs/latest/charts/doughnut.html
 
-function pieChart(ctx) {
+function pieChart(ctx) { // eslint-disable-line
   return new Chart(ctx, { // eslint-disable-line no-unused-vars
     type: 'pie',
     data: {
@@ -46,7 +46,7 @@ function pieChart(ctx) {
 }
 
 function barChart(ctx, settings) {
-  const { categories, counters/* , types */ } = settings;
+  const { categories, 'counters-year': counters/* , types */ } = settings;
   const countLabels = Object.values(categories);
   const countData = Object.values(counters[2017].categories);
   console.log('countLabels', countLabels);
@@ -92,10 +92,6 @@ function barChart(ctx, settings) {
   });
 }
 
-// function barChart(ctx) {
-//   return ?
-// }
-
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
@@ -115,7 +111,7 @@ class Charts extends Component {
     const ctx = this.canvas.getContext('2d');
     const { settings } = this.props;
     barChart(ctx, settings);
-    pieChart(ctx, settings);
+    // pieChart(ctx, settings);
   }
 
   render() {
@@ -136,22 +132,6 @@ class Charts extends Component {
     );
   }
 }
-
-/*
-"rules": {
-  "react/forbid-prop-types": 0,
-  "no-console": 0,
-  "react/jsx-filename-extension": [
-    1,
-    {
-      "extensions": [
-        ".js",
-        ".jsx",
-        ".test.js"
-      ]
-    }
-  ]
-} */
 
 Charts.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line

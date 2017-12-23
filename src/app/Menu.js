@@ -48,7 +48,7 @@ function Menu(props) {
     </div>
   );
   return (
-    <Drawer open={open} onRequestClose={toggle}>
+    <Drawer open={open} onClose={toggle}>
       <div
         tabIndex={0}
         role="button"

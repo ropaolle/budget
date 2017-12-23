@@ -45,7 +45,7 @@ class LoginDialog extends Component {
       // console.log('Signed in'/* , user */);
       this.setState({ error: '' });
       // resetPassword(email);
-      this.props.onRequestClose();
+      this.props.onClose();
     }, (error) => {
       this.setState({ error: error.message });
     });
@@ -55,18 +55,18 @@ class LoginDialog extends Component {
     const { email, password } = this.state;
     auth(email, password).then(() => {
       this.setState({ error: '' });
-      this.props.onRequestClose();
+      this.props.onClose();
     }, (error) => {
       this.setState({ error: error.message });
     });
   }
 
   render() {
-    const { classes, open, onRequestClose } = this.props;
+    const { classes, open, onClose } = this.props;
     const { error } = this.state;
     return (
       <div className={classes.root}>
-        <Dialog open={open} onRequestClose={onRequestClose}>
+        <Dialog open={open} onClose={onClose}>
           <DialogTitle>Login</DialogTitle>
           <DialogContent>
             {error && <DialogContentText className={classes.error}>
@@ -94,7 +94,7 @@ class LoginDialog extends Component {
             <Button onClick={() => this.handleCreateUser()}>
               Create new account
             </Button>
-            <Button raised onClick={onRequestClose} color="primary">
+            <Button raised onClick={onClose} color="primary">
               Cancel
             </Button>
             <Button
@@ -114,12 +114,12 @@ class LoginDialog extends Component {
 LoginDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 LoginDialog.defaultProps = {
   open: false,
-  onRequestClose: null,
+  onClose: null,
 };
 
 export default withStyles(styles)(LoginDialog);
