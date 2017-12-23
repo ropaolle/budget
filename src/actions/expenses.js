@@ -19,9 +19,9 @@ const expensesKeyedById = docs => docs.reduce((expenses, doc) => ({
   ...expenses,
   [doc.id]: {
     ...doc.data(),
-    date: doc.data().date.toLocaleDateString(),
+    date: doc.data().date.toLocaleDateString('sv-SE'),
     recurrent: (doc.data().recurrent) ?
-      doc.data().recurrent.toLocaleDateString()
+      doc.data().recurrent.toLocaleDateString('sv-SE')
       :
       null,
   },

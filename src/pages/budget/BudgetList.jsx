@@ -50,7 +50,7 @@ class BudgetList extends Component {
 
     const secondary = (item) => {
       const { cost, service, date } = item;
-      const kronor = cost.toLocaleString('se-SV', {
+      const kronor = cost.toLocaleString('sv-SE', {
         style: 'currency',
         currency: 'SEK',
         minimumFractionDigits: 0,
