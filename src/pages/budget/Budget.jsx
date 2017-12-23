@@ -123,6 +123,7 @@ class Budget extends Component {
 
   handleRequestChange = (e, name) => {
     const value = e.target.value;
+    console.log(e.target);
     this.setState((prevState) => {
       const expense = Object.assign({}, prevState.expense);
       const convertToNumber = ['cost'];

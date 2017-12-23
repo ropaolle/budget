@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/settings';
 import { database, firebaseAuth, DB_SETTINGS } from '../utils';
@@ -33,15 +33,19 @@ class App extends Component {
 
   render() {
     const { auth, loadUser, settings } = this.props;
+    const Page404 = () => <h1>Oops 404!</h1>;
     return (
       <BrowserRouter>
         <div id="app-wrapper">
           <AppBar user={auth.user} loadUser={loadUser} />
           {settings.isLoaded && <div id="content">
-            <Route exact path="/" component={Home} />
-            <Route path="/charts" component={Charts} />
-            <Route path="/budget" component={Budget} />
-            <Route path="/settings" component={Settings} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/charts" component={Charts} />
+              <Route path="/budget" component={Budget} />
+              <Route path="/settings" component={Settings} />
+              <Route component={Page404} />
+            </Switch>
           </div>}
           <Footer />
         </div>
