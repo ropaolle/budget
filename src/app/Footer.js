@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-function Footer(props) {
+const Footer = (props) => {
   const { classes } = props;
   return (
     <footer>
@@ -30,7 +30,7 @@ function Footer(props) {
       </Typography>
     </footer>
   );
-}
+};
 
 Footer.propTypes = {
   classes: PropTypes.object.isRequired,

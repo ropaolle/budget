@@ -77,6 +77,7 @@ class BudgetList extends Component {
         </ListItem>
       );
     });
+
     return (
       <div className={classes.root}>
         <List className={classes.list}>

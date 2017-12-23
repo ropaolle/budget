@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-function Menu(props) {
+const Menu = (props) => {
   const { open, classes, toggle } = props;
   const sideList = (
     <div className={classes.root}>
@@ -57,7 +57,7 @@ function Menu(props) {
       </div>
     </Drawer>
   );
-}
+};
 
 Menu.propTypes = {
   classes: PropTypes.object.isRequired,
