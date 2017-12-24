@@ -9,6 +9,7 @@ export const auth = (state = {}, action) => {
     case LOAD_USER:
       return {
         ...state,
+        isAuthenticated: !!action.user,
         user: action.user,
       };
     default:

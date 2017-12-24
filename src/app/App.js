@@ -6,10 +6,13 @@ import * as actionCreators from '../actions/settings';
 import { database, firebaseAuth, DB_SETTINGS } from '../utils';
 import AppBar from './AppBar';
 import Footer from './Footer';
+import PrivateRoute from './PrivateRoute';
 import Home from '../pages/home/Home';
 import Charts from '../pages/charts/Charts';
 import Budget from '../pages/budget/Budget';
 import Settings from '../pages/settings/Settings';
+
+const Page404 = () => <h1>Oops 404!</h1>;
 
 class App extends Component {
   componentDidMount() {
@@ -33,7 +36,7 @@ class App extends Component {
 
   render() {
     const { auth, loadUser, settings } = this.props;
-    const Page404 = () => <h1>Oops 404!</h1>;
+
     return (
       <BrowserRouter>
         <div id="app-wrapper">
@@ -41,9 +44,9 @@ class App extends Component {
           {settings.isLoaded && <div id="content">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/charts" component={Charts} />
-              <Route path="/budget" component={Budget} />
-              <Route path="/settings" component={Settings} />
+              <PrivateRoute path="/charts" component={Charts} />
+              <PrivateRoute path="/budget" component={Budget} />
+              <PrivateRoute path="/settings" component={Settings} />
               <Route component={Page404} />
             </Switch>
           </div>}

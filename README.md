@@ -1,6 +1,6 @@
 ## Todo
-- [ ] ?
-- [ ] Refactor app
+- [ ] Use shapes in props validation
+- [ ] 
 - [ ]
 
 ## Content
