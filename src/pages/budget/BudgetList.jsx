@@ -91,7 +91,17 @@ class BudgetList extends Component {
 BudgetList.propTypes = {
   classes: PropTypes.object.isRequired,
   handleClickOpen: PropTypes.func.isRequired,
-  expenses: PropTypes.object.isRequired,
+  expenses: PropTypes.objectOf(PropTypes.shape({
+    category: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    cost: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    service: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    recurrent: PropTypes.string,
+  })).isRequired,
   categories: PropTypes.object.isRequired,
 };
 

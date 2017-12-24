@@ -92,7 +92,9 @@ class UserMenu extends Component {
 
 UserMenu.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    photoURL: PropTypes.string,
+  }).isRequired,
 };
 
 export default withStyles(styles)(UserMenu);

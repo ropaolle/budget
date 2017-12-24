@@ -34,21 +34,20 @@ class App extends Component {
   }
 
   render() {
-    const { auth, loadUser/* , settings */ } = this.props;
+    const { user, loadUser, isLoaded } = this.props;
 
     return (
       <BrowserRouter>
         <div id="app-wrapper">
-          <AppBar user={auth.user} loadUser={loadUser} />
-          {/* settings.isLoaded && */}
+          <AppBar user={user} loadUser={loadUser} />
           <div id="content">
-            <Switch>
+            {isLoaded && <Switch>
               <Route exact path="/" component={Home} />
               <PrivateRoute path="/charts" component={Charts} />
               <PrivateRoute path="/budget" component={Budget} />
               <PrivateRoute path="/settings" component={Settings} />
               <Route component={Page404} />
-            </Switch>
+            </Switch>}
           </div>
           <Footer />
         </div>
@@ -60,13 +59,24 @@ class App extends Component {
 App.propTypes = {
   loadUser: PropTypes.func.isRequired,
   updateSettings: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  // settings: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    uid: PropTypes.string,
+    email: PropTypes.string,
+    emailVerified: PropTypes.bool,
+    displayName: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    photoURL: PropTypes.string,
+  }),
+  isLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const { auth, settings } = state;
-  return { auth, settings };
+App.defaultProps = {
+  user: null,
 };
+
+const mapStateToProps = state => ({
+  user: state.auth.user,
+  isLoaded: state.settings.isLoaded,
+});
 
 export default connect(mapStateToProps, actionCreators)(App);

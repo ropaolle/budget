@@ -38,8 +38,8 @@ const defaultExpense = {
   date: new Date().toLocaleDateString('sv-SE'),
   description: '',
   service: '',
-  type: 1,
-  id: null,
+  type: 'oneTime',
+  id: '',
   recurrent: null,
 };
 

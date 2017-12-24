@@ -8,7 +8,6 @@ import { withStyles } from 'material-ui/styles';
 
 function renderInput(inputProps) {
   const { classes, autoFocus, value, ref, label, ...other } = inputProps;
-
   return (
     <TextField
       autoFocus={autoFocus}
@@ -63,7 +62,7 @@ function getSuggestions(value, suggestions) {
   }
 
   const regex = new RegExp(escapedValue, 'i');
-
+  console.log(suggestions);
   return suggestions.filter(suggestion => regex.test(suggestion.label));
 }
 
@@ -154,7 +153,9 @@ class IntegrationAutosuggest extends Component {
 
 IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
-  suggestions: PropTypes.array.isRequired,
+  suggestions: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+  })).isRequired,
   onChange: PropTypes.func.isRequired,
   defaultValue: PropTypes.string,
   label: PropTypes.string,

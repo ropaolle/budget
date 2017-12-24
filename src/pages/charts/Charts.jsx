@@ -134,8 +134,8 @@ class Charts extends Component {
 }
 
 Charts.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line
-  settings: PropTypes.object.isRequired, // eslint-disable-line
+  classes: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
 };
 
 Charts.defaultProps = {
