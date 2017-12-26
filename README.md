@@ -14,43 +14,8 @@ Charts
 2. Add budget settings listener
 
 
-{
-    "eslint.autoFixOnSave": true,
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/node_modules/": true,
-        "**/coverage": true,
-        "**/build": true,
-        "**/firebase/": true
-    },
-    "TodoParser": {
-        "only": ["src"]
-    },
-    "git.autofetch": true,
-    "explorer.confirmDelete": false,
-    "workbench.startupEditor": "newUntitledFile",
-    "[markdown]": {}
-}
-
-
 ## Content
 [Notes and referenses](#notes-and-ref)
-
-----------------------------------------
-# NPM
-### NPM-permissions
-[NPM-permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
-```
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-# Open or create a ~/.profile file and add this line:
-  export PATH=~/.npm-global/bin:$PATH
-source ~/.profile
-```
 
 ### Configure line endings in git
 Update your .gitattributes
