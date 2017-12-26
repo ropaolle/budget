@@ -1,6 +1,10 @@
 /* eslint no-param-reassign: 0 */
 /* eslint-disable2 */
-import { database, DB_EXSPENSES_COLL, DB_EXSPENSES_ROOT } from './firebase';
+import {
+  database,
+  DB_EXSPENSES_COLLECTION,
+  DB_BUDGET_COLLECTION,
+} from './firebase';
 
 const docs = [
   { date: '2017-04-27', cost: '112', description: 'Unionen A-kassa', service: 'Unionen A-kassa', type: 'monthly', comment: '', category: 13, recurrent: '' },
@@ -18,7 +22,7 @@ const getMonth = (date) => {
 };
 
 function getCount(perMonth = false) {
-  return database.collection(DB_EXSPENSES_COLL)
+  return database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'asc')
     // .limit(300)
     .get()
@@ -59,13 +63,13 @@ function getCount(perMonth = false) {
       }, {});
 
       const dbDoc = (perMonth) ? 'counters-month' : 'counters-year';
-      database.collection(DB_EXSPENSES_ROOT).doc(dbDoc).set(counterObj);
+      database.collection(DB_BUDGET_COLLECTION).doc(dbDoc).set(counterObj);
       console.log(dbDoc, counterObj);
     });
 }
 
 function getAutocompleteText() {
-  return database.collection(DB_EXSPENSES_COLL)
+  return database.collection(DB_EXSPENSES_COLLECTION)
     .get()
     .then((query) => {
       const textObj = query.docs.reduce((texts, doc) => {
@@ -79,7 +83,7 @@ function getAutocompleteText() {
         }
         return texts;
       }, { description: [], service: [] });
-      database.collection(DB_EXSPENSES_ROOT).doc('autocomplete').set(textObj);
+      database.collection(DB_BUDGET_COLLECTION).doc('autocomplete').set(textObj);
       console.log('Autocomplete: ', textObj);
     });
 }
@@ -87,6 +91,7 @@ function getAutocompleteText() {
 export function runCron() {
   return Promise.all([
     getCount(true),
+    getCount(false),
     getAutocompleteText(),
   ]);
 }
@@ -94,7 +99,8 @@ export function runCron() {
 export function importExpensesBatch() {
   const batch = database.batch();
   docs.forEach((doc) => {
-    const expenseRef = database.collection(DB_EXSPENSES_COLL).doc(); // Create empty doc with id;
+    // Create empty doc with id;
+    const expenseRef = database.collection(DB_EXSPENSES_COLLECTION).doc();
     const newDoc = {
       ...doc,
       date: new Date(doc.date),

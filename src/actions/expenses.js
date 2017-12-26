@@ -1,4 +1,4 @@
-import { database, DB_EXSPENSES_COLL } from '../utils';
+import { database, DB_EXSPENSES_COLLECTION } from '../utils';
 
 export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 export const RECEIVE_EXPENSES = 'RECEIVE_EXPENSES';
@@ -41,14 +41,14 @@ function oldestExpense(state) {
   const { expenses } = state;
   if (!expenses.items) return '';
   const keys = Object.keys(expenses.items);
-  const lastKey = keys[keys.length - 1]; // or keys.slice(-1)[0];
+  const lastKey = keys[keys.length - 1];
   return expenses.items[lastKey];
 }
 
 export const fetchExpenses = limit => (dispatch, getState) => {
   dispatch(requestExpenses());
 
-  let query = database.collection(DB_EXSPENSES_COLL)
+  let query = database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'desc')
     .orderBy('id');
 

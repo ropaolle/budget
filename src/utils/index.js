@@ -2,9 +2,8 @@ export {
   database,
   firebaseAuth,
   DB_USERS,
-  DB_SETTINGS,
-  DB_EXSPENSES_ROOT,
-  DB_EXSPENSES_COLL,
+  DB_BUDGET_COLLECTION,
+  DB_EXSPENSES_COLLECTION,
 } from './firebase';
 
 export {

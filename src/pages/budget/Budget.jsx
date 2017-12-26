@@ -6,10 +6,15 @@ import { withStyles } from 'material-ui/styles';
 import AddIcon from 'material-ui-icons/Add';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
-import * as actionCreators from '../../actions/expenses';
-import { database, DB_EXSPENSES_COLL } from '../../utils';
+// import * as actionCreators from '../../actions/expenses';
+import * as actionCreatorsExpenses from '../../actions/expenses';
+import * as actionCreatorsBudget from '../../actions/budget';
+import { database, DB_EXSPENSES_COLLECTION } from '../../utils';
 import EditDialog from './EditDialog';
 import BudgetList from './BudgetList';
+
+// TODO: Simplify this
+const actionCreators = Object.assign(actionCreatorsExpenses, actionCreatorsBudget);
 
 const styles = () => ({
   button: {
@@ -43,11 +48,6 @@ const defaultExpense = {
   recurrent: null,
 };
 
-// const firstDayOfMonth = () => {
-//   const today = new Date();
-//   return new Date(`${today.getYear() + 1900}-${today.getMonth() + 1}-01`);
-// };
-
 class Budget extends Component {
   constructor(props) {
     super(props);
@@ -56,52 +56,40 @@ class Budget extends Component {
       dialogOpen: false,
     };
 
-    this.expensesRef = database.collection(DB_EXSPENSES_COLL);
+    this.expensesRef = database.collection(DB_EXSPENSES_COLLECTION);
   }
 
-
   componentDidMount() {
-    if (!this.props.isLoaded) this.removeListener = this.initialListner();
+    const { isLoaded, fetchExpenses, fetchBudget } = this.props;
+    if (!isLoaded) {
+      fetchBudget();
+      fetchExpenses(12);
+    }
+
+    this.removeListener = this.expenseListner();
   }
 
   componentWillUnmount() {
     if (this.removeListener) this.removeListener();
   }
 
-  initialListner() {
-    // TODO: Loads all items on init if I not use endAt. However this also
-    // prevents onSnapshot from fiering on items older that current month.
-    return this.expensesRef.orderBy('date', 'desc')
-      // .endAt(firstDayOfMonth())
-      .limit(20)
+  expenseListner() {
+    // Realtime updates
+    const now = new Date();
+    return this.expensesRef.orderBy('date', 'asc')
+      .startAt(now)// Ignore all old expenses
       .onSnapshot((snapshot) => {
-        // console.log('initialListner', snapshot);
-        const { updateExpenses } = this.props;
-        const { docs } = snapshot;
-        updateExpenses(docs);
-        this.removeListener();
-        this.removeListener = this.basicListner();
-      });
-  }
-
-  basicListner() {
-    // Real time updates
-    return this.expensesRef.orderBy('date', 'desc')
-      .onSnapshot((snapshot) => {
-        // Check fromCache to prevent loading all items after componentDidMount
-        if (!snapshot.metadata.fromCache) {
-          // console.log('basicListner', snapshot);
-          const { updateExpenses, deleteExpense } = this.props;
-          const { docChanges } = snapshot;
-          docChanges.forEach((change) => {
-            const { type, doc } = change;
-            if (type === 'added' || type === 'modified') {
-              updateExpenses([doc]);
-            } else if (type === 'removed') {
-              deleteExpense(doc.id);
-            }
-          });
-        }
+        // console.log('basicListner', snapshot.size);
+        const { updateExpenses, deleteExpense } = this.props;
+        const { docChanges } = snapshot;
+        docChanges.forEach((change) => {
+          const { type, doc } = change;
+          if (type === 'added' || type === 'modified') {
+            updateExpenses([doc]);
+          } else if (type === 'removed') {
+            deleteExpense(doc.id);
+          }
+        });
       });
   }
 
@@ -210,6 +198,7 @@ Budget.propTypes = {
   deleteExpense: PropTypes.func.isRequired,
   updateExpenses: PropTypes.func.isRequired,
   fetchExpenses: PropTypes.func.isRequired,
+  fetchBudget: PropTypes.func.isRequired,
   expenses: PropTypes.object,
   types: PropTypes.object,
   categories: PropTypes.object,
@@ -228,10 +217,11 @@ Budget.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { expenses, settings } = state;
-  const { types, categories, autocomplete } = settings;
+  const { expenses, budget } = state;
+  const { types, categories, autocomplete } = budget;
   const { isFetching, isLoaded, items } = expenses;
   return {
+    budget,
     types,
     categories,
     autocomplete,

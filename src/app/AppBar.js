@@ -39,7 +39,6 @@ class ButtonAppBar extends Component {
 
   handleRequestClose = () => {
     this.setState({ loginOpen: false });
-    // this.props.loadUser(requestExpenses(null));
   }
 
   toggleDrawer = () => {

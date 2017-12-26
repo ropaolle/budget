@@ -14,6 +14,10 @@ Charts
 2. Add budget settings listener
 
 
+## Key codes
+https://www.w3.org/2002/09/tests/keys.html
+
+
 ## Content
 [Notes and referenses](#notes-and-ref)
 

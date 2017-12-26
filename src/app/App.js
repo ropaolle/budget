@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/settings';
-import { database, firebaseAuth, DB_SETTINGS } from '../utils';
+import * as actionCreators from '../actions/auth';
+import { firebaseAuth } from '../utils';
 import AppBar from './AppBar';
 import Footer from './Footer';
 import Page404 from './Page404';
@@ -15,31 +15,23 @@ import Settings from '../pages/settings/Settings';
 
 class App extends Component {
   componentDidMount() {
-    // Load app settings
-    this.removeSettingsListener = database.collection(DB_SETTINGS)
-      .onSnapshot((snapshot) => {
-        this.props.updateSettings(snapshot.docs);
-      });
-
-    // Load user data
-    const { loadUser } = this.props;
+    const { updateUser } = this.props;
     this.removeAuthListener = firebaseAuth().onAuthStateChanged((user) => {
-      loadUser(user);
+      updateUser(user);
     });
   }
 
   componentWillUnmount() {
-    this.removeSettingsListener();
     this.removeAuthListener();
   }
 
   render() {
-    const { user, loadUser, isLoaded } = this.props;
+    const { user, isLoaded } = this.props;
 
     return (
       <BrowserRouter>
         <div id="app-wrapper">
-          <AppBar user={user} loadUser={loadUser} />
+          <AppBar user={user} />
           <div id="content">
             {isLoaded && <Switch>
               <Route exact path="/" component={Home} />
@@ -57,8 +49,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  loadUser: PropTypes.func.isRequired,
-  updateSettings: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string,
     email: PropTypes.string,
@@ -74,9 +65,6 @@ App.defaultProps = {
   user: null,
 };
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  isLoaded: state.settings.isLoaded,
-});
+const mapStateToProps = state => ({ ...state.auth });
 
 export default connect(mapStateToProps, actionCreators)(App);

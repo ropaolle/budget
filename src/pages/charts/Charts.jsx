@@ -45,8 +45,8 @@ function pieChart(ctx) { // eslint-disable-line
   });
 }
 
-function barChart(ctx, settings) {
-  const { categories, 'counters-year': counters/* , types */ } = settings;
+function barChart(ctx, budget) {
+  const { categories, 'counters-year': counters/* , types */ } = budget;
   const countLabels = Object.values(categories);
   const countData = Object.values(counters[2017].categories);
   console.log('countLabels', countLabels);
@@ -109,9 +109,9 @@ class Charts extends Component {
 
   componentDidMount() {
     const ctx = this.canvas.getContext('2d');
-    const { settings } = this.props;
-    barChart(ctx, settings);
-    // pieChart(ctx, settings);
+    const { budget } = this.props;
+    barChart(ctx, budget);
+    // pieChart(ctx, budget);
   }
 
   render() {
@@ -135,15 +135,15 @@ class Charts extends Component {
 
 Charts.propTypes = {
   classes: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
+  budget: PropTypes.object.isRequired,
 };
 
 Charts.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { settings } = state;
-  return { settings };
+  const { budget } = state;
+  return { budget };
 };
 
 export default connect(mapStateToProps)(withStyles(styles)(Charts));

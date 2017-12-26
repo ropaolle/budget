@@ -7,11 +7,11 @@ import {
 
 const expensesState = (
   state = {
-    // isFetching: false,
-    // isLoaded: false,
+    isFetching: false,
+    isLoaded: false,
     items: {},
   },
-  action // eslint-disable-line comma-dangle
+  action,
 ) => {
   switch (action.type) {
     case REQUEST_EXPENSES:

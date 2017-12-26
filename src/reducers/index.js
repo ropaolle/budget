@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { expenses } from './expenses';
-import { auth, settings } from './settings';
+import { auth } from './auth';
+import { budget } from './budget';
 
 const rootReducer = combineReducers({
   auth,
+  budget,
   expenses,
-  settings,
 });
 
 export default rootReducer;
