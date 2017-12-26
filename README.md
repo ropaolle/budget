@@ -1,12 +1,40 @@
 ## Todo
-- [ ] Use shapes in props validation
-- [ ] 
-- [ ] 
+- [x] Use shapes in props validation
+
+- [ ] Requiered data
+App
+1. Load auth listener
+- App>AppBar: auth.user
+- PrivateRoute: auth.isAuthenticated
+Budget
+1. if not loaded: Load budget settings+expenses
+2. Add expenses listener
+Charts
+1. if not loaded: Load budget settings
+2. Add budget settings listener
 
 
-
-
-
+{
+    "eslint.autoFixOnSave": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/node_modules/": true,
+        "**/coverage": true,
+        "**/build": true,
+        "**/firebase/": true
+    },
+    "TodoParser": {
+        "only": ["src"]
+    },
+    "git.autofetch": true,
+    "explorer.confirmDelete": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "[markdown]": {}
+}
 
 
 ## Content
