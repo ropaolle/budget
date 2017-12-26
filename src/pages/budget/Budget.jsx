@@ -63,7 +63,7 @@ class Budget extends Component {
     const { isLoaded, fetchExpenses, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
-      fetchExpenses(12);
+      fetchExpenses(1);
     }
 
     this.removeListener = this.expenseListner();
@@ -79,7 +79,7 @@ class Budget extends Component {
     return this.expensesRef.orderBy('date', 'asc')
       .startAt(now)// Ignore all old expenses
       .onSnapshot((snapshot) => {
-        // console.log('basicListner', snapshot.size);
+        console.log('basicListner', snapshot.size);
         const { updateExpenses, deleteExpense } = this.props;
         const { docChanges } = snapshot;
         docChanges.forEach((change) => {

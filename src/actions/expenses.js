@@ -48,6 +48,8 @@ function oldestExpense(state) {
 export const fetchExpenses = limit => (dispatch, getState) => {
   dispatch(requestExpenses());
 
+  // OrderBy more then one field requiers that you manualy create an index that includes all fields
+  // in Firestore.
   let query = database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'desc')
     .orderBy('id');

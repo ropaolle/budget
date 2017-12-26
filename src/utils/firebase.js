@@ -18,4 +18,4 @@ export const firebaseAuth = firebase.auth;
 // Database paths
 export const DB_USERS = 'users';
 export const DB_BUDGET_COLLECTION = 'budget';
-export const DB_EXSPENSES_COLLECTION = 'expenses'; // 'budget/items/expenses';
+export const DB_EXSPENSES_COLLECTION = 'expenses';
