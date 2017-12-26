@@ -25,7 +25,6 @@ const expensesState = (
         isFetching: false,
         isLoaded: true,
         items: Object.assign({}, state.items, action.expenses),
-        lastUpdated: action.receivedAt,
       };
     case UPDATE_EXPENSES:
       return {

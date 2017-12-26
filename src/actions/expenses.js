@@ -12,7 +12,6 @@ const requestExpenses = () => ({
 const receiveExpenses = expenses => ({
   type: RECEIVE_EXPENSES,
   expenses,
-  receivedAt: Date.now(),
 });
 
 const expensesKeyedById = docs => docs.reduce((expenses, doc) => ({
