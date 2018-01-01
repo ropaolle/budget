@@ -3,94 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import Chart from 'chart.js';
-import { red, blue, yellow, green/* , purple, orange, blueGrey */ } from 'material-ui/colors';
-// https://www.materialui.co/colors
-// http://www.chartjs.org/docs/latest/charts/doughnut.html
-
-function pieChart(ctx) { // eslint-disable-line
-  return new Chart(ctx, { // eslint-disable-line no-unused-vars
-    type: 'pie',
-    data: {
-      // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Blue Gray'],
-      // labels: ['Bygg', 'Bil', 'Bar', 'Mat', 'Medicin', 'Restaurang', 'Tjänster'],
-      labels: ['Monthly', 'One time', 'Yearly', 'Quartely'],
-      datasets: [{
-        label: '# of Types',
-        data: [7, 218, 6, 9],
-        backgroundColor: [
-          red[400],
-          blue[400],
-          yellow[400],
-          green[400],
-          // purple[400],
-          // orange[400],
-          // blueGrey[400],
-        ],
-        borderColor: [
-          red[800],
-          blue[800],
-          yellow[800],
-          green[800],
-          // purple[800],
-          // orange[800],
-          // blueGrey[800],
-        ],
-        borderWidth: 1,
-      }],
-    },
-    options: {
-      cutoutPercentage: 20,
-    },
-  });
-}
-
-function barChart(ctx, budget) {
-  const { categories, 'counters-year': counters/* , types */ } = budget;
-  const countLabels = Object.values(categories);
-  const countData = Object.values(counters[2017].categories);
-  console.log('countLabels', countLabels);
-  console.log('countData', countData);
-  // Cost values to array
-  const costData = countData.map(val => val.cost || 0);
-  console.log('Cost', costData);
-
-  // Summera cost/count
-  // const cost = countData.reduce((data, val) => data + (val.cost || 0), 0);
-  // const count = countData.reduce((data, val) => data + (val.count || 0), 0);
-  // console.log('Data', cost, count);
-
-
-  return new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: countLabels,
-      datasets: [{
-        label: '# of Count',
-        data: countData,
-        backgroundColor: red[400],
-        borderColor: red[800],
-        borderWidth: 1,
-      },
-      {
-        label: '# of Cost',
-        data: costData,
-        backgroundColor: blue[400],
-        borderColor: blue[800],
-        borderWidth: 1,
-      }],
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-          },
-        }],
-      },
-    },
-  });
-}
+import * as actionCreators from '../../actions/budget';
+import barChart from './BarChart';
 
 const styles = theme => ({
   root: {
@@ -108,10 +22,21 @@ class Charts extends Component {
   }
 
   componentDidMount() {
-    const ctx = this.canvas.getContext('2d');
-    const { budget } = this.props;
-    barChart(ctx, budget);
-    // pieChart(ctx, budget);
+    const { isLoaded, fetchBudget } = this.props;
+    if (!isLoaded) {
+      console.log('FETCH');
+      fetchBudget();
+    }
+  }
+
+  componentDidUpdate(/* prevProps */) {
+    const { isLoaded, ...budget } = this.props.budget;
+    if (isLoaded) {
+      console.log('DRAW');
+      const ctx = this.canvas.getContext('2d');
+      barChart(ctx, budget);
+      // pieChart(ctx, budget);
+    }
   }
 
   render() {
@@ -136,14 +61,17 @@ class Charts extends Component {
 Charts.propTypes = {
   classes: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired,
+  fetchBudget: PropTypes.func.isRequired,
+  isLoaded: PropTypes.bool,
 };
 
 Charts.defaultProps = {
+  isLoaded: false,
 };
 
 const mapStateToProps = (state) => {
   const { budget } = state;
-  return { budget };
+  return { budget, isLoaded: budget.isLoaded };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(Charts));
+export default connect(mapStateToProps, actionCreators)(withStyles(styles)(Charts));
