@@ -1,5 +1,8 @@
 # Todo
-- [ ] Load from db
+- [ ] Cron: Update statistics
+- [ ] 
+- [ ] 
+- [x] Load from db
       App
       1. Load auth listener
       - App>AppBar: auth.user
@@ -10,16 +13,11 @@
       Charts
       1. if not loaded: Load budget settings
       2. Add budget settings listener
-- [ ] Cron function
-      - Update statistics
-- [ ] DB backup
+
+# Later
+- [ ] Cron: DB backup
 - [ ] Import montly/yearly expenses
-
-
-
-
-
-
+- [ ] Import from .xls
 
 # Firebase
 
