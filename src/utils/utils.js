@@ -1,12 +1,10 @@
 /* eslint no-param-reassign: 0 */
-/* eslint-disable2 */
+
 import {
   database,
   DB_EXSPENSES_COLLECTION,
   DB_BUDGET_COLLECTION,
 } from './firebase';
-
-import { expensesTest as docs } from './expenses';
 
 const getYear = date => date.getYear() + 1900;
 
@@ -62,7 +60,7 @@ function getCount(perMonth = false) {
     });
 }
 
-function getAutocompleteText() {
+export function getAutocompleteText() {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .get()
     .then((query) => {
@@ -88,22 +86,4 @@ export function runCron() {
     getCount(false),
     getAutocompleteText(),
   ]);
-}
-
-export function importExpensesBatch() {
-  const batch = database.batch();
-  docs.forEach((doc) => {
-    // Create empty doc with id;
-    const expenseRef = database.collection(DB_EXSPENSES_COLLECTION).doc();
-    const newDoc = {
-      ...doc,
-      date: new Date(doc.date),
-      recurrent: (doc.recurrent) ? new Date(doc.recurrent) : null,
-      cost: Number(doc.cost.replace(',', '.')),
-      id: expenseRef.id,
-    };
-    console.log(newDoc);
-    batch.set(expenseRef, newDoc);
-  });
-  return batch.commit();
 }

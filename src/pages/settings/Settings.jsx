@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { CircularProgress } from 'material-ui/Progress';
-import { importExpensesBatch, runCron } from '../../utils';
+import { importExpensesBatch, runCron, importTypesAndCategories } from '../../utils';
 
 const styles = theme => ({
   container: {
@@ -60,6 +60,7 @@ class Settings extends Component {
       });
     } else if (btn === 'import') {
       this.setState({ importLoading: true });
+      importTypesAndCategories();
       importExpensesBatch().then(() => {
         this.setState({ importLoading: false });
       });

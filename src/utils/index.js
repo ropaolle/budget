@@ -17,5 +17,9 @@ export {
 
 export {
   runCron,
-  importExpensesBatch,
 } from './utils';
+
+export {
+  importExpensesBatch,
+  importTypesAndCategories,
+} from './import';
