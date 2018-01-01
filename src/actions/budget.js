@@ -21,7 +21,7 @@ const budgetCollectionKeyedById = docs => docs.reduce((budget, doc) => ({
 export const fetchBudget = () => (dispatch) => {
   dispatch(requestBudget());
 
-  database.collection(DB_BUDGET_COLLECTION).get()
+  return database.collection(DB_BUDGET_COLLECTION).get()
     .then(snapshot => budgetCollectionKeyedById(snapshot.docs))
     .then(json => dispatch(receiveBudget(json)));
 };

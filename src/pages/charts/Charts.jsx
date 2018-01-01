@@ -24,15 +24,21 @@ class Charts extends Component {
   componentDidMount() {
     const { isLoaded, fetchBudget } = this.props;
     if (!isLoaded) {
-      console.log('FETCH');
+      // console.log('FETCH');
       fetchBudget();
+    } else {
+      this.updateCanvas();
     }
   }
 
   componentDidUpdate(/* prevProps */) {
+    this.updateCanvas();
+  }
+
+  updateCanvas = () => {
     const { isLoaded, ...budget } = this.props.budget;
     if (isLoaded) {
-      console.log('DRAW');
+      // console.log('DRAW');
       const ctx = this.canvas.getContext('2d');
       barChart(ctx, budget);
       // pieChart(ctx, budget);
