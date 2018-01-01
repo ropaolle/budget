@@ -6,13 +6,7 @@ import {
   DB_BUDGET_COLLECTION,
 } from './firebase';
 
-const docs = [
-  { date: '2017-04-27', cost: '112', description: 'Unionen A-kassa', service: 'Unionen A-kassa', type: 'monthly', comment: '', category: 13, recurrent: '' },
-  { date: '2017-04-27', cost: '2700', description: 'Hyra', service: 'Fridshyddevägen', type: 'monthly', comment: 'Fridshyddevägen', category: 14, recurrent: '' },
-  { date: '2017-05-09', cost: '61', description: 'Privata repositories', service: 'GitHub.com', type: 'monthly', comment: 'GitHUb', category: 7, recurrent: '' },
-  { date: '2017-05-27', cost: '145', description: 'Mobiltelefon', service: 'Comviq', type: 'monthly', comment: 'Comviq', category: 7, recurrent: '' },
-  { date: '2017-10-09', cost: '15', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 7, recurrent: '' },
-];
+import { expensesTest as docs } from './expenses';
 
 const getYear = date => date.getYear() + 1900;
 
