@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import * as actionCreators from '../../actions/budget';
-import barChart from './BarChart';
+// import categoriesPerYear from './CategoriesPerYear';
+import categoriesPerYear from './CategoriesPerMonth';
 
 const styles = theme => ({
   root: {
@@ -18,7 +19,11 @@ const styles = theme => ({
 class Charts extends Component {
   constructor(props) {
     super(props);
-    this.state = { dummy: null };
+    this.state = {
+      dummy: null,
+      drawChart: categoriesPerYear,
+      chartType: 'Categories per year',
+    };
   }
 
   componentDidMount() {
@@ -37,21 +42,22 @@ class Charts extends Component {
 
   updateCanvas = () => {
     const { isLoaded, ...budget } = this.props.budget;
-    if (isLoaded) {
+    const { drawChart } = this.state;
+    if (isLoaded && drawChart) {
       // console.log('DRAW');
       const ctx = this.canvas.getContext('2d');
-      barChart(ctx, budget);
-      // pieChart(ctx, budget);
+      drawChart(ctx, budget);
     }
   }
 
   render() {
     const { classes } = this.props;
+    const { chartType } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.content}>
-          <Typography type="display2" gutterBottom>Charts</Typography>
+          <Typography type="display2" gutterBottom>{chartType}</Typography>
           <canvas
             className={classes.root}
             ref={(c) => { this.canvas = c; }}

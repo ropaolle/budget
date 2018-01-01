@@ -9,8 +9,8 @@ import {
 const getYear = date => date.getYear() + 1900;
 
 const getMonth = (date) => {
-  const month = (date.getMonth() + 1).toString();
-  return (month.length === 1) ? `0${month}` : month;
+  const month = (date.getMonth()).toString();
+  return (month.length === 1) ? `${month}` : month;
 };
 
 function getCount(perMonth = false) {

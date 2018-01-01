@@ -63,7 +63,7 @@ export function importTypesAndCategories() {
 }
 
 // eslint-disable-next-line
-const expenses = [
+const expensesOnTime = [
   { date: '2017-05-02', cost: '213', description: 'Lim', service: 'Bauhause', type: 'oneTime', comment: 'Bauhause', category: 1, recurrent: '' },
   { date: '2017-05-02', cost: '208', description: 'Impregnering, Lim', service: 'Jula', type: 'oneTime', comment: 'Jula', category: 1, recurrent: '' },
   { date: '2017-05-03', cost: '790', description: 'Bensin 95', service: 'Circle K', type: 'oneTime', comment: 'Circkle K, 55L', category: 2, recurrent: '' },
@@ -282,6 +282,10 @@ const expenses = [
   { date: '2017-12-09', cost: '215,34', description: 'Mat', service: 'Coop Häggvik', type: 'oneTime', comment: 'COOP Häggvik', category: 4, recurrent: '' },
   { date: '2017-12-10', cost: '640', description: 'Tomterockers', service: 'Försvarsgården Häggvik', type: 'oneTime', comment: 'Försvarsgården Häggvik', category: 3, recurrent: '' },
   { date: '2017-12-11', cost: '345,74', description: 'Frontend Masters', service: 'Frontendmasters.com', type: 'oneTime', comment: 'Frontendmasters.com', category: 7, recurrent: '' },
+];
+
+// eslint-disable-next-line
+const expensesRecurring = [
   { date: '2017-01-31', cost: '702', description: 'Sollentuna Energi', service: 'Sollentuna Energi', type: 'quartely', comment: '', category: 12, recurrent: '' },
   { date: '2017-03-27', cost: '719', description: 'Sollentuna Energi', service: 'Sollentuna Energi', type: 'quartely', comment: '', category: 12, recurrent: '' },
   { date: '2017-05-31', cost: '713', description: 'Sollentuna Energi', service: 'Sollentuna Energi', type: 'quartely', comment: '', category: 12, recurrent: '' },

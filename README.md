@@ -1,6 +1,6 @@
 # Todo
 - [ ] Cron: Update statistics
-- [ ] 
+- [ ] Monthly cost
 - [ ]
 
 # Later
