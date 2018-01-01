@@ -5,21 +5,25 @@ admin.initializeApp(functions.config().firebase);
 const ref = admin.firestore();
 
 exports.cron = functions.https.onRequest((request, response) => {
-  ref.collection('budget/items/expenses')
+  ref.collection('expenses')
     .orderBy('date', 'desc')
     .limit(3)
     .get()
-    .then(query => {
-      const a = query.docs.reduce((counters, doc) => {
+    .then((query) => {
+      console.log('Size', query.size);
+      const docs = query.docs.reduce((counters, doc) => {
         const data = doc.data();
-        console.log(data);
-      });
+        counters.push(data);
+        return counters;
+      }, []);
+      console.log('Docs', docs);
+      response.send(`Size ${query.size}`);
     });
-  response.send('Hello from Cron!');
+  // response.send('Hello from Cron!');
 });
 
-exports.expensesUpdated = functions.firestore
-  .document('budget/items/expenses/{userId}')
+/* exports.expensesUpdated = functions.firestore
+  .document('expenses/{userId}')
   .onWrite((event) => {
     // console.log('Event: ', event);
     // console.log('Raw: ', event.data);
@@ -31,6 +35,8 @@ exports.expensesUpdated = functions.firestore
     // Update collection 'system'
     // return ref.collection('system').add(data);
   });
+ */
+
 
 // // Listen for changes in all documents and all subcollections
 // exports.useMultipleWildcards = functions.firestore
