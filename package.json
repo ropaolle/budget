@@ -63,9 +63,9 @@
   "scripts": {
     "start": "BROWSER=none node scripts/start.js",
     "build": "node scripts/build.js && cp -r build/** firebase/build",
-    "build:firebase": "cd firebase && firebase deploy --only hosting && cd ..",
-    "build:functions": "cd firebase && firebase deploy --only functions && cd ..",
-    "deploy": "npm run build && npm run build:firebase",
+    "deploy:firebase": "cd firebase && firebase deploy --only hosting && cd ..",
+    "deploy:functions": "cd firebase && firebase deploy --only functions && cd ..",
+    "deploy": "npm run build && npm run deploy:firebase",
     "backup": "firestore-backup --accountCredentials ./backup/fb.json --backupPath ./backup --prettyPrint",
     "test": "node scripts/test.js --env=jsdom",
     "test:cov": "node scripts/test.js --env=jsdom --coverage"
