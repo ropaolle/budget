@@ -34,3 +34,17 @@ export function costPerCategoryPerYear(date, counters, size) {
   const categories = counters[year] && counters[year].categories;
   return costPerCategory(categories, size);
 }
+
+export function costPerMonthPerYear(date, counters) {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const year = date.year();
+
+  return months.map((month) => {
+    const categories = counters[year] &&
+      counters[year][month] &&
+      counters[year][month].categories;
+
+    if (typeof categories !== 'object') return 0;
+    return Object.values(categories).reduce((acc, value) => acc + value.cost, 0);
+  });
+}

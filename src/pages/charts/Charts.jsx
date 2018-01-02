@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import * as actionCreators from '../../actions/budget';
-import categoriesPerYear from './CategoriesPerYear';
+// import categoriesPerYear from './CategoriesPerYear';
 // import categoriesPerYear from './CategoriesPerMonth';
+import categoriesPerYear from './CostPerMonth';
 
 const styles = theme => ({
   root: {
