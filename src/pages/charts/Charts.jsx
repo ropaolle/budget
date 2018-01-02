@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import * as actionCreators from '../../actions/budget';
-// import categoriesPerYear from './CategoriesPerYear';
-// import categoriesPerYear from './CategoriesPerMonth';
-import categoriesPerYear from './CostPerMonth';
+import categoriesPerYear from './CategoriesPerYear';
+import categoriesPerMonth from './CategoriesPerMonth';
+import costPerMonth from './CostPerMonth';
 
 const styles = theme => ({
   root: {
@@ -14,6 +15,12 @@ const styles = theme => ({
   },
   content: {
     margin: theme.spacing.unit,
+  },
+  loadButtonWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
 });
 
@@ -23,21 +30,20 @@ class Charts extends Component {
     this.state = {
       dummy: null,
       drawChart: categoriesPerYear,
-      chartType: 'Categories per year',
+      chartType: 'Charts',
     };
   }
 
   componentDidMount() {
     const { isLoaded, fetchBudget } = this.props;
     if (!isLoaded) {
-      // console.log('FETCH');
       fetchBudget();
     } else {
       this.updateCanvas();
     }
   }
 
-  componentDidUpdate(/* prevProps */) {
+  componentDidUpdate() {
     this.updateCanvas();
   }
 
@@ -45,10 +51,24 @@ class Charts extends Component {
     const { isLoaded, ...budget } = this.props.budget;
     const { drawChart } = this.state;
     if (isLoaded && drawChart) {
-      // console.log('DRAW');
       const ctx = this.canvas.getContext('2d');
       drawChart(ctx, budget/* , 2017, 5 */);
     }
+  }
+
+  handleButtonClick = (type) => {
+    let chartType;
+    switch (type) {
+      case 'yearly': chartType = categoriesPerYear;
+        break;
+      case 'monthly': chartType = categoriesPerMonth;
+        break;
+      case 'categories': chartType = costPerMonth;
+        break;
+      default:
+        chartType = categoriesPerYear;
+    }
+    this.setState({ drawChart: chartType });
   }
 
   render() {
@@ -59,6 +79,11 @@ class Charts extends Component {
       <div className={classes.root}>
         <div className={classes.content}>
           <Typography type="display2" gutterBottom>{chartType}</Typography>
+          <div className={classes.loadButtonWrapper}>
+            <Button onClick={() => this.handleButtonClick('yearly')}>Yearly</Button>
+            <Button onClick={() => this.handleButtonClick('monthly')}>Monthly</Button>
+            <Button onClick={() => this.handleButtonClick('categories')}>Categories</Button>
+          </div>
           <canvas
             className={classes.root}
             ref={(c) => { this.canvas = c; }}
