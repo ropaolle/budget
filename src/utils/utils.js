@@ -6,26 +6,17 @@ import {
   DB_BUDGET_COLLECTION,
 } from './firebase';
 
-const getYear = date => date.getYear() + 1900;
-
-const getMonth = (date) => {
-  const month = (date.getMonth()).toString();
-  return (month.length === 1) ? `${month}` : month;
-};
-
 function getCount(perMonth = false) {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'asc')
-    // .limit(300)
     .get()
     .then((query) => {
-      // console.log('FULL: ', query.docs.map(doc => doc.data()));
       const counterObj = query.docs.reduce((counters, doc) => {
         const { category, type, date, cost } = doc.data();
 
         // Add year and month
-        const year = getYear(date);
-        const month = getMonth(date);
+        const year = date.getYear() + 1900;
+        const month = date.getMonth() + 1; // 1 = Jan
         let currTypes;
         let currCategories = [];
         const rootObj = { types: {}, categories: {} };

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import * as actionCreators from '../../actions/budget';
-// import categoriesPerYear from './CategoriesPerYear';
-import categoriesPerYear from './CategoriesPerMonth';
+import categoriesPerYear from './CategoriesPerYear';
+// import categoriesPerYear from './CategoriesPerMonth';
 
 const styles = theme => ({
   root: {
@@ -46,7 +46,7 @@ class Charts extends Component {
     if (isLoaded && drawChart) {
       // console.log('DRAW');
       const ctx = this.canvas.getContext('2d');
-      drawChart(ctx, budget);
+      drawChart(ctx, budget/* , 2017, 5 */);
     }
   }
 

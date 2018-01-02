@@ -1,47 +1,29 @@
 import Chart from 'chart.js';
 import moment from 'moment';
-// import forEach from 'lodash.foreach';
 import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
+import { costPerCategoryPerMonth, costPerMonth } from './ChartUtils';
 
-function costPerCategory(year, month, counters) {
-  if (counters[year] && counters[year][month] && counters[year][month].categories) {
-    const categories = Object.values(counters[year][month].categories);
-    return categories.map(val => val.cost || 0);
-  }
-  return [];
-}
 
-// function costPerYear(data) {
-//   const cost = data.reduce((sum, val) => sum + (val || 0), 0);
-//   return cost.toLocaleString('sv-SE', {
-//     style: 'currency',
-//     currency: 'SEK',
-//     minimumFractionDigits: 0,
-//     maximumFractionDigits: 2,
-//   });
-// }
-
-export default function chart(ctx, budget, defaultMonth, defaultYear) {
+export default function chart(ctx, budget, defaultYear, defaultMonth) {
   const { categories, 'counters-month': counters } = budget;
 
   // Labels
   const labels = Object.values(categories);
 
-  // Cost per category
-  const year = defaultYear || moment().year();
-  const month = defaultMonth || moment().month();
-  const prevMonth = moment().month(month).subtract(1, 'months');
-  // const month2 = moment().month(month).subtract(1, 'months');
-  // console.log(year, month, month2.year(), month2.month());
+  // Dates
+  const defaultDate = (defaultYear && defaultMonth) ?
+    moment([defaultYear, defaultMonth]) : moment();
+  const prevDate = defaultDate.clone().subtract(1, 'months');
+  // console.log(defaultDate.year(), defaultDate.month(), prevDate.year(), prevDate.month());
 
-  const thisYear = costPerCategory(year, month, counters);
-  // const prevYear = costPerCategory(prevMonth.year(), prevMonth.month() - 5, counters);
-  const prevYear = costPerCategory(prevMonth.year(), prevMonth.month() - 7, counters);
-  console.log('Cost', thisYear, prevYear);
+  // Cost per category
+  const thisMonth = costPerCategoryPerMonth(defaultDate, counters, labels.length);
+  const prevMonth = costPerCategoryPerMonth(prevDate, counters, labels.length);
+  // console.log('Cost', thisMonth, prevMonth);
 
   // Total cost
-  const costThisYear = 1; // costPerYear(thisYear);
-  const costPrevYear = 2; // costPerYear(prevYear);
+  const costThisMonth = costPerMonth(thisMonth);
+  const costPrevMonth = costPerMonth(prevMonth);
   // console.log('Sum', costThisYear, costPrevYear);
 
   return new Chart(ctx, {
@@ -49,15 +31,15 @@ export default function chart(ctx, budget, defaultMonth, defaultYear) {
     data: {
       labels,
       datasets: [{
-        label: `${year - 1} (${costPrevYear})`,
-        data: prevYear,
+        label: `${prevDate.format('MMM')} (${costPrevMonth})`,
+        data: prevMonth,
         backgroundColor: red[400],
         borderColor: red[800],
         borderWidth: 1,
       },
       {
-        label: `${year} (${costThisYear})`,
-        data: thisYear,
+        label: `${defaultDate.format('MMM')} (${costThisMonth})`,
+        data: thisMonth,
         backgroundColor: blue[400],
         borderColor: blue[800],
         borderWidth: 1,
