@@ -71,10 +71,60 @@ export function getAutocompleteText() {
     });
 }
 
+function costPerMonthPerCategori(query) {
+  return query.docs.reduce((counters, doc) => {
+    const { category, date, cost } = doc.data();
+
+    // Add year, month, and categories properties if missing
+    const year = date.getYear() + 1900;
+    const month = date.getMonth() + 1; // 1 = Jan
+    if (!counters[year]) counters[year] = {};
+    if (!counters[year][month]) counters[year][month] = {};
+    const categories = counters[year][month];
+    if (!categories[category]) categories[category] = 0;
+
+    // Increment cost
+    categories[category] += cost;
+
+    return counters;
+  }, {});
+}
+
+function costPerYearPerCategori(query) {
+  return query.docs.reduce((counters, doc) => {
+    const { category, date, cost } = doc.data();
+
+    // Add year and categories properties if missing
+    const year = date.getYear() + 1900;
+    if (!counters[year]) counters[year] = {};
+    const categories = counters[year];
+    if (!categories[category]) categories[category] = 0;
+
+    // Increment cost
+    categories[category] += cost;
+
+    return counters;
+  }, {});
+}
+
+function getCost(perMonth = false) {
+  return database.collection(DB_EXSPENSES_COLLECTION)
+    .orderBy('date', 'asc')
+    .get()
+    .then((query) => {
+      const costFunc = (perMonth) ? costPerMonthPerCategori : costPerYearPerCategori;
+      const dbObj = costFunc(query);
+      console.log(costFunc.name, dbObj);
+      database.collection(DB_BUDGET_COLLECTION).doc(costFunc.name).set(dbObj);
+    });
+}
+
 export function runCron() {
   return Promise.all([
     getCount(true),
     getCount(false),
+    getCost(true),
+    getCost(false),
     getAutocompleteText(),
   ]);
 }

@@ -1,19 +1,23 @@
 import Chart from 'chart.js';
-// import moment from 'moment';
-// import forEach from 'lodash.foreach';
 import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
-import { costPerCategoryPerYear, costPerYear } from './ChartUtils';
+import { costPerCategory, totalCostInSek as costPerYear } from './ChartUtils';
+
+export function costPerCategoryPerYear(date, costs) {
+  const year = date.year();
+  if (!costs[year]) return [];
+  return costPerCategory(costs[year]);
+}
 
 function drawChart(ctx, budget, currentDate) {
-  const { categories, 'counters-year': counters/* , types */ } = budget;
+  const { categories, costPerYearPerCategori: costs } = budget;
 
   // Labels
   const labels = Object.values(categories);
 
   // Cost per category
   const prevDate = currentDate.clone().subtract(1, 'months');
-  const thisYear = costPerCategoryPerYear(currentDate, counters);
-  const prevYear = costPerCategoryPerYear(prevDate, counters);
+  const thisYear = costPerCategoryPerYear(currentDate, costs, labels.length);
+  const prevYear = costPerCategoryPerYear(prevDate, costs, labels.length);
 
   return new Chart(ctx, {
     type: 'horizontalBar',

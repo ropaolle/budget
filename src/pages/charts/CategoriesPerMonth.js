@@ -1,18 +1,27 @@
 import Chart from 'chart.js';
 import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
-import { costPerCategoryPerMonth, costPerMonth } from './ChartUtils';
+import { costPerCategory, totalCostInSek as costPerMonth } from './ChartUtils';
 
+export function costPerCategoryPerMonth(date, cost) {
+  // TODO: Try-catch or should I check if costs[year][month] exists?
+  try {
+    return costPerCategory(cost[date.year()][date.month()]);
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
 
 function drawChart(ctx, budget, currentDate) {
-  const { categories, 'counters-month': counters } = budget;
+  const { categories, costPerMonthPerCategori: costs } = budget;
 
   // Labels
   const labels = Object.values(categories);
 
   // Cost per category
   const prevDate = currentDate.clone().subtract(1, 'months');
-  const thisMonth = costPerCategoryPerMonth(currentDate, counters, labels.length);
-  const prevMonth = costPerCategoryPerMonth(prevDate, counters, labels.length);
+  const thisMonth = costPerCategoryPerMonth(currentDate, costs);
+  const prevMonth = costPerCategoryPerMonth(prevDate, costs);
 
   return new Chart(ctx, {
     type: 'horizontalBar',

@@ -1,16 +1,29 @@
 import Chart from 'chart.js';
+import reduce from 'lodash.reduce';
 import { red, blue } from 'material-ui/colors';
-import { costPerMonthPerYear, costPerYear } from './ChartUtils';
+import { totalCostInSek as costPerYear } from './ChartUtils';
+
+export function costPerMonthPerYear(date, costs) {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  // TODO: Try-catch or should I check if costs[year][month] exists?
+  try {
+    return months.map(month =>
+      reduce(costs[date.year()][month], (acc, value) => acc + value, 0));
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
 
 function drawChart(ctx, budget, currentDate) {
-  const { 'counters-month': counters } = budget;
+  const { costPerMonthPerCategori: costs } = budget;
 
   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   const prevDate = currentDate.clone().subtract(1, 'months');
 
   // Cost per category
-  const thisYear = costPerMonthPerYear(currentDate, counters, labels.length);
-  const prevYear = costPerMonthPerYear(prevDate, counters, labels.length);
+  const thisYear = costPerMonthPerYear(currentDate, costs);
+  const prevYear = costPerMonthPerYear(prevDate, costs);
 
   return new Chart(ctx, {
     type: 'horizontalBar',
