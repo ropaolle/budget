@@ -6,7 +6,7 @@ import {
   DB_BUDGET_COLLECTION,
 } from './firebase';
 
-function getCount(perMonth = false) {
+/* function getCount(perMonth = false) {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'asc')
     .get()
@@ -16,7 +16,7 @@ function getCount(perMonth = false) {
 
         // Add year and month
         const year = date.getYear() + 1900;
-        const month = date.getMonth() + 1; // 1 = Jan
+        const month = date.getMonth();
         let currTypes;
         let currCategories = [];
         const rootObj = { types: {}, categories: {} };
@@ -49,7 +49,7 @@ function getCount(perMonth = false) {
       database.collection(DB_BUDGET_COLLECTION).doc(dbDoc).set(counterObj);
       console.log(dbDoc, counterObj);
     });
-}
+} */
 
 export function getAutocompleteText() {
   return database.collection(DB_EXSPENSES_COLLECTION)
@@ -77,7 +77,7 @@ function costPerMonthPerCategori(query) {
 
     // Add year, month, and categories properties if missing
     const year = date.getYear() + 1900;
-    const month = date.getMonth() + 1; // 1 = Jan
+    const month = date.getMonth();
     if (!counters[year]) counters[year] = {};
     if (!counters[year][month]) counters[year][month] = {};
     const categories = counters[year][month];
@@ -121,8 +121,8 @@ function getCost(perMonth = false) {
 
 export function runCron() {
   return Promise.all([
-    getCount(true),
-    getCount(false),
+    // getCount(true),
+    // getCount(false),
     getCost(true),
     getCost(false),
     getAutocompleteText(),

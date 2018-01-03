@@ -15,9 +15,9 @@ function drawChart(ctx, budget, currentDate) {
   const labels = Object.values(categories);
 
   // Cost per category
-  const prevDate = currentDate.clone().subtract(1, 'months');
-  const thisYear = costPerCategoryPerYear(currentDate, costs, labels.length);
-  const prevYear = costPerCategoryPerYear(prevDate, costs, labels.length);
+  const prevDate = currentDate.clone().subtract(1, 'years');
+  const thisYear = costPerCategoryPerYear(currentDate, costs);
+  const prevYear = costPerCategoryPerYear(prevDate, costs);
 
   return new Chart(ctx, {
     type: 'horizontalBar',

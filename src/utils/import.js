@@ -46,6 +46,7 @@ const categories = {
   12: 'El',
   13: 'Försäkringar',
   14: 'Hyra',
+  100: 'Intäkt',
 };
 
 const types = {

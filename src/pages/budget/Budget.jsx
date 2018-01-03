@@ -113,7 +113,7 @@ class Budget extends Component {
     const value = e.target.value;
     this.setState((prevState) => {
       const expense = Object.assign({}, prevState.expense);
-      const convertToNumber = ['cost'];
+      const convertToNumber = ['cost', 'category'];
       expense[name] = (convertToNumber.includes(name)) ? Number(value) : value;
       return { expense };
     });

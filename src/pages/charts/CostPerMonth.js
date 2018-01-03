@@ -4,7 +4,7 @@ import { red, blue } from 'material-ui/colors';
 import { totalCostInSek as costPerYear } from './ChartUtils';
 
 export function costPerMonthPerYear(date, costs) {
-  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   // TODO: Try-catch or should I check if costs[year][month] exists?
   try {
     return months.map(month =>
@@ -19,7 +19,7 @@ function drawChart(ctx, budget, currentDate) {
   const { costPerMonthPerCategori: costs } = budget;
 
   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-  const prevDate = currentDate.clone().subtract(1, 'months');
+  const prevDate = currentDate.clone().subtract(1, 'years');
 
   // Cost per category
   const thisYear = costPerMonthPerYear(currentDate, costs);
