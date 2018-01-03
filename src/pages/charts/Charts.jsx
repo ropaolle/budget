@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -28,10 +29,10 @@ class Charts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dummy: null,
-      drawChart: categoriesPerYear,
-      chartType: 'Charts',
+      currentDate: moment(),
+      ...categoriesPerYear,
     };
+    this.currentChart = null;
   }
 
   componentDidMount() {
@@ -49,40 +50,56 @@ class Charts extends Component {
 
   updateCanvas = () => {
     const { isLoaded, ...budget } = this.props.budget;
-    const { drawChart } = this.state;
+    const { drawChart, currentDate } = this.state;
     if (isLoaded && drawChart) {
       const ctx = this.canvas.getContext('2d');
-      drawChart(ctx, budget/* , 2017, 5 */);
+      if (this.currentChart) this.currentChart.destroy();
+      this.currentChart = drawChart(ctx, budget, currentDate);
     }
   }
 
+  handleIncDecClick(type) {
+    this.setState((prevState) => {
+      const { baseDate, currentDate } = prevState;
+      return { currentDate: (type === '-') ?
+        currentDate.clone().subtract(1, baseDate) :
+        currentDate.clone().add(1, baseDate),
+      };
+    });
+  }
+
   handleButtonClick = (type) => {
-    let chartType;
+    let chart;
     switch (type) {
-      case 'yearly': chartType = categoriesPerYear;
+      case 'yearly':
+        chart = categoriesPerYear;
         break;
-      case 'monthly': chartType = categoriesPerMonth;
+      case 'monthly':
+        chart = categoriesPerMonth;
         break;
-      case 'categories': chartType = costPerMonth;
+      case 'categories':
+        chart = costPerMonth;
         break;
       default:
-        chartType = categoriesPerYear;
+        chart = categoriesPerYear;
     }
-    this.setState({ drawChart: chartType });
+    this.setState({ ...chart });
   }
 
   render() {
     const { classes } = this.props;
-    const { chartType } = this.state;
+    const { chartLabel } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.content}>
-          <Typography type="display2" gutterBottom>{chartType}</Typography>
+          <Typography type="display2" gutterBottom>{chartLabel}</Typography>
           <div className={classes.loadButtonWrapper}>
+            <Button onClick={() => this.handleIncDecClick('-')}>-</Button>
             <Button onClick={() => this.handleButtonClick('yearly')}>Yearly</Button>
             <Button onClick={() => this.handleButtonClick('monthly')}>Monthly</Button>
-            <Button onClick={() => this.handleButtonClick('categories')}>Categories</Button>
+            <Button onClick={() => this.handleButtonClick('categories')}>Cost</Button>
+            <Button onClick={() => this.handleIncDecClick('+')}>+</Button>
           </div>
           <canvas
             className={classes.root}
