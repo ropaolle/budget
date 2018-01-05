@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import * as actionCreators from '../../actions/budget';
 import categoriesPerYear from './CategoriesPerYear';
 import categoriesPerMonth from './CategoriesPerMonth';
+import costIncomePerMonth from './CostIncomePerMonth';
 import costPerMonth from './CostPerMonth';
 
 const styles = theme => ({
@@ -30,7 +31,7 @@ class Charts extends Component {
     super(props);
     this.state = {
       currentDate: moment(),
-      ...categoriesPerYear,
+      ...costIncomePerMonth,
     };
     this.currentChart = null;
   }
@@ -77,7 +78,10 @@ class Charts extends Component {
       case 'monthly':
         chart = categoriesPerMonth;
         break;
-      case 'categories':
+      case 'costIncomePerMonth':
+        chart = costIncomePerMonth;
+        break;
+      case 'costPerMonth':
         chart = costPerMonth;
         break;
       default:
@@ -88,17 +92,18 @@ class Charts extends Component {
 
   render() {
     const { classes } = this.props;
-    const { chartLabel } = this.state;
+    const { chartLabel, currentDate } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.content}>
-          <Typography type="display2" gutterBottom>{chartLabel}</Typography>
+          <Typography type="display1" gutterBottom>{chartLabel} ({currentDate.year()})</Typography>
           <div className={classes.loadButtonWrapper}>
             <Button onClick={() => this.handleIncDecClick('-')}>-</Button>
             <Button onClick={() => this.handleButtonClick('yearly')}>Yearly</Button>
             <Button onClick={() => this.handleButtonClick('monthly')}>Monthly</Button>
-            <Button onClick={() => this.handleButtonClick('categories')}>Cost</Button>
+            <Button onClick={() => this.handleButtonClick('costIncomePerMonth')}>Cost/Income</Button>
+            <Button onClick={() => this.handleButtonClick('costPerMonth')}>Cost per month</Button>
             <Button onClick={() => this.handleIncDecClick('+')}>+</Button>
           </div>
           <canvas
