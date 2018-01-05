@@ -20,6 +20,6 @@ export {
 } from './utils';
 
 export {
-  importExpensesBatch,
+  importExpenses,
   importTypesAndCategories,
 } from './import';
