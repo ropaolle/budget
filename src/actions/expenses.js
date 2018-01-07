@@ -49,9 +49,11 @@ export const fetchExpenses = limit => (dispatch, getState) => {
 
   // OrderBy more then one field requiers that you manualy create an index that includes all fields
   // in Firestore.
+  const now = new Date(); // moment().toDate();
   let query = database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'desc')
-    .orderBy('id');
+    .orderBy('id')
+    .startAt(now);
 
   const { date, id } = oldestExpense(getState());
   if (date && id) query = query.startAfter(new Date(date), id);

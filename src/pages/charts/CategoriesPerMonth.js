@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 import filter from 'lodash.filter';
-import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
-import { costPerCategory, totalCostInSek as costPerMonth } from './ChartUtils';
+import { blue } from 'material-ui/colors';
+import { costPerCategory } from './ChartUtils';
 
 export function costPerCategoryPerMonth(date, cost) {
   // TODO: Try-catch or should I check if costs[year][month] exists?
@@ -15,29 +15,16 @@ export function costPerCategoryPerMonth(date, cost) {
 
 function drawChart(ctx, budget, currentDate) {
   const { categories, costPerMonthPerCategori: costs } = budget;
-
-  // Labels
-  // const labels = Object.values(categories);
-  const labels = filter(categories, (value, index) => index < 100);
-
-  // Cost per category
-  const prevDate = currentDate.clone().subtract(1, 'months');
+  // Labels. Ignore categories above 99
+  const labels = filter(categories, (value, category) => category < 100);
   const thisMonth = costPerCategoryPerMonth(currentDate, costs);
-  const prevMonth = costPerCategoryPerMonth(prevDate, costs);
 
   return new Chart(ctx, {
     type: 'horizontalBar',
     data: {
       labels,
       datasets: [{
-        label: `${prevDate.format('MMM')} (${costPerMonth(prevMonth)})`,
-        data: prevMonth,
-        backgroundColor: red[400],
-        borderColor: red[800],
-        borderWidth: 1,
-      },
-      {
-        label: `${currentDate.format('MMM')} (${costPerMonth(thisMonth)})`,
+        label: `${currentDate.format('MMM')}`,
         data: thisMonth,
         backgroundColor: blue[400],
         borderColor: blue[800],

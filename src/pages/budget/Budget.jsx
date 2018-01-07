@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -63,7 +64,7 @@ class Budget extends Component {
     const { isLoaded, fetchExpenses, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
-      fetchExpenses(1);
+      fetchExpenses(100);
     }
 
     this.removeListener = this.expenseListner();
@@ -75,9 +76,13 @@ class Budget extends Component {
 
   expenseListner() {
     // Realtime updates
-    const now = new Date();
+    // const from = new Date();
+    const from = moment().toDate();
+    const to = moment().add(1, 'days').toDate();
+
     return this.expensesRef.orderBy('date', 'asc')
-      .startAt(now)// Ignore all old expenses
+      .startAt(from) // Ignore all old expenses
+      .endAt(to)
       .onSnapshot((snapshot) => {
         console.log('basicListner', snapshot.size);
         const { updateExpenses, deleteExpense } = this.props;

@@ -71,6 +71,25 @@ export function getAutocompleteText() {
     });
 }
 
+function costPerMonthPerType(query) {
+  return query.docs.reduce((counters, doc) => {
+    const { category, type, date, cost } = doc.data();
+
+    // Add year, month, and categories properties if missing
+    const year = date.getYear() + 1900;
+    const month = date.getMonth();
+    if (!counters[year]) counters[year] = {};
+    if (!counters[year][month]) counters[year][month] = {};
+    const types = counters[year][month];
+    if (!types[type]) types[type] = 0;
+
+    // Increment cost
+    types[type] += (category < 100) ? cost : 0;
+
+    return counters;
+  }, {});
+}
+
 function costPerMonthPerCategori(query) {
   return query.docs.reduce((counters, doc) => {
     const { category, date, cost } = doc.data();
@@ -107,12 +126,12 @@ function costPerYearPerCategori(query) {
   }, {});
 }
 
-function getCost(perMonth = false) {
+function getCost(costFunc) {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'asc')
     .get()
     .then((query) => {
-      const costFunc = (perMonth) ? costPerMonthPerCategori : costPerYearPerCategori;
+      // const costFunc = (perMonth) ? costPerMonthPerCategori : costPerYearPerCategori;
       const dbObj = costFunc(query);
       console.log(costFunc.name, dbObj);
       database.collection(DB_BUDGET_COLLECTION).doc(costFunc.name).set(dbObj);
@@ -121,10 +140,9 @@ function getCost(perMonth = false) {
 
 export function runCron() {
   return Promise.all([
-    // getCount(true),
-    // getCount(false),
-    getCost(true),
-    getCost(false),
+    getCost(costPerMonthPerCategori),
+    getCost(costPerYearPerCategori),
+    getCost(costPerMonthPerType),
     getAutocompleteText(),
   ]);
 }

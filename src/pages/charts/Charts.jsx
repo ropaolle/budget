@@ -9,7 +9,7 @@ import * as actionCreators from '../../actions/budget';
 import categoriesPerYear from './CategoriesPerYear';
 import categoriesPerMonth from './CategoriesPerMonth';
 import costIncomePerMonth from './CostIncomePerMonth';
-import costPerMonth from './CostPerMonth';
+import costPerMonth from './CostPerMonthPerType';
 
 const styles = theme => ({
   root: {
