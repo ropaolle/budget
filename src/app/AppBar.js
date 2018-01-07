@@ -35,15 +35,15 @@ class ButtonAppBar extends Component {
 
   handleClickOpen = () => {
     this.setState({ loginOpen: true });
-  }
+  };
 
   handleRequestClose = () => {
     this.setState({ loginOpen: false });
-  }
+  };
 
   toggleDrawer = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
-  }
+  };
 
   render() {
     const { classes, user } = this.props;
@@ -58,22 +58,24 @@ class ButtonAppBar extends Component {
             <Menu open={this.state.menuOpen} toggle={this.toggleDrawer} />
             {/* Title */}
             <Typography type="title" color="inherit" className={classes.flex}>
-              My Spendings
+              Budget
             </Typography>
             {/* Login button */}
-            {!user && <div>
-              <Button
-                color="contrast"
-                onClick={this.handleClickOpen}
-                className={classes.menuButton}
-              >
-                Login
-              </Button>
-              <LoginDialog
-                open={this.state.loginOpen}
-                onClose={this.handleRequestClose}
-              />
-            </div>}
+            {!user && (
+              <div>
+                <Button
+                  color="contrast"
+                  onClick={this.handleClickOpen}
+                  className={classes.menuButton}
+                >
+                  Login
+                </Button>
+                <LoginDialog
+                  open={this.state.loginOpen}
+                  onClose={this.handleRequestClose}
+                />
+              </div>
+            )}
             {/* User menu */}
             {user && <UserMenu user={user} />}
           </Toolbar>

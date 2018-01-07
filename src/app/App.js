@@ -33,13 +33,15 @@ class App extends Component {
         <div id="app-wrapper">
           <AppBar user={user} />
           <div id="content">
-            {isLoaded && <Switch>
-              <Route exact path="/" component={Home} />
-              <PrivateRoute path="/charts" component={Charts} />
-              <PrivateRoute path="/budget" component={Budget} />
-              <PrivateRoute path="/settings" component={Settings} />
-              <Route component={Page404} />
-            </Switch>}
+            {isLoaded && (
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <PrivateRoute path="/charts" component={Charts} />
+                <PrivateRoute path="/expenses" component={Budget} />
+                <PrivateRoute path="/settings" component={Settings} />
+                <Route component={Page404} />
+              </Switch>
+            )}
           </div>
           <Footer />
         </div>

@@ -15,7 +15,10 @@ import EditDialog from './EditDialog';
 import BudgetList from './BudgetList';
 
 // TODO: Simplify this
-const actionCreators = Object.assign(actionCreatorsExpenses, actionCreatorsBudget);
+const actionCreators = Object.assign(
+  actionCreatorsExpenses,
+  actionCreatorsBudget,
+);
 
 const styles = () => ({
   button: {
@@ -64,7 +67,7 @@ class Budget extends Component {
     const { isLoaded, fetchExpenses, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
-      fetchExpenses(100);
+      fetchExpenses(20);
     }
 
     this.removeListener = this.expenseListner();
@@ -78,9 +81,12 @@ class Budget extends Component {
     // Realtime updates
     // const from = new Date();
     const from = moment().toDate();
-    const to = moment().add(1, 'days').toDate();
+    const to = moment()
+      .add(1, 'days')
+      .toDate();
 
-    return this.expensesRef.orderBy('date', 'asc')
+    return this.expensesRef
+      .orderBy('date', 'asc')
       .startAt(from) // Ignore all old expenses
       .endAt(to)
       .onSnapshot((snapshot) => {
@@ -100,7 +106,7 @@ class Budget extends Component {
 
   handleClickAdd = () => {
     this.setState({ dialogOpen: true, expense: defaultExpense });
-  }
+  };
 
   handleClickOpen = expenseId => () => {
     const { expenses } = this.props;
@@ -108,28 +114,28 @@ class Budget extends Component {
       dialogOpen: true,
       expense: expenses[expenseId],
     });
-  }
+  };
 
   handleRequestClose = () => {
     this.setState({ dialogOpen: false });
-  }
+  };
 
   handleRequestChange = (e, name) => {
     const value = e.target.value;
     this.setState((prevState) => {
       const expense = Object.assign({}, prevState.expense);
       const convertToNumber = ['cost', 'category'];
-      expense[name] = (convertToNumber.includes(name)) ? Number(value) : value;
+      expense[name] = convertToNumber.includes(name) ? Number(value) : value;
       return { expense };
     });
-  }
+  };
 
   handleRequestSave = (expense) => {
     // Clone expense and change date from string to Date.
     const exp = {
       ...expense,
       date: new Date(expense.date),
-      recurrent: (expense.recurrent) ? new Date(expense.recurrent) : null,
+      recurrent: expense.recurrent ? new Date(expense.recurrent) : null,
     };
 
     // Add or update
@@ -142,20 +148,28 @@ class Budget extends Component {
     }
 
     this.setState({ dialogOpen: false });
-  }
+  };
 
   handleRequestDelete = (expenseId) => {
     this.expensesRef.doc(expenseId).delete();
     this.setState({ dialogOpen: false });
-  }
+  };
 
   handleLoadMore = () => {
     const { fetchExpenses } = this.props;
     fetchExpenses(20);
-  }
+  };
 
   render() {
-    const { classes, expenses, types, categories, autocomplete, isFetching, isLoaded } = this.props;
+    const {
+      classes,
+      expenses,
+      types,
+      categories,
+      autocomplete,
+      isFetching,
+      isLoaded,
+    } = this.props;
     const { dialogOpen, expense } = this.state;
     return (
       <div>
@@ -167,31 +181,36 @@ class Budget extends Component {
         >
           <AddIcon />
         </Button>
-        <Typography type="display2" gutterBottom>Budget</Typography>
-        {open && <EditDialog
-          open={dialogOpen}
-          expense={expense}
-          types={types}
-          categories={categories}
-          autocomplete={autocomplete}
-          handleRequestClose={this.handleRequestClose}
-          handleRequestSave={this.handleRequestSave}
-          handleRequestDelete={this.handleRequestDelete}
-          handleRequestChange={this.handleRequestChange}
-        />}
-        {<BudgetList
-          handleClickOpen={this.handleClickOpen}
-          expenses={expenses}
-          categories={categories}
-        />}
+        <Typography type="display2" gutterBottom>
+          Expenses
+        </Typography>
+        {open && (
+          <EditDialog
+            open={dialogOpen}
+            expense={expense}
+            types={types}
+            categories={categories}
+            autocomplete={autocomplete}
+            handleRequestClose={this.handleRequestClose}
+            handleRequestSave={this.handleRequestSave}
+            handleRequestDelete={this.handleRequestDelete}
+            handleRequestChange={this.handleRequestChange}
+          />
+        )}
+        {
+          <BudgetList
+            handleClickOpen={this.handleClickOpen}
+            expenses={expenses}
+            categories={categories}
+          />
+        }
         <div className={classes.loadButtonWrapper}>
-          <Button
-            onClick={this.handleLoadMore}
-            disabled={!isLoaded}
-          >
-            {(isLoaded) ? 'Load more...' : 'Loading...'}
+          <Button onClick={this.handleLoadMore} disabled={!isLoaded}>
+            {isLoaded ? 'Load more...' : 'Loading...'}
           </Button>
-          {isFetching && <CircularProgress size={24} className={classes.buttonProgress} />}
+          {isFetching && (
+            <CircularProgress size={24} className={classes.buttonProgress} />
+          )}
         </div>
       </div>
     );
@@ -236,4 +255,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, actionCreators)(withStyles(styles)(Budget));
+export default connect(mapStateToProps, actionCreators)(
+  withStyles(styles)(Budget),
+);

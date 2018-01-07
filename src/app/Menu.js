@@ -34,9 +34,9 @@ const Menu = (props) => {
       </List>
       <Divider />
       <List>
-        <Link to="/budget" className={classes.link}>
-          <ListItem button onClick={e => toggle(e, 'budget')}>
-            <ListItemText primary="Budget" />
+        <Link to="/expenses" className={classes.link}>
+          <ListItem button onClick={e => toggle(e, 'expenses')}>
+            <ListItemText primary="Expenses" />
           </ListItem>
         </Link>
         <Link to="/charts" className={classes.link}>
@@ -49,10 +49,7 @@ const Menu = (props) => {
   );
   return (
     <Drawer open={open} onClose={toggle}>
-      <div
-        tabIndex={0}
-        role="button"
-      >
+      <div tabIndex={0} role="button">
         {sideList}
       </div>
     </Drawer>
