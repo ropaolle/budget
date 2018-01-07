@@ -9,7 +9,7 @@ import * as actionCreators from '../../actions/budget';
 import categoriesPerYear from './CategoriesPerYear';
 import categoriesPerMonth from './CategoriesPerMonth';
 import costIncomePerMonth from './CostIncomePerMonth';
-import costPerMonth from './CostPerMonthPerType';
+import costPerMonthPerType from './CostPerMonthPerType';
 
 const styles = theme => ({
   root: {
@@ -37,6 +37,7 @@ class Charts extends Component {
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
     const { isLoaded, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
@@ -45,7 +46,18 @@ class Charts extends Component {
     }
   }
 
+  componentWillReceiveProps(/* nextProps */) {
+    console.log('componentWillReceiveProps');
+    // this.updateCanvas();
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
+    // this.updateCanvas();
+  }
+
   componentDidUpdate() {
+    console.log('componentDidUpdate');
     this.updateCanvas();
   }
 
@@ -53,18 +65,21 @@ class Charts extends Component {
     const { isLoaded, ...budget } = this.props.budget;
     const { drawChart, currentDate } = this.state;
     if (isLoaded && drawChart) {
+      console.log('UPDATE CHART');
       const ctx = this.canvas.getContext('2d');
       if (this.currentChart) this.currentChart.destroy();
       this.currentChart = drawChart(ctx, budget, currentDate);
     }
-  }
+  };
 
   handleIncDecClick(type) {
     this.setState((prevState) => {
       const { baseDate, currentDate } = prevState;
-      return { currentDate: (type === '-') ?
-        currentDate.clone().subtract(1, baseDate) :
-        currentDate.clone().add(1, baseDate),
+      return {
+        currentDate:
+          type === '-'
+            ? currentDate.clone().subtract(1, baseDate)
+            : currentDate.clone().add(1, baseDate),
       };
     });
   }
@@ -81,14 +96,14 @@ class Charts extends Component {
       case 'costIncomePerMonth':
         chart = costIncomePerMonth;
         break;
-      case 'costPerMonth':
-        chart = costPerMonth;
+      case 'costPerMonthPerType':
+        chart = costPerMonthPerType;
         break;
       default:
         chart = categoriesPerYear;
     }
     this.setState({ ...chart });
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -97,21 +112,40 @@ class Charts extends Component {
     return (
       <div className={classes.root}>
         <div className={classes.content}>
-          <Typography type="display1" gutterBottom>{chartLabel} ({currentDate.year()})</Typography>
+          <Typography type="display1" gutterBottom>
+            {chartLabel} ({currentDate.year()})
+          </Typography>
           <div className={classes.loadButtonWrapper}>
             <Button onClick={() => this.handleIncDecClick('-')}>-</Button>
-            <Button onClick={() => this.handleButtonClick('yearly')}>Yearly</Button>
-            <Button onClick={() => this.handleButtonClick('monthly')}>Monthly</Button>
-            <Button onClick={() => this.handleButtonClick('costIncomePerMonth')}>Cost/Income</Button>
-            <Button onClick={() => this.handleButtonClick('costPerMonth')}>Cost per month</Button>
+            <Button onClick={() => this.handleButtonClick('yearly')}>
+              Yearly
+            </Button>
+            <Button onClick={() => this.handleButtonClick('monthly')}>
+              Monthly
+            </Button>
+            <Button
+              onClick={() => this.handleButtonClick('costIncomePerMonth')}
+            >
+              Result
+            </Button>
+            <Button
+              onClick={() => this.handleButtonClick('costPerMonthPerType')}
+            >
+              Costs
+            </Button>
             <Button onClick={() => this.handleIncDecClick('+')}>+</Button>
           </div>
-          <canvas
-            className={classes.root}
-            ref={(c) => { this.canvas = c; }}
-            width={400}
-            height={400}
-          />
+
+          <div>
+            <canvas
+              className={classes.root}
+              ref={(c) => {
+                this.canvas = c;
+              }}
+              width={400}
+              height={400}
+            />
+          </div>
         </div>
       </div>
     );
@@ -134,4 +168,6 @@ const mapStateToProps = (state) => {
   return { budget, isLoaded: budget.isLoaded };
 };
 
-export default connect(mapStateToProps, actionCreators)(withStyles(styles)(Charts));
+export default connect(mapStateToProps, actionCreators)(
+  withStyles(styles)(Charts),
+);

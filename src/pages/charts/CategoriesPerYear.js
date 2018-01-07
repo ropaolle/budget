@@ -1,6 +1,6 @@
 import Chart from 'chart.js';
 import filter from 'lodash.filter';
-import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
+import { blue } from 'material-ui/colors';
 import { costPerCategory, totalCostInSek as costPerYear } from './ChartUtils';
 
 export function costPerCategoryPerYear(date, costs) {
@@ -11,46 +11,32 @@ export function costPerCategoryPerYear(date, costs) {
 
 function drawChart(ctx, budget, currentDate) {
   const { categories, costPerYearPerCategori: costs } = budget;
-
-  // Labels
-  // const labels = Object.values(categories);
-  const labels = filter(categories, (value, index) => index < 100);
-
-  // Cost per category
-  const prevDate = currentDate.clone().subtract(1, 'years');
+  // Labels. Ignore categories above 99
+  const labels = filter(categories, (value, category) => category < 100);
   const thisYear = costPerCategoryPerYear(currentDate, costs);
-  const prevYear = costPerCategoryPerYear(prevDate, costs);
 
   return new Chart(ctx, {
     type: 'horizontalBar',
     data: {
       labels,
-      datasets: [{
-        label: `${prevDate.year()} (${costPerYear(prevYear)})`,
-        data: prevYear,
-        backgroundColor: red[400],
-        borderColor: red[800],
-        borderWidth: 1,
-      },
-      {
-        label: `${currentDate.year()} (${costPerYear(thisYear)})`,
-        data: thisYear,
-        backgroundColor: blue[400],
-        borderColor: blue[800],
-        borderWidth: 1,
-      }],
+      datasets: [
+        {
+          label: `${currentDate.year()} (${costPerYear(thisYear)})`,
+          data: thisYear,
+          backgroundColor: blue[400],
+          borderColor: blue[800],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
+      maintainAspectRatio: false,
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
+        xAxes: [
+          {
+            position: 'top',
           },
-          position: 'left',
-        }],
-        xAxes: [{
-          position: 'top',
-        }],
+        ],
       },
     },
   });

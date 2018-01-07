@@ -23,25 +23,24 @@ function drawChart(ctx, budget, currentDate) {
     type: 'horizontalBar',
     data: {
       labels,
-      datasets: [{
-        label: `${currentDate.format('MMM')}`,
-        data: thisMonth,
-        backgroundColor: blue[400],
-        borderColor: blue[800],
-        borderWidth: 1,
-      }],
+      datasets: [
+        {
+          label: `${currentDate.format('MMM')}`,
+          data: thisMonth,
+          backgroundColor: blue[400],
+          borderColor: blue[800],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
+      maintainAspectRatio: false,
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
+        xAxes: [
+          {
+            position: 'top',
           },
-          position: 'left',
-        }],
-        xAxes: [{
-          position: 'top',
-        }],
+        ],
       },
     },
   });

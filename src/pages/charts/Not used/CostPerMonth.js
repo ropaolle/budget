@@ -1,33 +1,16 @@
 import Chart from 'chart.js';
 import reduce from 'lodash.reduce';
 import { red, blue } from 'material-ui/colors';
-import { totalCostInSek as costPerYear } from './ChartUtils';
+import { totalCostInSek as costPerYear } from '../ChartUtils';
 
-export function variableCostPerMonth(date, costs) {
+export function costPerMonthPerYear(date, costs) {
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   // TODO: Try-catch or should I check if costs[year][month] exists?
   try {
     return months.map(month =>
       reduce(
         costs[date.year()][month],
-        (acc, value, type) => (type === 'oneTime' ? acc + value : acc),
-        0,
-      ),
-    );
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-}
-
-export function fixedCostPerMonth(date, costs) {
-  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  // TODO: Try-catch or should I check if costs[year][month] exists?
-  try {
-    return months.map(month =>
-      reduce(
-        costs[date.year()][month],
-        (acc, value, type) => (type !== 'oneTime' ? acc + value : acc),
+        (acc, value, categoryType) => (categoryType < 100 ? acc + value : acc),
         0,
       ),
     );
@@ -38,7 +21,7 @@ export function fixedCostPerMonth(date, costs) {
 }
 
 function drawChart(ctx, budget, currentDate) {
-  const { costPerMonthPerType: costs } = budget;
+  const { costPerMonthPerCategori: costs } = budget;
 
   const labels = [
     'Jan',
@@ -54,27 +37,27 @@ function drawChart(ctx, budget, currentDate) {
     'Nov',
     'Dec',
   ];
-  // const prevDate = currentDate.clone().subtract(1, 'years');
+  const prevDate = currentDate.clone().subtract(1, 'years');
 
   // Cost per category
-  const variableCosts = variableCostPerMonth(currentDate, costs);
-  const fixedCosts = fixedCostPerMonth(currentDate, costs);
+  const thisYear = costPerMonthPerYear(currentDate, costs);
+  const prevYear = costPerMonthPerYear(prevDate, costs);
 
   return new Chart(ctx, {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
       labels,
       datasets: [
         {
-          label: `Fixed (${costPerYear(fixedCosts)})`,
-          data: fixedCosts,
+          label: `${prevDate.format('YYYY')} (${costPerYear(prevYear)})`,
+          data: prevYear,
           backgroundColor: red[400],
           borderColor: red[800],
           borderWidth: 1,
         },
         {
-          label: `Variable (${costPerYear(variableCosts)})`,
-          data: variableCosts,
+          label: `${currentDate.format('YYYY')} (${costPerYear(thisYear)})`,
+          data: thisYear,
           backgroundColor: blue[400],
           borderColor: blue[800],
           borderWidth: 1,
@@ -82,20 +65,17 @@ function drawChart(ctx, budget, currentDate) {
       ],
     },
     options: {
-      maintainAspectRatio: false,
       scales: {
         yAxes: [
           {
             ticks: {
               beginAtZero: true,
             },
-            stacked: true,
             position: 'left',
           },
         ],
         xAxes: [
           {
-            stacked: true,
             position: 'top',
           },
         ],
