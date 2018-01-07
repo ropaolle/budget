@@ -1,23 +1,26 @@
 import Chart from 'chart.js';
 import reduce from 'lodash.reduce';
-import { red, green } from 'material-ui/colors';
+import { red, green, blue } from 'material-ui/colors';
 import { totalCostInSek as costPerYear } from './ChartUtils';
 
-function categoryPerMonthPerYear(date, categories, compareFunc) {
-  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+function costPerMonthPerYear(date, categories) {
   if (!categories || !categories[date.year()]) return [];
   return months.map(month =>
     reduce(categories[date.year()][month], (acc, value, categoryType) =>
-      ((compareFunc(categoryType)) ? acc + value : acc), 0),
+      ((categoryType < 100) ? acc + value : acc)
+      , 0),
   );
 }
 
-function costPerMonthPerYear(date, costs) {
-  return categoryPerMonthPerYear(date, costs, categoryType => categoryType < 100);
-}
-
-function incomePerMonthPerYear(date, costs) {
-  return categoryPerMonthPerYear(date, costs, categoryType => categoryType >= 100);
+function incomePerMonthPerYear(date, categories) {
+  if (!categories || !categories[date.year()]) return [];
+  return months.map(month =>
+    reduce(categories[date.year()][month], (acc, value, categoryType) =>
+      ((categoryType >= 100) ? acc + value : acc)
+      , 0),
+  );
 }
 
 function drawChart(ctx, budget, currentDate) {
@@ -27,27 +30,35 @@ function drawChart(ctx, budget, currentDate) {
   // Cost/income per category
   const costs = costPerMonthPerYear(currentDate, costPerMonthPerCategori);
   const incomes = incomePerMonthPerYear(currentDate, costPerMonthPerCategori);
+  const results = incomes.map((income, index) => income - costs[index]);
+
 
   return new Chart(ctx, {
-    // type: 'horizontalBar',
     type: 'bar',
     data: {
       labels,
       datasets: [{
-        label: `Expenses (${costPerYear(incomes)})`,
-        data: incomes,
-        backgroundColor: red[400],
-        borderColor: red[800],
+        label: `Result (${costPerYear(results)})`,
+        data: results,
+        backgroundColor: blue[400],
+        borderColor: blue[800],
         borderWidth: 1,
-        // backgroundColor: 'rgba(255, 0, 0, 0.9)',
       },
       {
-        label: `Incomes (${costPerYear(costs)})`,
+        label: `Expenses (${costPerYear(costs)})`,
         data: costs,
-        backgroundColor: green[400],
+        borderColor: red[800],
+        borderWidth: 1,
+        type: 'line',
+        backgroundColor: 'rgba(200, 0, 0, 0.3)',
+      },
+      {
+        label: `Incomes (${costPerYear(incomes)})`,
+        data: incomes,
         borderColor: green[800],
         borderWidth: 1,
-        // backgroundColor: 'rgba(0, 255, 0, 1)',
+        type: 'line',
+        backgroundColor: 'rgba(0, 170, 0, 0.3)',
       }],
     },
     options: {

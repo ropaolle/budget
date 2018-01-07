@@ -30,6 +30,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "lodash.filter": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "material-ui": "^1.0.0-beta.24",

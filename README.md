@@ -4,11 +4,10 @@
 
 # Later
 
--[ ] Cron: Update statistics
+* [ ] Cron: Update statistics
 * [ ] Cron: DB backup
-- [ ] Import montly/yearly expenses
-*[ ] Import from .xls
-
+* [ ] Import montly/yearly expenses
+* [ ] Import from .xls
 
 # VS Code Extenions
 * ESLint

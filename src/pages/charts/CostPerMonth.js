@@ -8,7 +8,8 @@ export function costPerMonthPerYear(date, costs) {
   // TODO: Try-catch or should I check if costs[year][month] exists?
   try {
     return months.map(month =>
-      reduce(costs[date.year()][month], (acc, value) => acc + value, 0));
+      reduce(costs[date.year()][month], (acc, value, categoryType) =>
+        ((categoryType < 100) ? acc + value : acc), 0));
   } catch (err) {
     console.log(err);
     return [];

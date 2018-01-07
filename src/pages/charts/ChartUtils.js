@@ -12,7 +12,8 @@ export function totalCostInSek(costs) {
 
 export function costPerCategory(costs) {
   return reduce(costs, (acc, val, i) => {
-    acc[i] = val;
+    // console.log(acc, val, i);
+    acc[i] = (i < 100) ? val : 0;
     return acc;
   }, []);
 }

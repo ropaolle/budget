@@ -6,7 +6,7 @@ import {
   DB_BUDGET_COLLECTION,
 } from '../firebase';
 
-import { oneTime/* , multipleTime, test */ } from './data';
+import { year2018 /* , year2017, test */ } from './data';
 
 
 function importExpensesBatch(docs) {
@@ -28,10 +28,8 @@ function importExpensesBatch(docs) {
 }
 
 export function importExpenses() {
-  // return importExpensesBatch(multipleTime);
-  return importExpensesBatch(oneTime);
+  return importExpensesBatch(year2018);
 }
-
 
 const categories = {
   0: 'Övrigt',

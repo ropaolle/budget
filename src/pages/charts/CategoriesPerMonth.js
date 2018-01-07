@@ -1,4 +1,5 @@
 import Chart from 'chart.js';
+import filter from 'lodash.filter';
 import { red, blue/* , yellow, green , purple, orange, blueGrey */ } from 'material-ui/colors';
 import { costPerCategory, totalCostInSek as costPerMonth } from './ChartUtils';
 
@@ -16,7 +17,8 @@ function drawChart(ctx, budget, currentDate) {
   const { categories, costPerMonthPerCategori: costs } = budget;
 
   // Labels
-  const labels = Object.values(categories);
+  // const labels = Object.values(categories);
+  const labels = filter(categories, (value, index) => index < 100);
 
   // Cost per category
   const prevDate = currentDate.clone().subtract(1, 'months');
