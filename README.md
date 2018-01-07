@@ -4,10 +4,23 @@
 
 # Later
 
-* [ ] Cron: Update statistics
+-[ ] Cron: Update statistics
 * [ ] Cron: DB backup
-* [ ] Import montly/yearly expenses
-* [ ] Import from .xls
+- [ ] Import montly/yearly expenses
+*[ ] Import from .xls
+
+
+# VS Code Extenions
+* ESLint
+* EditorConfig for Visual Studio Code
+* Debugger for Chrome
+* Prettier formatter for Visual Studio Code
+* Auto Close Tag
+* Code Runner
+
+## Test later
+* Rest Client
+
 
 # MD
 

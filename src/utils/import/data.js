@@ -1,3 +1,14 @@
+export const test = [
+  { date: '2017-12-27', cost: '112', description: 'Unionen A-kassa', service: 'Unionen A-kassa', type: 'monthly', comment: '', category: 13, recurrent: '' },
+  { date: '2017-12-27', cost: '2700', description: 'Hyra', service: 'Fridshyddevägen', type: 'monthly', comment: 'Fridshyddevägen', category: 14, recurrent: '' },
+  { date: '2017-12-09', cost: '61', description: 'Privata repositories', service: 'GitHub.com', type: 'monthly', comment: 'GitHUb', category: 7, recurrent: '' },
+  { date: '2018-01-27', cost: '145', description: 'Mobiltelefon', service: 'Comviq', type: 'monthly', comment: 'Comviq', category: 7, recurrent: '' },
+  { date: '2018-01-09', cost: '15', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 7, recurrent: '' },
+  { date: '2017-12-09', cost: '2500', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 100, recurrent: '' },
+  { date: '2017-12-09', cost: '500', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 101, recurrent: '' },
+  { date: '2018-01-09', cost: '600', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 100, recurrent: '' },
+  { date: '2018-01-09', cost: '500', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 101, recurrent: '' },
+];
 
 export const oneTime = [
   { date: '2017-01-02', cost: '1290', description: 'Fitbit', service: 'Siba', type: 'oneTime', comment: '', category: 8, recurrent: '' },
@@ -571,5 +582,3 @@ export const multipleTime = [
   { date: '2018-11-09', cost: '15', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 7, recurrent: '' },
   { date: '2018-12-09', cost: '15', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: 'Backblaze', category: 7, recurrent: '' },
 ];
-
-export const dummy = 1;
