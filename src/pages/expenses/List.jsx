@@ -12,6 +12,7 @@ import InfoIcon from 'material-ui-icons/Info';
 import ScheduleIcon from 'material-ui-icons/Schedule';
 import UpdateIcon from 'material-ui-icons/Update';
 import Chip from 'material-ui/Chip';
+import { toSEK } from '../../utils';
 
 const styles = theme => ({
   root: {
@@ -50,13 +51,7 @@ class BudgetList extends Component {
 
     const secondary = (item) => {
       const { cost, service, date } = item;
-      const kronor = cost.toLocaleString('sv-SE', {
-        style: 'currency',
-        currency: 'SEK',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      });
-      return `${date} - ${kronor} (${service})`;
+      return `${date} - ${toSEK(cost)} (${service})`;
     };
 
 

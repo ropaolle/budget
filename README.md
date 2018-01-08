@@ -1,12 +1,10 @@
 # Todo
-
-
-
+* [ ] Cost format -> 20.00 kr
+* [ ] Planned expenses: Auto insert. Ignore coming... 
+ 
 # Later
-
 * [ ] Cron: Update statistics
 * [ ] Cron: DB backup
-* [ ] Import montly/yearly expenses
 * [ ] Import from .xls
 
 # VS Code Extenions
@@ -19,7 +17,6 @@
 
 ## Test later
 * Rest Client
-
 
 # MD
 

@@ -17,6 +17,7 @@ export {
 
 export {
   runCron,
+  toSEK,
 } from './utils';
 
 export {

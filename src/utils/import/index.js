@@ -6,7 +6,7 @@ import {
   DB_BUDGET_COLLECTION,
 } from '../firebase';
 
-import { year2018 /* , year2017, test */ } from './data';
+import { year2017 } from './data';
 
 
 function importExpensesBatch(docs) {
@@ -28,7 +28,7 @@ function importExpensesBatch(docs) {
 }
 
 export function importExpenses() {
-  return importExpensesBatch(year2018);
+  return importExpensesBatch(year2017);
 }
 
 const categories = {
@@ -55,6 +55,7 @@ const categories = {
 };
 
 const types = {
+  bimonthly: 'Bimonthly',
   quartely: 'Quartely',
   oneTime: 'One time',
   yearly: 'Yearly',

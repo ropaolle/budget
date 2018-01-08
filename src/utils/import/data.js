@@ -482,11 +482,6 @@ export const year2017 = [
   { date: '2017-12-27', cost: '2700', description: 'Hyra', service: 'Fridshyddevägen', type: 'monthly', comment: '', category: 14, recurrent: '' },
   { date: '2017-12-29', cost: '524,5', description: 'Glögg + Pistonhead', service: 'Systembolaget', type: 'oneTime', comment: '', category: 3, recurrent: '' },
   { date: '2017-12-30', cost: '110', description: 'Bio', service: 'Vaxholms Bio', type: 'oneTime', comment: '', category: 0, recurrent: '' },
-];
-
-export const year2018 = [
-
-
   { date: '2018-01-01', cost: '12', description: 'Nordea Vardagspaket', service: 'Nordea', type: 'monthly', comment: '', category: 7, recurrent: '' },
   { date: '2018-01-01', cost: '2263', description: 'Hemförsäkring', service: 'Länsförsäkringar', type: 'yearly', comment: '', category: 13, recurrent: '' },
   { date: '2018-01-02', cost: '11,5', description: 'Heatsink tejp', service: 'Ebay UK', type: 'oneTime', comment: '', category: 8, recurrent: '' },
@@ -501,6 +496,9 @@ export const year2018 = [
   { date: '2018-01-05', cost: '289', description: 'Logitech C270 HD', service: 'Netonnet', type: 'oneTime', comment: '', category: 8, recurrent: '' },
   { date: '2018-01-05', cost: '549', description: 'Logitech HD Pro Webcam C920', service: 'Netonnet', type: 'oneTime', comment: '', category: 8, recurrent: '' },
   { date: '2018-01-05', cost: '73', description: 'Mat', service: 'Thaibutiken Sollentuna C', type: 'oneTime', comment: '', category: 4, recurrent: '' },
+];
+
+export const year2018 = [
   { date: '2018-01-09', cost: '15', description: 'Backblaze B2', service: 'Backblaze', type: 'monthly', comment: '', category: 7, recurrent: '' },
   { date: '2018-01-09', cost: '61', description: 'Privata repositories', service: 'GitHub.com', type: 'monthly', comment: '', category: 7, recurrent: '' },
   { date: '2018-01-27', cost: '112', description: 'Unionen A-kassa', service: 'Unionen A-kassa', type: 'monthly', comment: '', category: 13, recurrent: '' },

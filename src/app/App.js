@@ -37,6 +37,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <PrivateRoute path="/charts" component={Charts} />
+                <PrivateRoute path="/expenses/table" component={Expenses} />
                 <PrivateRoute path="/expenses" component={Expenses} />
                 <PrivateRoute path="/settings" component={Settings} />
                 <Route component={Page404} />

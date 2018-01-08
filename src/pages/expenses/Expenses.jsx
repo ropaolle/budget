@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -71,16 +71,15 @@ class Budget extends Component {
       fetchExpenses(20);
     }
 
-    this.removeListener = this.expenseListner();
+    // this.removeListener = this.expenseListner();
   }
 
-  componentWillUnmount() {
-    if (this.removeListener) this.removeListener();
-  }
+  // componentWillUnmount() {
+  //   if (this.removeListener) this.removeListener();
+  // }
 
-  expenseListner() {
+  /*   expenseListner() {
     // Realtime updates
-    // const from = new Date();
     const from = moment().toDate();
     const to = moment()
       .add(1, 'days')
@@ -103,7 +102,7 @@ class Budget extends Component {
           }
         });
       });
-  }
+  } */
 
   handleClickAdd = () => {
     this.setState({ dialogOpen: true, expense: defaultExpense });
@@ -171,6 +170,7 @@ class Budget extends Component {
       isFetching,
       isLoaded,
     } = this.props;
+    console.log(this.props);
     const { dialogOpen, expense } = this.state;
     return (
       <div>
@@ -218,8 +218,8 @@ class Budget extends Component {
 
 Budget.propTypes = {
   classes: PropTypes.object.isRequired,
-  deleteExpense: PropTypes.func.isRequired,
-  updateExpenses: PropTypes.func.isRequired,
+  // deleteExpense: PropTypes.func.isRequired,
+  // updateExpenses: PropTypes.func.isRequired,
   fetchExpenses: PropTypes.func.isRequired,
   fetchBudget: PropTypes.func.isRequired,
   expenses: PropTypes.object,

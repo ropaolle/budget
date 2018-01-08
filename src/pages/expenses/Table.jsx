@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { toSEK } from '../../utils';
 
 const styles = theme => ({
   root: {
@@ -32,7 +33,7 @@ class BudgetTable extends Component { // eslint-disable-line react/prefer-statel
           <TableCell >{item.date}</TableCell>
           <TableCell>{item.service}</TableCell>
           <TableCell>{item.description}</TableCell>
-          <TableCell>{item.cost}</TableCell>
+          <TableCell>{toSEK(item.cost)}</TableCell>
           <TableCell>{categoryText(item.category)}</TableCell>
           <TableCell>{item.type}</TableCell>
         </TableRow>
