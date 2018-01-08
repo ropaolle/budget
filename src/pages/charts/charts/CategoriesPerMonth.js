@@ -1,24 +1,13 @@
 import Chart from 'chart.js';
 import filter from 'lodash.filter';
 import { blue } from 'material-ui/colors';
-import reduce from 'lodash.reduce';
-import { summarizeCostsInSEK as totalCost } from '../../../utils';
+import { costPerCategory, summarizeCostsInSEK as totalCost } from '../../../utils';
 
-function costPerCategory(costs) {
-  return reduce(costs, (acc, val, i) => {
-    acc[i] = (i < 100) ? val : 0;
-    return acc;
-  }, []);
-}
-
-function costPerCategoryPerMonth(date, cost) {
-  // TODO: Try-catch or should I check if costs[year][month] exists?
-  try {
-    return costPerCategory(cost[date.year()][date.month()]);
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
+export function costPerCategoryPerMonth(date, costs) {
+  const year = date.year();
+  const month = date.month();
+  if (costs[year]) return costPerCategory(costs[year][month]);
+  return [];
 }
 
 let chart = null;

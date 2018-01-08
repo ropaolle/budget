@@ -1,30 +1,13 @@
 import Chart from 'chart.js';
-import reduce from 'lodash.reduce';
 import { red, green, blue } from 'material-ui/colors';
-import { summarizeCostsInSEK as totalCost } from '../../../utils';
+import { summarizeCost, summarizeCostsInSEK as totalCost } from '../../../utils';
 
-const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-function costPerMonthPerYear(date, categories) {
-  if (!categories || !categories[date.year()]) return [];
-  return months.map(month =>
-    reduce(
-      categories[date.year()][month],
-      (acc, value, categoryType) => (categoryType < 100 ? acc + value : acc),
-      0,
-    ),
-  );
+function costPerMonthPerYear(costs, year) {
+  return summarizeCost(costs, year, (type => type < 100));
 }
 
-function incomePerMonthPerYear(date, categories) {
-  if (!categories || !categories[date.year()]) return [];
-  return months.map(month =>
-    reduce(
-      categories[date.year()][month],
-      (acc, value, categoryType) => (categoryType >= 100 ? acc + value : acc),
-      0,
-    ),
-  );
+function incomePerMonthPerYear(costs, year) {
+  return summarizeCost(costs, year, (type => type >= 100));
 }
 
 let chart = null;
@@ -49,8 +32,8 @@ export default function updateChart(ctx, budget, currentDate) {
   ];
 
   // Cost/income per category
-  const costs = costPerMonthPerYear(currentDate, costPerMonthPerCategori);
-  const incomes = incomePerMonthPerYear(currentDate, costPerMonthPerCategori);
+  const costs = costPerMonthPerYear(costPerMonthPerCategori, currentDate.year());
+  const incomes = incomePerMonthPerYear(costPerMonthPerCategori, currentDate.year());
   const results = incomes.map((income, index) => income - costs[index]);
 
   chart = new Chart(ctx, {

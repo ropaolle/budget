@@ -1,15 +1,7 @@
 import Chart from 'chart.js';
 import filter from 'lodash.filter';
 import { blue } from 'material-ui/colors';
-import reduce from 'lodash.reduce';
-import { summarizeCostsInSEK as totalCost } from '../../../utils';
-
-function costPerCategory(costs) {
-  return reduce(costs, (acc, val, i) => {
-    acc[i] = (i < 100) ? val : 0;
-    return acc;
-  }, []);
-}
+import { costPerCategory, summarizeCostsInSEK as totalCost } from '../../../utils';
 
 function costPerCategoryPerYear(date, costs) {
   const year = date.year();

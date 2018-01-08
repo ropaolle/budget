@@ -19,6 +19,8 @@ export {
   runCron,
   toSEK,
   summarizeCostsInSEK,
+  costPerCategory,
+  summarizeCost,
 } from './utils';
 
 export {

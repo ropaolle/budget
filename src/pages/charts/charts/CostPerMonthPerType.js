@@ -1,40 +1,13 @@
 import Chart from 'chart.js';
-import reduce from 'lodash.reduce';
 import { red, blue } from 'material-ui/colors';
-import { summarizeCostsInSEK as totalCost } from '../../../utils';
+import { summarizeCost, summarizeCostsInSEK as totalCost } from '../../../utils';
 
-function variableCostPerMonth(date, costs) {
-  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  // TODO: Try-catch or should I check if costs[year][month] exists?
-  try {
-    return months.map(month =>
-      reduce(
-        costs[date.year()][month],
-        (acc, value, type) => (type === 'oneTime' ? acc + value : acc),
-        0,
-      ),
-    );
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
+function variableCostPerMonth(costs, year) {
+  return summarizeCost(costs, year, (type => type === 'oneTime'));
 }
 
-function fixedCostPerMonth(date, costs) {
-  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  // TODO: Try-catch or should I check if costs[year][month] exists?
-  try {
-    return months.map(month =>
-      reduce(
-        costs[date.year()][month],
-        (acc, value, type) => (type !== 'oneTime' ? acc + value : acc),
-        0,
-      ),
-    );
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
+function fixedCostPerMonth(costs, year) {
+  return summarizeCost(costs, year, (type => type !== 'oneTime'));
 }
 
 let chart = null;
@@ -60,8 +33,8 @@ export default function updateChart(ctx, budget, currentDate) {
   ];
 
   // Cost per category
-  const variableCosts = variableCostPerMonth(currentDate, costs);
-  const fixedCosts = fixedCostPerMonth(currentDate, costs);
+  const variableCosts = variableCostPerMonth(costs, currentDate.year());
+  const fixedCosts = fixedCostPerMonth(costs, currentDate.year());
 
   chart = new Chart(ctx, {
     type: 'bar',
