@@ -1,9 +1,9 @@
 import Chart from 'chart.js';
 import reduce from 'lodash.reduce';
 import { red, blue } from 'material-ui/colors';
-import { totalCostInSek as costPerYear } from '../ChartUtils';
+import { summarizeCostsInSEK as totalCost } from '../../../utils';
 
-export function variableCostPerMonth(date, costs) {
+function variableCostPerMonth(date, costs) {
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   // TODO: Try-catch or should I check if costs[year][month] exists?
   try {
@@ -20,7 +20,7 @@ export function variableCostPerMonth(date, costs) {
   }
 }
 
-export function fixedCostPerMonth(date, costs) {
+function fixedCostPerMonth(date, costs) {
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   // TODO: Try-catch or should I check if costs[year][month] exists?
   try {
@@ -37,7 +37,11 @@ export function fixedCostPerMonth(date, costs) {
   }
 }
 
-function drawChart(ctx, budget, currentDate) {
+let chart = null;
+
+export default function updateChart(ctx, budget, currentDate) {
+  if (chart) chart.destroy();
+
   const { costPerMonthPerType: costs } = budget;
 
   const labels = [
@@ -54,26 +58,25 @@ function drawChart(ctx, budget, currentDate) {
     'Nov',
     'Dec',
   ];
-  // const prevDate = currentDate.clone().subtract(1, 'years');
 
   // Cost per category
   const variableCosts = variableCostPerMonth(currentDate, costs);
   const fixedCosts = fixedCostPerMonth(currentDate, costs);
 
-  return new Chart(ctx, {
+  chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
       datasets: [
         {
-          label: `Fixed (${costPerYear(fixedCosts)})`,
+          label: 'Fixed',
           data: fixedCosts,
           backgroundColor: red[400],
           borderColor: red[800],
           borderWidth: 1,
         },
         {
-          label: `Variable (${costPerYear(variableCosts)})`,
+          label: 'Variable',
           data: variableCosts,
           backgroundColor: blue[400],
           borderColor: blue[800],
@@ -102,10 +105,14 @@ function drawChart(ctx, budget, currentDate) {
       },
     },
   });
-}
 
-export default {
-  drawChart,
-  chartLabel: 'Cost per month',
-  baseDate: 'years',
-};
+  chart.budget = {
+    heading: `Cost ${currentDate.year()}`,
+    params: [
+      { text: 'Fixed', data: totalCost(fixedCosts) },
+      { text: 'Variable', data: totalCost(variableCosts) },
+    ],
+  };
+
+  return chart;
+}

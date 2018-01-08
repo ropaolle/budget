@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 import reduce from 'lodash.reduce';
 import { red, green, blue } from 'material-ui/colors';
-import { totalCostInSek as costPerYear } from '../ChartUtils';
+import { summarizeCostsInSEK as totalCost } from '../../../utils';
 
 const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
@@ -27,7 +27,11 @@ function incomePerMonthPerYear(date, categories) {
   );
 }
 
-function drawChart(ctx, budget, currentDate) {
+let chart = null;
+
+export default function updateChart(ctx, budget, currentDate) {
+  if (chart) chart.destroy();
+
   const { costPerMonthPerCategori } = budget;
   const labels = [
     'Jan',
@@ -49,20 +53,20 @@ function drawChart(ctx, budget, currentDate) {
   const incomes = incomePerMonthPerYear(currentDate, costPerMonthPerCategori);
   const results = incomes.map((income, index) => income - costs[index]);
 
-  return new Chart(ctx, {
+  chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
       datasets: [
         {
-          label: `Result (${costPerYear(results)})`,
+          label: 'Result',
           data: results,
           backgroundColor: blue[400],
           borderColor: blue[800],
           borderWidth: 1,
         },
         {
-          label: `Expenses (${costPerYear(costs)})`,
+          label: 'Expenses',
           data: costs,
           borderColor: red[800],
           borderWidth: 1,
@@ -70,7 +74,7 @@ function drawChart(ctx, budget, currentDate) {
           backgroundColor: 'rgba(200, 0, 0, 0.3)',
         },
         {
-          label: `Incomes (${costPerYear(incomes)})`,
+          label: 'Incomes',
           data: incomes,
           borderColor: green[800],
           borderWidth: 1,
@@ -91,15 +95,16 @@ function drawChart(ctx, budget, currentDate) {
     },
   });
 
-  // return {
-  //   chart,
-  //   label: 'Expens/income per month',
-  //   subLabel: 'sub label',
-  // };
+
+  chart.budget = {
+    heading: `Result ${currentDate.year()}`,
+    params: [
+      { text: 'Costs', data: totalCost(costs) },
+      { text: 'Incomes', data: totalCost(incomes) },
+      { text: 'Results', data: totalCost(results) },
+    ],
+  };
+
+  return chart;
 }
 
-export default {
-  drawChart,
-  chartLabel: 'Expens/income per month',
-  baseDate: 'years',
-};

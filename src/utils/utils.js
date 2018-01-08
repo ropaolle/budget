@@ -15,6 +15,11 @@ export function toSEK(cost, showOre = false) {
   });
 }
 
+export function summarizeCostsInSEK(costs, showOre = false) {
+  const cost = costs.reduce((sum, val) => sum + (val || 0), 0);
+  return toSEK(cost, showOre);
+}
+
 /* function getCount(perMonth = false) {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .orderBy('date', 'asc')

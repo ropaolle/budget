@@ -28,13 +28,12 @@ class Charts extends Component {
     super(props);
     this.state = {
       date: moment(),
-      type: null,
+      type: 'yearly',
       dateBase: 'years',
     };
   }
 
   componentDidMount() {
-    // console.log('componentDidMount');
     const { budget, fetchBudget } = this.props;
     if (!budget.isLoaded) { fetchBudget(); }
   }

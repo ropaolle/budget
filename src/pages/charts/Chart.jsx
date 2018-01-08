@@ -1,4 +1,3 @@
-// import moment from 'moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -8,50 +7,41 @@ import categoriesPerMonth from './charts/CategoriesPerMonth';
 import costIncomePerMonth from './charts/CostIncomePerMonth';
 import costPerMonthPerType from './charts/CostPerMonthPerType';
 
-
 const styles = theme => ({
   root: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit * 0,
   },
-  // content: {
-  //   margin: theme.spacing.unit,
-  // },
+  subheading: {
+    marginLeft: 10,
+    marginRight: 10,
+    fontWeight: 100,
+  },
 });
 
 class Chart extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { currentDate: moment() };
-  // }
+  constructor(props) {
+    super(props);
+    this.currentChart = null;
+    this.state = { type: props.type, label: '' };
+  }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    this.updateCanvas();
+    this.updateCanvas(this.props);
   }
 
-  componentWillReceiveProps(/* nextProps */) {
-    console.log('componentWillReceiveProps');
-  }
-
-  // componentWillUpdate() {
-  //   console.log('componentWillUpdate');
-  // }
-
-  componentDidUpdate(prevProps/* , prevState */) {
-    console.log('componentDidUpdate', prevProps.type, this.props.type);
-    if (prevProps.type !== this.props.type || prevProps.date !== this.props.date) {
-      if (this.currentChart) this.currentChart.destroy();
-      this.updateCanvas();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.type !== this.props.type || nextProps.date !== this.props.date) {
+      this.updateCanvas(nextProps);
     }
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
     if (this.currentChart) this.currentChart.destroy();
   }
 
-  updateCanvas = () => {
-    const { date, budget, type } = this.props;
+  updateCanvas = (props) => {
+    const { date, budget, type } = props;
+
     let chart;
     switch (type) {
       case 'yearly':
@@ -63,27 +53,37 @@ class Chart extends Component {
       case 'result':
         chart = costIncomePerMonth;
         break;
-      case 'costs':
+      case 'cost':
         chart = costPerMonthPerType;
         break;
       default:
         chart = categoriesPerYear;
     }
 
-    if (chart.drawChart) {
-      console.log('UPDATE CHART', type);
+    if (chart) {
+      if (this.currentChart) this.currentChart.destroy();
       const ctx = this.canvas.getContext('2d');
-      this.currentChart = chart.drawChart(ctx, budget, date);
+      this.currentChart = chart(ctx, budget, date);
+      this.setState({ type, ...this.currentChart.budget });
     }
   };
 
   render() {
-    const { classes, type, label, date, budget } = this.props;
-    console.log('B', budget);
+    const { classes } = this.props;
+    const { heading, params } = this.state;
+
+    const subheading = (Array.isArray(params)) ? params.map((param, i) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <span key={i}>
+        {param.text}:
+        <span className={classes.subheading}>{param.data}</span>
+      </span>))
+      : '';
 
     return (
       <div className={classes.root}>
-        <Typography type="display1" gutterBottom>{type} {label} ({date.year()}) </Typography>
+        <Typography type="display1" gutterBottom>{heading}</Typography>
+        <Typography type="title" gutterBottom>{subheading}</Typography>
         <div>
           <canvas
             className={classes.root}
@@ -100,13 +100,8 @@ class Chart extends Component {
 Chart.propTypes = {
   classes: PropTypes.object.isRequired,
   date: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   budget: PropTypes.object.isRequired,
-};
-
-Chart.defaultProps = {
-  label: 'dummy',
+  type: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(Chart);
