@@ -6,17 +6,14 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import * as actionCreators from '../../actions/budget';
-import categoriesPerYear from './CategoriesPerYear';
-import categoriesPerMonth from './CategoriesPerMonth';
-import costIncomePerMonth from './CostIncomePerMonth';
-import costPerMonthPerType from './CostPerMonthPerType';
+import Chart from './Chart';
 
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
   },
-  content: {
-    margin: theme.spacing.unit,
+  link: {
+    marginRight: theme.spacing.unit * 2,
   },
   loadButtonWrapper: {
     display: 'flex',
@@ -30,123 +27,52 @@ class Charts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: moment(),
-      ...costIncomePerMonth,
+      date: moment(),
+      type: null,
+      dateBase: 'years',
     };
-    this.currentChart = null;
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    const { isLoaded, fetchBudget } = this.props;
-    if (!isLoaded) {
-      fetchBudget();
-    } else {
-      this.updateCanvas();
-    }
+    // console.log('componentDidMount');
+    const { budget, fetchBudget } = this.props;
+    if (!budget.isLoaded) { fetchBudget(); }
   }
-
-  componentWillReceiveProps(/* nextProps */) {
-    console.log('componentWillReceiveProps');
-    // this.updateCanvas();
-  }
-
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-    // this.updateCanvas();
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-    this.updateCanvas();
-  }
-
-  updateCanvas = () => {
-    const { isLoaded, ...budget } = this.props.budget;
-    const { drawChart, currentDate } = this.state;
-    if (isLoaded && drawChart) {
-      console.log('UPDATE CHART');
-      const ctx = this.canvas.getContext('2d');
-      if (this.currentChart) this.currentChart.destroy();
-      this.currentChart = drawChart(ctx, budget, currentDate);
-    }
-  };
 
   handleIncDecClick(type) {
     this.setState((prevState) => {
-      const { baseDate, currentDate } = prevState;
+      const { dateBase, date } = prevState;
       return {
-        currentDate:
+        date:
           type === '-'
-            ? currentDate.clone().subtract(1, baseDate)
-            : currentDate.clone().add(1, baseDate),
+            ? date.clone().subtract(1, dateBase)
+            : date.clone().add(1, dateBase),
       };
     });
   }
 
-  handleButtonClick = (type) => {
-    let chart;
-    switch (type) {
-      case 'yearly':
-        chart = categoriesPerYear;
-        break;
-      case 'monthly':
-        chart = categoriesPerMonth;
-        break;
-      case 'costIncomePerMonth':
-        chart = costIncomePerMonth;
-        break;
-      case 'costPerMonthPerType':
-        chart = costPerMonthPerType;
-        break;
-      default:
-        chart = categoriesPerYear;
-    }
-    this.setState({ ...chart });
+  handleButtonClick = (type, dateBase) => {
+    this.setState({ type, dateBase });
   };
 
   render() {
-    const { classes } = this.props;
-    const { chartLabel, currentDate } = this.state;
-
+    const { classes, budget } = this.props;
+    const { date, type } = this.state;
     return (
       <div className={classes.root}>
-        <div className={classes.content}>
-          <Typography type="display1" gutterBottom>
-            {chartLabel} ({currentDate.year()})
-          </Typography>
-          <div className={classes.loadButtonWrapper}>
+        <div className={classes.loadButtonWrapper}>
+          <Typography type="button" gutterBottom>
             <Button onClick={() => this.handleIncDecClick('-')}>-</Button>
-            <Button onClick={() => this.handleButtonClick('yearly')}>
-              Yearly
-            </Button>
-            <Button onClick={() => this.handleButtonClick('monthly')}>
-              Monthly
-            </Button>
-            <Button
-              onClick={() => this.handleButtonClick('costIncomePerMonth')}
-            >
-              Result
-            </Button>
-            <Button
-              onClick={() => this.handleButtonClick('costPerMonthPerType')}
-            >
-              Costs
-            </Button>
+            <Button onClick={() => this.handleButtonClick('yearly', 'years')}>Year</Button>
+            <Button onClick={() => this.handleButtonClick('monthly', 'months')}>Month</Button>
+            <Button onClick={() => this.handleButtonClick('result', 'years')}>Result</Button>
+            <Button onClick={() => this.handleButtonClick('cost', 'years')}>Cost</Button>
             <Button onClick={() => this.handleIncDecClick('+')}>+</Button>
-          </div>
-
-          <div>
-            <canvas
-              className={classes.root}
-              ref={(c) => {
-                this.canvas = c;
-              }}
-              width={400}
-              height={400}
-            />
-          </div>
+          </Typography>
         </div>
+        {budget && budget.isLoaded &&
+          <Chart type={type} date={date} budget={budget} />
+        }
       </div>
     );
   }
@@ -156,11 +82,6 @@ Charts.propTypes = {
   classes: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired,
   fetchBudget: PropTypes.func.isRequired,
-  isLoaded: PropTypes.bool,
-};
-
-Charts.defaultProps = {
-  isLoaded: false,
 };
 
 const mapStateToProps = (state) => {
