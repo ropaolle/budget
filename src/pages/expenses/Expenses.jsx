@@ -12,7 +12,8 @@ import * as actionCreatorsExpenses from '../../actions/expenses';
 import * as actionCreatorsBudget from '../../actions/budget';
 import { database, DB_EXSPENSES_COLLECTION } from '../../utils';
 import EditDialog from './EditDialog';
-import BudgetList from './BudgetList';
+// import BudgetList from './List';
+import BudgetTable from './Table';
 
 // TODO: Simplify this
 const actionCreators = Object.assign(
@@ -197,13 +198,11 @@ class Budget extends Component {
             handleRequestChange={this.handleRequestChange}
           />
         )}
-        {
-          <BudgetList
-            handleClickOpen={this.handleClickOpen}
-            expenses={expenses}
-            categories={categories}
-          />
-        }
+        <BudgetTable
+          handleClickOpen={this.handleClickOpen}
+          expenses={expenses}
+          categories={categories}
+        />
         <div className={classes.loadButtonWrapper}>
           <Button onClick={this.handleLoadMore} disabled={!isLoaded}>
             {isLoaded ? 'Load more...' : 'Loading...'}

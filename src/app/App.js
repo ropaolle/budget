@@ -10,7 +10,7 @@ import Page404 from './Page404';
 import PrivateRoute from './PrivateRoute';
 import Home from '../pages/home/Home';
 import Charts from '../pages/charts/Charts';
-import Budget from '../pages/budget/Budget';
+import Expenses from '../pages/expenses/Expenses';
 import Settings from '../pages/settings/Settings';
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <PrivateRoute path="/charts" component={Charts} />
-                <PrivateRoute path="/expenses" component={Budget} />
+                <PrivateRoute path="/expenses" component={Expenses} />
                 <PrivateRoute path="/settings" component={Settings} />
                 <Route component={Page404} />
               </Switch>
