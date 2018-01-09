@@ -1,16 +1,20 @@
 # Todo
+
 * [ ] Cost format -> 20.00 kr
-* [ ] Planned expenses: Auto insert. Ignore coming... 
- 
+* [ ] Planned expenses: Auto insert. Ignore coming...
+
 # Later
+
 * [ ] Cron: Update statistics
 * [ ] Cron: DB backup
 * [ ] Import from .xls with (react-file-input)
 
 # Emmet
+
 div>span.test -> `<div><span className="test"></span></div>`
 
 # Diverse
+
 * Search: Ctrl+p, type >, typ # search
 * workspace, @ search file
 * Select: Alt+Shift+Mouse select column
@@ -20,24 +24,56 @@ div>span.test -> `<div><span className="test"></span></div>`
 * Factor out inner function: Markera delfunk och tryck på glödlampan
 
 # Telldus
-http://developer.telldus.com/blog/2016/05/24/local-api-for-tellstick-znet-lite-beta-now-in-public-beta
-http://api.telldus.net/localapi/api.html
-http://api.telldus.com/explore/index
-http://192.168.10.104/api
+
+[Telldus developer blog](http://developer.telldus.com/blog/2016/05/24/local-api-for-tellstick-znet-lite-beta-now-in-public-beta)
+
+## Kräver authentification
+
+* [Local api](http://api.telldus.net/localapi/api.html)
+* [Api explorer](http://api.telldus.com/explore/index)
+* [Telldus Znet Lite 2](http://192.168.10.104/api)
 
 ## Get token
-http://api.telldus.com/explore/devices/list
-``` bash
+
+```bash
+# Begär ett nytt temp-token
 curl -i -d app="ropaolle-sovrum" -X PUT http://192.168.10.104/api/token
-# http://192.168.10.104/api/authorize?token=a22a3d498a0d4304b09bf2f2dc7c61b4
-curl -i -X GET http://192.168.10.104/api/token?token=a22a3d498a0d4304b09bf2f2dc7c61b4
+
+# Gå till sidan som returneras, logga in och tillåt access.
+
+# Hämta api key (token)
+curl -i -X GET http://192.168.10.104/api/token?token={temp-token}
+
 {
   "allowRenew": true,
   "expires": 1517932317,
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImF1ZCI6InJvcGFvbGxlLXNvdnJ1bSIsImV4cCI6MTUxNzkzMjMxN30.eyJyZW5ldyI6dHJ1ZSwidHRsIjoyNDE5MjAwfQ.XYDHxcGUKIViOcAC48Ezbu3NMXrsIaCD2zqzpMB67AU"
+  "token": "{token}"
 }
+
+# Refresh token
+curl -i -X GET http://192.168.10.104/api/refreshToken -H "Authorization: Bearer {token}"
 ```
 
 ## Diverse
+
 https://github.com/telldus/tellstick-server/blob/master/api/src/api/ApiManager.py
 https://forum.telldus.com/viewtopic.php?f=1&t=6848
+
+$ curl -i -X GET http://0.0.0.0/api/devices/list?supportedMethods=3 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImF1ZCI6IkV4YW1wbGUgYXBwIiwiZXhwIjoxNDUyOTUxNTYyfQ.eyJyZW5ldyI6dHJ1ZSwidHRsIjo4NjQwMH0.HeqoFM6-K5IuQa08Zr9HM9V2TKGRI9VxXlgdsutP7sg"
+HTTP/1.1 200 OK
+Date: Tue, 19 Jan 2016 10:21:29 GMT
+Content-Type: Content-Type: application/json; charset=utf-8
+Server: CherryPy/3.7.0
+
+{
+"device": [
+{
+"id": 1,
+"methods": 3,
+"name": "Example device",
+"state": 2,
+"statevalue": "",
+"type": "device"
+}
+]
+}
