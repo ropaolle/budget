@@ -5,7 +5,51 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { CircularProgress } from 'material-ui/Progress';
-import { importExpenses, runCron, importTypesAndCategories } from '../../utils';
+import {
+  storageRef,
+  importExpenses,
+  runCron,
+  importTypesAndCategories,
+  database,
+  DB_EXSPENSES_COLLECTION,
+  DB_BUDGET_COLLECTION,
+  DB_USERS,
+} from '../../utils';
+
+
+function getCollection(collection) {
+  return database.collection(collection)
+    // .limit(2)
+    .get()
+    .then((snapshot) => {
+      console.log(collection, snapshot.size);
+      const docs = [];
+      snapshot.forEach((doc) => { docs.push(doc.data()); });
+      return docs;
+    });
+}
+
+function backupDb() {
+  const filename = `${Date().toLocaleString('sv-SE')}.txt`;
+  const fileRef = storageRef.child(filename);
+
+  // Begin a transaction
+  return database.runTransaction(() => {
+    const expenses = getCollection(DB_EXSPENSES_COLLECTION);
+    const users = getCollection(DB_USERS);
+    const budget = getCollection(DB_BUDGET_COLLECTION);
+    return Promise.all([expenses, users, budget]);
+  }).then((result) => {
+    console.log('Transaction success.', result.length);
+    const file = new File([JSON.stringify(result)], '');
+    return fileRef.put(file).then((filedata) => {
+      console.log(`DB saved to ${filename}. Size:`, filedata.totalBytes);
+      return 'done';
+    });
+  }).catch((err) => {
+    console.error(`Transaction failure: ${err}`);
+  });
+}
 
 const styles = theme => ({
   container: {
@@ -43,6 +87,7 @@ class Settings extends Component {
       multiline: '',
       cronLoading: false,
       importLoading: false,
+      backupLoading: false,
     };
   }
 
@@ -50,7 +95,7 @@ class Settings extends Component {
     this.setState({
       [name]: e.target.value,
     });
-  }
+  };
 
   handleSave = btn => () => {
     if (btn === 'cron') {
@@ -64,19 +109,20 @@ class Settings extends Component {
       importExpenses().then(() => {
         this.setState({ importLoading: false });
       });
+    } else if (btn === 'backup') {
+      this.setState({ backupLoading: true });
+      backupDb().then(() => {
+        this.setState({ backupLoading: false });
+      });
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
-    const { importLoading, cronLoading } = this.state;
+    const { importLoading, cronLoading, backupLoading } = this.state;
     return (
       <div className={classes.root}>
-        <Typography
-          type="display2"
-          gutterBottom
-          className={classes.header}
-        >
+        <Typography type="display2" gutterBottom className={classes.header}>
           Settings
         </Typography>
         <div className={classes.container}>
@@ -102,7 +148,9 @@ class Settings extends Component {
             >
               Import Json
             </Button>
-            {importLoading && <CircularProgress size={24} className={classes.spinner} />}
+            {importLoading && (
+              <CircularProgress size={24} className={classes.spinner} />
+            )}
           </div>
           <div className={classes.loadButtonWrapper}>
             <Button
@@ -114,7 +162,23 @@ class Settings extends Component {
             >
               Cron
             </Button>
-            {cronLoading && <CircularProgress size={24} className={classes.spinner} />}
+            {cronLoading && (
+              <CircularProgress size={24} className={classes.spinner} />
+            )}
+          </div>
+          <div className={classes.loadButtonWrapper}>
+            <Button
+              raised
+              color="primary"
+              onClick={this.handleSave('backup')}
+              disabled={backupLoading}
+              className={classes.button}
+            >
+              Backup
+            </Button>
+            {backupLoading && (
+              <CircularProgress size={24} className={classes.spinner} />
+            )}
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ firebase.initializeApp(config);
 
 export const database = firebase.firestore();
 export const firebaseAuth = firebase.auth;
+export const storageRef = firebase.storage().ref();
 
 // Database paths
 export const DB_USERS = 'users';

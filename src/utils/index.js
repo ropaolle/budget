@@ -1,6 +1,7 @@
 export {
   database,
   firebaseAuth,
+  storageRef,
   DB_USERS,
   DB_BUDGET_COLLECTION,
   DB_EXSPENSES_COLLECTION,
