@@ -60,7 +60,7 @@ export function getAutocompleteText() {
     });
 }
 
-/* function costPerMonthPerType(query) {
+function costPerMonthPerType(query) {
   return query.docs.reduce((counters, doc) => {
     const { category, type, date, cost } = doc.data();
 
@@ -77,7 +77,7 @@ export function getAutocompleteText() {
 
     return counters;
   }, {});
-} */
+}
 
 function costPerMonthPerCategori(query) {
   return query.docs.reduce((counters, doc) => {
@@ -131,7 +131,7 @@ export function runCron() {
   return Promise.all([
     getCost(costPerMonthPerCategori),
     getCost(costPerYearPerCategori),
-    // getCost(costPerMonthPerType),
+    getCost(costPerMonthPerType),
     getAutocompleteText(),
   ]).then(() => { console.timeEnd('runCron'); });
 }

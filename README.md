@@ -1,9 +1,5 @@
 # Todo
 
-* [x] Better icons
-* [x] Cron: Update statistics
-* [x] Cron: DB backup
-* [ ] Cron: Auto generate planned expenses
 * [ ] Trigger cron remotly. Add cron script to Plexburken? https://budget-ec3f9.firebaseapp.com/cron
 
 # Later

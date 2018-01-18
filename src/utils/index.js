@@ -22,6 +22,7 @@ export {
   summarizeCostsInSEK,
   costPerCategory,
   summarizeCost,
+  addRecurrent,
 } from './utils';
 
 export {

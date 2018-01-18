@@ -51,6 +51,7 @@ export const fetchExpenses = limit => (dispatch, getState) => {
   // in Firestore.
   const now = new Date(); // moment().toDate();
   let query = database.collection(DB_EXSPENSES_COLLECTION)
+    // .where('recurrent', '==', null)
     .orderBy('date', 'desc')
     .orderBy('id')
     .startAt(now);

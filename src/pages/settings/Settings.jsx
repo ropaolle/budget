@@ -10,6 +10,7 @@ import {
   importTestExpenses,
   backupDbToFirestore,
   restoreDbToFirestore,
+  addRecurrent,
 } from '../../utils';
 
 const styles = theme => ({
@@ -64,6 +65,7 @@ class Settings extends Component {
     if (btn === 'cron') {
       runCron().then(() => { showSpinner(false); });
     } else if (btn === 'import') {
+      addRecurrent();
       Promise.all([
         importTypesAndCategories(),
         importTestExpenses('dummyExpenses'),
