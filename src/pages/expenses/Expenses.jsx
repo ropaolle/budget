@@ -68,7 +68,7 @@ class Budget extends Component {
     const { isLoaded, fetchExpenses, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
-      fetchExpenses(2);
+      fetchExpenses(5);
     }
   }
 

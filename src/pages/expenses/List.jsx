@@ -54,24 +54,29 @@ class BudgetList extends Component {
       return `${date} - ${toSEK(cost)} (${service})`;
     };
 
-
-    const expenseItems = Object.keys(expenses).map((id) => {
-      const item = expenses[id];
-      return (
-        <ListItem button key={id} onClick={handleClickOpen(id)}>
-          <ListItemIcon>
-            {listIcon(item.type)}
-          </ListItemIcon>
-          <ListItemText
-            primary={primary(item)}
-            secondary={secondary(item)}
-          />
-          {(item.category === '0') && <ListItemSecondaryAction>
-            <Chip label={categoryText(item.category)} className={classes.chip} />
-          </ListItemSecondaryAction>}
-        </ListItem>
-      );
-    });
+    function compare(a, b) {
+      if (a.date > b.date) {
+        return -1;
+      }
+      if (a.date < b.date) {
+        return 1;
+      }
+      return 0;
+    }
+    const expenseItems = Object.values(expenses).sort(compare).map(item => (
+      <ListItem button key={item.id} onClick={handleClickOpen(item.id)}>
+        <ListItemIcon>
+          {listIcon(item.type)}
+        </ListItemIcon>
+        <ListItemText
+          primary={primary(item)}
+          secondary={secondary(item)}
+        />
+        {(item.category === '0') && <ListItemSecondaryAction>
+          <Chip label={categoryText(item.category)} className={classes.chip} />
+        </ListItemSecondaryAction>}
+      </ListItem>),
+    );
 
     return (
       <div className={classes.root}>
