@@ -24,7 +24,7 @@ const Footer = (props) => {
     <footer>
       <PollIcon className={classes.icon} />
       <Typography type="body1" className={classes.text}>
-        RopaOlle 2017 (<a href="https://github.com/ropaolle/game-of-life">
+        RopaOlle 2018 (<a href="https://github.com/ropaolle/game-of-life">
           Github.com
         </a>)
       </Typography>
