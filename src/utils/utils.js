@@ -127,11 +127,22 @@ function getCost(costFunc) {
 }
 
 export function runCron() {
-  console.time('cron');
+  console.time('runCron');
   return Promise.all([
     getCost(costPerMonthPerCategori),
     getCost(costPerYearPerCategori),
     // getCost(costPerMonthPerType),
     getAutocompleteText(),
-  ]).then(() => { console.timeEnd('cron'); });
+  ]).then(() => { console.timeEnd('runCron'); });
+}
+
+export function addRecurrent() {
+  const now = new Date();
+  return database.collection(DB_EXSPENSES_COLLECTION)
+    .orderBy('recurrent')
+    .startAt(now)
+    .get()
+    .then((query) => {
+      console.log('addRecurrent: ', query.docs.map(snap => snap.data()));
+    });
 }

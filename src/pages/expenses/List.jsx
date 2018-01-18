@@ -7,10 +7,13 @@ import List, {
   ListItemText,
   ListItemSecondaryAction,
 } from 'material-ui/List';
+import { red, green } from 'material-ui/colors';
+// https://material.io/icons/
 import HelpOutlineIcon from 'material-ui-icons/HelpOutline';
-import InfoIcon from 'material-ui-icons/Info';
 import ScheduleIcon from 'material-ui-icons/Schedule';
 import UpdateIcon from 'material-ui-icons/Update';
+import MonetizationOn from 'material-ui-icons/MonetizationOn';
+import AttachMoney from 'material-ui-icons/AttachMoney';
 import Chip from 'material-ui/Chip';
 import { toSEK } from '../../utils';
 
@@ -22,6 +25,12 @@ const styles = theme => ({
     marginLeft: -theme.spacing.unit * 2,
     marginRight: -theme.spacing.unit * 2,
   },
+  icon: {
+    color: 'gray',
+    width: 40,
+    height: 40,
+    marginRight: 0,
+  },
   chip: {
     marginRight: 10,
   },
@@ -31,15 +40,23 @@ class BudgetList extends Component {
   render() {
     const { classes, expenses, categories, handleClickOpen } = this.props;
 
-    const listIcon = (type) => {
-      switch (type) {
-        case 'oneTime': return <ScheduleIcon />;
+
+    const listIcon = (item) => {
+      if (item.recurrent) return <ScheduleIcon />;
+      if (item.category > 99) return <MonetizationOn />;
+      switch (item.type) {
+        case 'oneTime': return <AttachMoney />;
         case 'monthly':
         case 'quartely':
         case 'yearly': return <UpdateIcon />;
-        case 'auto': return <InfoIcon />;
         default: return <HelpOutlineIcon />;
       }
+    };
+
+    const listIconColor = (item) => {
+      if (item.recurrent) return { color: red[400] };
+      if (item.category > 99) return { color: green[800] };
+      return {};
     };
 
     const categoryText = id => ((categories) ? categories[id] : '-');
@@ -65,8 +82,8 @@ class BudgetList extends Component {
     }
     const expenseItems = Object.values(expenses).sort(compare).map(item => (
       <ListItem button key={item.id} onClick={handleClickOpen(item.id)}>
-        <ListItemIcon>
-          {listIcon(item.type)}
+        <ListItemIcon className={classes.icon} style={listIconColor(item)}>
+          {listIcon(item)}
         </ListItemIcon>
         <ListItemText
           primary={primary(item)}

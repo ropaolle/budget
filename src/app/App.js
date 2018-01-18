@@ -7,6 +7,7 @@ import { firebaseAuth } from '../utils';
 import AppBar from './AppBar';
 import Footer from './Footer';
 import Page404 from './Page404';
+import Cron from './Cron';
 import PrivateRoute from './PrivateRoute';
 import Home from '../pages/home/Home';
 import Charts from '../pages/charts/Charts';
@@ -39,6 +40,7 @@ class App extends Component {
                 <PrivateRoute path="/charts" component={Charts} />
                 <PrivateRoute path="/expenses" component={Expenses} />
                 <PrivateRoute path="/settings" component={Settings} />
+                <Route path="/cron" component={Cron} />
                 <Route component={Page404} />
               </Switch>
             )}
