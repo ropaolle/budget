@@ -71,14 +71,14 @@ const styles = theme => ({
     display: 'flex',
     margin: 8,
     position: 'relative',
-    zIndex: 10,
   },
   suggestionsContainerOpen: {
     position: 'absolute',
-    marginTop: theme.spacing.unit,
+    marginTop: 50,
     marginBottom: theme.spacing.unit * 3,
     left: 0,
     right: 0,
+    zIndex: 20,
   },
   suggestion: {
     display: 'block',
