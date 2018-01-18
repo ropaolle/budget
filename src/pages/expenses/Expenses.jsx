@@ -68,41 +68,9 @@ class Budget extends Component {
     const { isLoaded, fetchExpenses, fetchBudget } = this.props;
     if (!isLoaded) {
       fetchBudget();
-      fetchExpenses(20);
+      fetchExpenses(2);
     }
-
-    // this.removeListener = this.expenseListner();
   }
-
-  // componentWillUnmount() {
-  //   if (this.removeListener) this.removeListener();
-  // }
-
-  /*   expenseListner() {
-    // Realtime updates
-    const from = moment().toDate();
-    const to = moment()
-      .add(1, 'days')
-      .toDate();
-
-    return this.expensesRef
-      .orderBy('date', 'asc')
-      .startAt(from) // Ignore all old expenses
-      .endAt(to)
-      .onSnapshot((snapshot) => {
-        console.log('basicListner', snapshot.size);
-        const { updateExpenses, deleteExpense } = this.props;
-        const { docChanges } = snapshot;
-        docChanges.forEach((change) => {
-          const { type, doc } = change;
-          if (type === 'added' || type === 'modified') {
-            updateExpenses([doc]);
-          } else if (type === 'removed') {
-            deleteExpense(doc.id);
-          }
-        });
-      });
-  } */
 
   handleClickAdd = () => {
     this.setState({ dialogOpen: true, expense: defaultExpense });
@@ -132,25 +100,34 @@ class Budget extends Component {
 
   handleRequestSave = (expense) => {
     // Clone expense and change date from string to Date.
-    const exp = {
+    const expenseForDb = {
       ...expense,
       date: new Date(expense.date),
       recurrent: expense.recurrent ? new Date(expense.recurrent) : null,
     };
 
-    // Add or update
+    // Add or update db
     if (expense.id) {
-      this.expensesRef.doc(expense.id).update(exp);
+      this.expensesRef.doc(expense.id).update(expenseForDb);
     } else {
       const expRef = this.expensesRef.doc();
-      exp.id = expRef.id;
-      expRef.set(exp);
+      expenseForDb.id = expRef.id;
+      expRef.set(expenseForDb);
     }
+
+    // Add to redux
+    const id = expense.id || expenseForDb.id;
+    const expenseForRedux = { [id]: { ...expense, id } };
+    this.props.updateExpense(expenseForRedux);
 
     this.setState({ dialogOpen: false });
   };
 
   handleRequestDelete = (expenseId) => {
+    // Delete from redux
+    this.props.deleteExpense(expenseId);
+
+    // Delete in db
     this.expensesRef.doc(expenseId).delete();
     this.setState({ dialogOpen: false });
   };
@@ -227,8 +204,8 @@ class Budget extends Component {
 
 Budget.propTypes = {
   classes: PropTypes.object.isRequired,
-  // deleteExpense: PropTypes.func.isRequired,
-  // updateExpenses: PropTypes.func.isRequired,
+  deleteExpense: PropTypes.func.isRequired,
+  updateExpense: PropTypes.func.isRequired,
   fetchExpenses: PropTypes.func.isRequired,
   fetchBudget: PropTypes.func.isRequired,
   expenses: PropTypes.object,

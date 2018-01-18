@@ -2,7 +2,7 @@ import { database, DB_EXSPENSES_COLLECTION } from '../utils';
 
 export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 export const RECEIVE_EXPENSES = 'RECEIVE_EXPENSES';
-export const UPDATE_EXPENSES = 'UPDATE_EXPENSES';
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 const requestExpenses = () => ({
@@ -12,6 +12,16 @@ const requestExpenses = () => ({
 const receiveExpenses = expenses => ({
   type: RECEIVE_EXPENSES,
   expenses,
+});
+
+export const updateExpense = expense => ({
+  type: UPDATE_EXPENSE,
+  expense,
+});
+
+export const deleteExpense = id => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 const expensesKeyedById = docs => docs.reduce((expenses, doc) => ({
@@ -25,16 +35,6 @@ const expensesKeyedById = docs => docs.reduce((expenses, doc) => ({
       null,
   },
 }), {});
-
-export const updateExpenses = expenses => ({
-  type: UPDATE_EXPENSES,
-  expenses: expensesKeyedById(expenses),
-});
-
-export const deleteExpense = id => ({
-  type: DELETE_EXPENSE,
-  id,
-});
 
 function oldestExpense(state) {
   const { expenses } = state;

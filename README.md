@@ -1,5 +1,6 @@
 # Todo
 
+* [ ] Add/del items when created
 * [ ] Cron: Update statistics
 * [ ] Cron: DB backup
 * [ ] Cron: Auto insert planned expenses

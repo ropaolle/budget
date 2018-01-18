@@ -1,7 +1,7 @@
 import {
   REQUEST_EXPENSES,
   RECEIVE_EXPENSES,
-  UPDATE_EXPENSES,
+  UPDATE_EXPENSE,
   DELETE_EXPENSE,
 } from '../actions/expenses';
 
@@ -26,11 +26,11 @@ const expensesState = (
         isLoaded: true,
         items: Object.assign({}, state.items, action.expenses),
       };
-    case UPDATE_EXPENSES:
+    case UPDATE_EXPENSE:
       return {
         ...state,
         isLoaded: true,
-        items: Object.assign({}, state.items, action.expenses),
+        items: Object.assign({}, state.items, action.expense),
       };
     case DELETE_EXPENSE: {
       // Clone items and delete item[action.id]. TODO: Maybe hard to understand
@@ -50,7 +50,7 @@ export const expenses = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_EXPENSES:
     case REQUEST_EXPENSES:
-    case UPDATE_EXPENSES:
+    case UPDATE_EXPENSE:
     case DELETE_EXPENSE:
       return {
         ...state,

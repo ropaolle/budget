@@ -62,7 +62,6 @@ function getSuggestions(value, suggestions) {
   }
 
   const regex = new RegExp(escapedValue, 'i');
-  console.log(suggestions);
   return suggestions.filter(suggestion => regex.test(suggestion.label));
 }
 

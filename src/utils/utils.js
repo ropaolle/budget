@@ -40,51 +40,6 @@ export function summarizeCost(costs, year, compareFunc) {
   );
 }
 
-/* function getCount(perMonth = false) {
-  return database.collection(DB_EXSPENSES_COLLECTION)
-    .orderBy('date', 'asc')
-    .get()
-    .then((query) => {
-      const counterObj = query.docs.reduce((counters, doc) => {
-        const { category, type, date, cost } = doc.data();
-
-        // Add year and month
-        const year = date.getYear() + 1900;
-        const month = date.getMonth();
-        let currTypes;
-        let currCategories = [];
-        const rootObj = { types: {}, categories: {} };
-
-        if (perMonth) {
-          if (!counters[year]) counters[year] = {};
-          if (!counters[year][month]) {
-            counters[year][month] = rootObj;
-          }
-          currTypes = counters[year][month].types;
-          currCategories = counters[year][month].categories;
-        } else {
-          if (!counters[year]) counters[year] = rootObj;
-          currTypes = counters[year].types;
-          currCategories = counters[year].categories;
-        }
-
-        if (!currTypes[type]) currTypes[type] = 0;
-        if (!currCategories[category]) currCategories[category] = { count: 0, cost: 0 };
-
-        // Count
-        currTypes[type] += 1;
-        currCategories[category].count += 1;
-        currCategories[category].cost += cost;
-
-        return counters;
-      }, {});
-
-      const dbDoc = (perMonth) ? 'counters-month' : 'counters-year';
-      database.collection(DB_BUDGET_COLLECTION).doc(dbDoc).set(counterObj);
-      console.log(dbDoc, counterObj);
-    });
-} */
-
 export function getAutocompleteText() {
   return database.collection(DB_EXSPENSES_COLLECTION)
     .get()
@@ -105,7 +60,7 @@ export function getAutocompleteText() {
     });
 }
 
-function costPerMonthPerType(query) {
+/* function costPerMonthPerType(query) {
   return query.docs.reduce((counters, doc) => {
     const { category, type, date, cost } = doc.data();
 
@@ -122,7 +77,7 @@ function costPerMonthPerType(query) {
 
     return counters;
   }, {});
-}
+} */
 
 function costPerMonthPerCategori(query) {
   return query.docs.reduce((counters, doc) => {
@@ -165,7 +120,6 @@ function getCost(costFunc) {
     .orderBy('date', 'asc')
     .get()
     .then((query) => {
-      // const costFunc = (perMonth) ? costPerMonthPerCategori : costPerYearPerCategori;
       const dbObj = costFunc(query);
       console.log(costFunc.name, dbObj);
       database.collection(DB_BUDGET_COLLECTION).doc(costFunc.name).set(dbObj);
@@ -173,10 +127,11 @@ function getCost(costFunc) {
 }
 
 export function runCron() {
+  console.time('cron');
   return Promise.all([
     getCost(costPerMonthPerCategori),
     getCost(costPerYearPerCategori),
-    getCost(costPerMonthPerType),
+    // getCost(costPerMonthPerType),
     getAutocompleteText(),
-  ]);
+  ]).then(() => { console.timeEnd('cron'); });
 }
