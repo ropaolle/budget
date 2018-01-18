@@ -25,6 +25,8 @@ export {
 } from './utils';
 
 export {
-  importExpenses,
   importTypesAndCategories,
-} from './import';
+  importTestExpenses,
+  backupDbToFirestore,
+  restoreDbToFirestore,
+} from './backup';

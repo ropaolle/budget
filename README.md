@@ -6,9 +6,9 @@
 * [ ] Ignore planned expenses
 
 # Later
+
 * [ ] Restore DB
 * [ ] Cron with Firebase Functions: DB backup, update statistics and auto insert planned expenses.
-* [ ] Import from .xls with (react-file-input)?
 
 # Diverse
 
@@ -19,4 +19,3 @@
 * RightClick find all referenses
 * Select func name press F2, rename + enter: öppnar alla filer med denna ref
 * Factor out inner function: Markera delfunk och tryck på glödlampan
-

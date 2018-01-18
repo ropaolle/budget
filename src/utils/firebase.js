@@ -2,12 +2,12 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const config = {
-  apiKey: 'AIzaSyD2Pm1XxJdEIIzl_ZXhK-ooMG2PdEr_gYw',
-  authDomain: 'my-spendings-38b3e.firebaseapp.com',
-  databaseURL: 'https://my-spendings-38b3e.firebaseio.com',
-  projectId: 'my-spendings-38b3e',
-  storageBucket: 'my-spendings-38b3e.appspot.com',
-  messagingSenderId: '511310400308',
+  apiKey: 'AIzaSyDsrPH_fYtKmLvDaidU1HKsfA9uKkyVHq0',
+  authDomain: 'budget-ec3f9.firebaseapp.com',
+  databaseURL: 'https://budget-ec3f9.firebaseio.com',
+  projectId: 'budget-ec3f9',
+  storageBucket: 'budget-ec3f9.appspot.com',
+  messagingSenderId: '47147422899',
 };
 
 firebase.initializeApp(config);

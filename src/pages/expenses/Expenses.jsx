@@ -173,7 +173,6 @@ class Budget extends Component {
     } = this.props;
 
     const displayMode = location.pathname.split('/')[2];
-    console.log(displayMode);
 
     const { dialogOpen, expense } = this.state;
 
