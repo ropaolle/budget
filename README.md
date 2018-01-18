@@ -1,11 +1,12 @@
 # Todo
+
 * [ ] Cron: Update statistics
 * [ ] Cron: DB backup
 * [ ] Cron: Auto insert planned expenses
 * [ ] Ignore planned expenses
 
 # Later
-
+* [ ] Restore DB
 * [ ] Cron with Firebase Functions: DB backup, update statistics and auto insert planned expenses.
 * [ ] Import from .xls with (react-file-input)?
 

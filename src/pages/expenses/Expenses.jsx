@@ -12,7 +12,7 @@ import * as actionCreatorsExpenses from '../../actions/expenses';
 import * as actionCreatorsBudget from '../../actions/budget';
 import { database, DB_EXSPENSES_COLLECTION } from '../../utils';
 import EditDialog from './EditDialog';
-// import BudgetList from './List';
+import BudgetList from './List';
 import BudgetTable from './Table';
 
 // TODO: Simplify this
@@ -169,9 +169,14 @@ class Budget extends Component {
       autocomplete,
       isFetching,
       isLoaded,
+      location,
     } = this.props;
-    console.log(this.props);
+
+    const displayMode = location.pathname.split('/')[2];
+    console.log(displayMode);
+
     const { dialogOpen, expense } = this.state;
+
     return (
       <div>
         <Button
@@ -198,11 +203,16 @@ class Budget extends Component {
             handleRequestChange={this.handleRequestChange}
           />
         )}
-        <BudgetTable
+        {displayMode === 'table' && <BudgetTable
           handleClickOpen={this.handleClickOpen}
           expenses={expenses}
           categories={categories}
-        />
+        />}
+        {displayMode !== 'table' && <BudgetList
+          handleClickOpen={this.handleClickOpen}
+          expenses={expenses}
+          categories={categories}
+        />}
         <div className={classes.loadButtonWrapper}>
           <Button onClick={this.handleLoadMore} disabled={!isLoaded}>
             {isLoaded ? 'Load more...' : 'Loading...'}
@@ -228,6 +238,7 @@ Budget.propTypes = {
   autocomplete: PropTypes.object,
   isLoaded: PropTypes.bool,
   isFetching: PropTypes.bool,
+  location: PropTypes.object.isRequired,
 };
 
 Budget.defaultProps = {
