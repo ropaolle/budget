@@ -228,13 +228,14 @@ Budget.defaultProps = {
 
 const mapStateToProps = (state) => {
   const { expenses, budget } = state;
-  const { types, categories, autocomplete } = budget;
+  const { types, categories, /* autocomplete,  */autocompleteText } = budget;
   const { isFetching, isLoaded, items } = expenses;
+
   return {
     budget,
     types,
     categories,
-    autocomplete,
+    autocomplete: autocompleteText,
     expenses: items,
     isFetching,
     isLoaded,

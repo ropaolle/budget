@@ -29,7 +29,7 @@ function renderSuggestion(suggestion, { /* query, */ isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        <span>{suggestion.label}</span>
+        <span>{suggestion/* .label */}</span>
       </div>
     </MenuItem>
   );
@@ -46,7 +46,7 @@ function renderSuggestionsContainer(options) {
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.label;
+  return suggestion/* .label */;
 }
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
@@ -62,7 +62,7 @@ function getSuggestions(value, suggestions) {
   }
 
   const regex = new RegExp(escapedValue, 'i');
-  return suggestions.filter(suggestion => regex.test(suggestion.label));
+  return suggestions.filter(suggestion => regex.test(suggestion/* .label */));
 }
 
 const styles = theme => ({
@@ -152,9 +152,10 @@ class IntegrationAutosuggest extends Component {
 
 IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
-  suggestions: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-  })).isRequired,
+  // suggestions: PropTypes.arrayOf(PropTypes.shape({
+  //   label: PropTypes.string.isRequired,
+  // })).isRequired,
+  suggestions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   defaultValue: PropTypes.string,
   label: PropTypes.string,
