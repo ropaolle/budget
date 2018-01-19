@@ -1,5 +1,5 @@
 # Todo
-* [ ] Trigger cron from Plexburken? https://budget-ec3f9.firebaseapp.com/cron
+* [ ] Trigger cron from Plexburken? https://budget-ec3f9.firebaseapp.com/cron (http://phantomjs.org/)
 * [ ] Import fixed costs.
 * [x] Backup DB to Firebase bucket.
 * [ ] Restore DB from Firebase bucket.
