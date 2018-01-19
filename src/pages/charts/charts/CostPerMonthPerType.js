@@ -1,6 +1,6 @@
 import Chart from 'chart.js';
 import { red, blue } from 'material-ui/colors';
-import { summarizeCost, summarizeCostsInSEK as totalCost } from '../../../utils';
+import { summarizeCost, summarizeCostsInSEK as totalCost } from './utils';
 
 function variableCostPerMonth(costs, year) {
   return summarizeCost(costs, year, (type => type === 'oneTime'));

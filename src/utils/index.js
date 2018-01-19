@@ -1,4 +1,9 @@
 export {
+  toSEK,
+} from './utils';
+
+
+export {
   database,
   firebaseAuth,
   storageRef,
@@ -18,12 +23,7 @@ export {
 
 export {
   runCron,
-  toSEK,
-  summarizeCostsInSEK,
-  costPerCategory,
-  summarizeCost,
-  addRecurrent,
-} from './utils';
+} from './cron';
 
 export {
   importTypesAndCategories,

@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 import filter from 'lodash.filter';
 import { blue } from 'material-ui/colors';
-import { costPerCategory, summarizeCostsInSEK as totalCost } from '../../../utils';
+import { costPerCategory, summarizeCostsInSEK as totalCost } from './utils';
 
 export function costPerCategoryPerMonth(date, costs) {
   const year = date.year();
