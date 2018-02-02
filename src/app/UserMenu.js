@@ -66,21 +66,18 @@ class UserMenu extends Component {
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
+          // anchorOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'right',
+          // }}
+          // transformOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'right',
+          // }}
           open={open}
           onClose={this.handleRequestClose}
         >
-          {/* TODO: MenuItem with link gets a colord border in Chrome. */}
-          <Link to="/settings" className={classes.link}>
-            <MenuItem button onClick={this.handleRequestClose}>My account</MenuItem>
-          </Link>
+          <MenuItem button to="/settings" component={Link} onClick={this.handleRequestClose}>My account</MenuItem>
           <Divider />
           <MenuItem onClick={this.handleRequestLogout}>Logout</MenuItem>
         </Menu>

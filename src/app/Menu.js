@@ -6,15 +6,20 @@ import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import HomeIcon from 'material-ui-icons/Home';
+import MonetizationOn from 'material-ui-icons/MonetizationOn';
+import History from 'material-ui-icons/History';
+
 
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
-    textDecoration: 'none',
-    width: 250,
+    minWidth: 250,
   },
   link: {
     textDecoration: 'none',
+  },
+  text: {
+    padding: 0,
   },
 });
 
@@ -28,7 +33,7 @@ const Menu = (props) => {
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText className={classes.text} primary="Hem" />
           </ListItem>
         </Link>
       </List>
@@ -36,12 +41,18 @@ const Menu = (props) => {
       <List>
         <Link to="/expenses" className={classes.link}>
           <ListItem button onClick={e => toggle(e, 'expenses')}>
-            <ListItemText primary="Expenses" />
+            <ListItemIcon>
+              <MonetizationOn />
+            </ListItemIcon>
+            <ListItemText className={classes.text} primary="Kostnader" />
           </ListItem>
         </Link>
         <Link to="/charts" className={classes.link}>
           <ListItem button onClick={e => toggle(e, 'charts')}>
-            <ListItemText primary="Charts" />
+            <ListItemIcon>
+              <History />
+            </ListItemIcon>
+            <ListItemText className={classes.text} primary="Historik" />
           </ListItem>
         </Link>
       </List>
