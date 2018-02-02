@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import PollIcon from 'material-ui-icons/Poll';
 import Typography from 'material-ui/Typography';
 
-const styles = theme => ({
-  icon: {
-    width: 50,
-    height: 50,
-    color: theme.palette.grey[500],
-    transform: 'rotate(90deg)',
+const styles = () => ({
+  left: {
+    display: 'inline-block',
   },
-  text: {
-    display: 'inline-box',
+  right: {
+    display: 'inline-block',
     float: 'right',
-    paddingTop: 17,
   },
 });
 
@@ -22,11 +17,14 @@ const Footer = (props) => {
   const { classes } = props;
   return (
     <footer>
-      <PollIcon className={classes.icon} />
-      <Typography type="body1" className={classes.text}>
-        RopaOlle 2018 (<a href="https://github.com/ropaolle/game-of-life">
-          Github.com
-        </a>)
+      <Typography type="body1" className={classes.left}>
+        By <b>RopaOlle</b><br />
+        <a href="https://github.com/ropaolle/budget">Github repo</a>
+      </Typography>
+
+      <Typography type="body1" className={classes.right}>
+        <b>Budget 2018 </b>
+        <img src="./favicon-32x32.png" alt="logo" />
       </Typography>
     </footer>
   );
