@@ -48,6 +48,7 @@ class UserMenu extends Component {
     const { photoURL } = user;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
+
     return (
       <div className={classes.root}>
         <IconButton
@@ -66,14 +67,14 @@ class UserMenu extends Component {
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
-          // anchorOrigin={{
-          //   vertical: 'top',
-          //   horizontal: 'right',
-          // }}
-          // transformOrigin={{
-          //   vertical: 'top',
-          //   horizontal: 'right',
-          // }}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
           open={open}
           onClose={this.handleRequestClose}
         >
