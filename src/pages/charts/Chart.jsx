@@ -10,8 +10,15 @@ import costPerMonthPerType from './charts/CostPerMonthPerType';
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit * 0,
+    textAlign: 'center',
+  },
+  heading: {
+    marginTop: theme.spacing.unit * 3,
   },
   subheading: {
+    display: 'grid',
+  },
+  subheadingInner: {
     marginLeft: 10,
     marginRight: 10,
     fontWeight: 100,
@@ -76,17 +83,17 @@ class Chart extends Component {
       // eslint-disable-next-line react/no-array-index-key
       <span key={i}>
         {param.text}:
-        <span className={classes.subheading}>{param.data}</span>
+        <span className={classes.subheadingInner}>{param.data}</span>
       </span>))
       : '';
 
     return (
       <div className={classes.root}>
-        <Typography type="display1" gutterBottom>{heading}</Typography>
-        <Typography type="title" gutterBottom>{subheading}</Typography>
+        <Typography className={classes.heading} type="display1" gutterBottom>{heading}</Typography>
+        <Typography className={classes.subheading} type="title" gutterBottom>{subheading}</Typography>
         <div>
           <canvas
-            className={classes.root}
+            // className={classes.root}
             ref={(c) => { this.canvas = c; }}
             width={400}
             height={400}

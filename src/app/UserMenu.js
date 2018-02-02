@@ -54,7 +54,6 @@ class UserMenu extends Component {
           aria-owns={open ? 'menu-appbar' : null}
           aria-haspopup="true"
           onClick={this.handleMenu}
-          color="contrast"
         >
           {(photoURL) ?
             <div>

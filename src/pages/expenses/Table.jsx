@@ -10,6 +10,7 @@ const styles = theme => ({
     margin: theme.spacing.unit * 0,
     width: '100%',
     overflowX: 'auto',
+    marginBottom: 20,
   },
   list: {
     marginLeft: -theme.spacing.unit * 2,
@@ -29,7 +30,7 @@ class BudgetTable extends Component { // eslint-disable-line react/prefer-statel
     const expenseItems = Object.keys(expenses).map((id) => {
       const item = expenses[id];
       return (
-        <TableRow key={item.id} onClick={handleClickOpen(id)}>
+        <TableRow hover key={item.id} onClick={handleClickOpen(id)}>
           <TableCell >{item.date}</TableCell>
           <TableCell>{item.service}</TableCell>
           <TableCell>{item.description}</TableCell>

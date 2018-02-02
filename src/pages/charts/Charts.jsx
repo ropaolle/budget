@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import * as actionCreators from '../../actions/budget';
 import Chart from './Chart';
@@ -11,15 +10,7 @@ import Chart from './Chart';
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
-  },
-  link: {
-    marginRight: theme.spacing.unit * 2,
-  },
-  loadButtonWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+    textAlign: 'center',
   },
 });
 
@@ -59,15 +50,16 @@ class Charts extends Component {
     const { date, type } = this.state;
     return (
       <div className={classes.root}>
-        <div className={classes.loadButtonWrapper}>
-          <Typography type="button" gutterBottom>
-            <Button onClick={() => this.handleIncDecClick('-')}>-</Button>
-            <Button onClick={() => this.handleButtonClick('yearly', 'years')}>Year</Button>
-            <Button onClick={() => this.handleButtonClick('monthly', 'months')}>Month</Button>
-            <Button onClick={() => this.handleButtonClick('result', 'years')}>Result</Button>
-            <Button onClick={() => this.handleButtonClick('cost', 'years')}>Cost</Button>
-            <Button onClick={() => this.handleIncDecClick('+')}>+</Button>
-          </Typography>
+        <div>
+          <Button onClick={() => this.handleButtonClick('yearly', 'years')}>Year</Button>
+          <Button onClick={() => this.handleButtonClick('monthly', 'months')}>Month</Button>
+          <Button onClick={() => this.handleButtonClick('result', 'years')}>Result</Button>
+          <Button onClick={() => this.handleButtonClick('cost', 'years')}>Cost</Button>
+        </div>
+        <div>
+          <Button fab mini onClick={() => this.handleIncDecClick('-')}>-</Button>
+          {' '}
+          <Button fab mini onClick={() => this.handleIncDecClick('+')}>+</Button>
         </div>
         {budget && budget.isLoaded &&
           <Chart type={type} date={date} budget={budget} />

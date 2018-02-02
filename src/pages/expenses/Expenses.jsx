@@ -1,4 +1,3 @@
-// import moment from 'moment';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -59,6 +58,7 @@ class Budget extends Component {
     this.state = {
       expense: defaultExpense,
       dialogOpen: false,
+      showAsList: true,
     };
 
     this.expensesRef = database.collection(DB_EXSPENSES_COLLECTION);
@@ -137,6 +137,10 @@ class Budget extends Component {
     fetchExpenses(20);
   };
 
+  handleTableList = () => {
+    this.setState({ showAsList: !this.state.showAsList });
+  };
+
   render() {
     const {
       classes,
@@ -146,12 +150,9 @@ class Budget extends Component {
       autocomplete,
       isFetching,
       isLoaded,
-      location,
     } = this.props;
 
-    const displayMode = location.pathname.split('/')[2];
-
-    const { dialogOpen, expense } = this.state;
+    const { dialogOpen, expense, showAsList } = this.state;
 
     return (
       <div>
@@ -164,7 +165,14 @@ class Budget extends Component {
           <AddIcon />
         </Button>
         <Typography type="display2" gutterBottom>
-          Expenses
+          Expenses{' '}
+          <Button
+            size="small"
+            raised
+            onClick={this.handleTableList}
+          >
+            {showAsList ? 'Visa tabell' : 'Visa lista'}
+          </Button>
         </Typography>
         {open && (
           <EditDialog
@@ -179,12 +187,12 @@ class Budget extends Component {
             handleRequestChange={this.handleRequestChange}
           />
         )}
-        {displayMode === 'table' && <BudgetTable
+        {!showAsList && <BudgetTable
           handleClickOpen={this.handleClickOpen}
           expenses={expenses}
           categories={categories}
         />}
-        {displayMode !== 'table' && <BudgetList
+        {showAsList && <BudgetList
           handleClickOpen={this.handleClickOpen}
           expenses={expenses}
           categories={categories}
@@ -214,7 +222,6 @@ Budget.propTypes = {
   autocomplete: PropTypes.object,
   isLoaded: PropTypes.bool,
   isFetching: PropTypes.bool,
-  location: PropTypes.object.isRequired,
 };
 
 Budget.defaultProps = {
@@ -228,7 +235,7 @@ Budget.defaultProps = {
 
 const mapStateToProps = (state) => {
   const { expenses, budget } = state;
-  const { types, categories, /* autocomplete,  */autocompleteText } = budget;
+  const { types, categories, autocompleteText } = budget;
   const { isFetching, isLoaded, items } = expenses;
 
   return {

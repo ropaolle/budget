@@ -52,7 +52,7 @@ class ButtonAppBar extends Component {
         <AppBar position="static">
           <Toolbar>
             {/* Menu */}
-            <IconButton onClick={this.toggleDrawer} color="contrast">
+            <IconButton onClick={this.toggleDrawer} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Menu open={this.state.menuOpen} toggle={this.toggleDrawer} />
@@ -64,7 +64,6 @@ class ButtonAppBar extends Component {
             {!user && (
               <div>
                 <Button
-                  color="contrast"
                   onClick={this.handleClickOpen}
                   className={classes.menuButton}
                 >

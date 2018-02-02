@@ -36,12 +36,7 @@ const Menu = (props) => {
       <List>
         <Link to="/expenses" className={classes.link}>
           <ListItem button onClick={e => toggle(e, 'expenses')}>
-            <ListItemText primary="Expenses List" />
-          </ListItem>
-        </Link>
-        <Link to="/expenses/table" className={classes.link}>
-          <ListItem button onClick={e => toggle(e, 'expenses')}>
-            <ListItemText primary="Expenses Table" />
+            <ListItemText primary="Expenses" />
           </ListItem>
         </Link>
         <Link to="/charts" className={classes.link}>
