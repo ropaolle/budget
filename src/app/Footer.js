@@ -16,7 +16,7 @@ const styles = () => ({
 const Footer = (props) => {
   const { classes } = props;
   return (
-    <footer>
+    <div className="footer">
       <Typography type="body1" className={classes.left}>
         By <b>RopaOlle</b><br />
         <a href="https://github.com/ropaolle/budget">Github repo</a>
@@ -26,7 +26,7 @@ const Footer = (props) => {
         <b>Budget 2018 </b>
         <img src="./favicon-32x32.png" alt="logo" />
       </Typography>
-    </footer>
+    </div>
   );
 };
 

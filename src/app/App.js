@@ -31,20 +31,26 @@ class App extends Component {
 
     return (
       <BrowserRouter>
-        <div id="app-wrapper">
-          <AppBar user={user} />
-          <div id="content">
-            {isLoaded && (
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <PrivateRoute path="/charts" component={Charts} />
-                <PrivateRoute path="/expenses" component={Expenses} />
-                <PrivateRoute path="/settings" component={Settings} />
-                <Route path="/cron" component={Cron} />
-                <Route component={Page404} />
-              </Switch>
-            )}
+        <div className="app">
+          <div className="wrapper">
+            <AppBar user={user} />
+
+            <div className="content">
+              {isLoaded && (
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <PrivateRoute path="/charts" component={Charts} />
+                  <PrivateRoute path="/expenses" component={Expenses} />
+                  <PrivateRoute path="/settings" component={Settings} />
+                  <Route path="/cron" component={Cron} />
+                  <Route component={Page404} />
+                </Switch>
+              )}
+
+              <div className="push" />
+            </div>
           </div>
+
           <Footer />
         </div>
       </BrowserRouter>
