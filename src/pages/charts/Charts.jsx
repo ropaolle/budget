@@ -55,6 +55,7 @@ class Charts extends Component {
           <Button onClick={() => this.handleButtonClick('monthly', 'months')}>Month</Button>
           <Button onClick={() => this.handleButtonClick('result', 'years')}>Result</Button>
           <Button onClick={() => this.handleButtonClick('cost', 'years')}>Cost</Button>
+          <Button onClick={() => this.handleButtonClick('pieOne', 'months')}>PieOne</Button>
         </div>
         <div>
           <Button fab mini onClick={() => this.handleIncDecClick('-')}>-</Button>

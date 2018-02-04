@@ -6,6 +6,7 @@ import categoriesPerYear from './charts/CategoriesPerYear';
 import categoriesPerMonth from './charts/CategoriesPerMonth';
 import costIncomePerMonth from './charts/CostIncomePerMonth';
 import costPerMonthPerType from './charts/CostPerMonthPerType';
+import pieOne from './charts/PieOne';
 
 const styles = theme => ({
   root: {
@@ -63,6 +64,9 @@ class Chart extends Component {
       case 'cost':
         chart = costPerMonthPerType;
         break;
+      case 'pieOne':
+        chart = pieOne;
+        break;
       default:
         chart = categoriesPerYear;
     }
@@ -93,7 +97,6 @@ class Chart extends Component {
         <Typography className={classes.subheading} type="title" gutterBottom>{subheading}</Typography>
         <div>
           <canvas
-            // className={classes.root}
             ref={(c) => { this.canvas = c; }}
             width={400}
             height={400}
