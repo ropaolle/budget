@@ -7,9 +7,9 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import LoginDialog from './LoginDialog';
 import Menu from './Menu';
 import UserMenu from './UserMenu';
+import { login } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -27,19 +27,15 @@ const styles = theme => ({
 class ButtonAppBar extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      loginOpen: false,
       menuOpen: false,
     };
   }
 
-  handleClickOpen = () => {
-    this.setState({ loginOpen: true });
-  };
-
-  handleRequestClose = () => {
-    this.setState({ loginOpen: false });
-  };
+  handleLogin = () => {
+    login();
+  }
 
   toggleDrawer = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
@@ -47,16 +43,15 @@ class ButtonAppBar extends Component {
 
   render() {
     const { classes, user } = this.props;
+
     return (
       <header className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            {/* Menu */}
             <IconButton onClick={this.toggleDrawer} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Menu open={this.state.menuOpen} toggle={this.toggleDrawer} />
-            {/* Title */}
             <Typography type="title" color="inherit" className={classes.flex}>
               Budget
             </Typography>
@@ -64,15 +59,12 @@ class ButtonAppBar extends Component {
             {!user && (
               <div>
                 <Button
-                  onClick={this.handleClickOpen}
+                  color="inherit"
+                  onClick={this.handleLogin}
                   className={classes.menuButton}
                 >
                   Login
                 </Button>
-                <LoginDialog
-                  open={this.state.loginOpen}
-                  onClose={this.handleRequestClose}
-                />
               </div>
             )}
             {/* User menu */}

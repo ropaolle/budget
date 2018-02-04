@@ -5,8 +5,9 @@ import IconButton from 'material-ui/IconButton';
 import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Divider from 'material-ui/Divider';
+import Tooltip from 'material-ui/Tooltip';
 import { Link } from 'react-router-dom';
-import { logout } from '../utils/auth';
+import { logout } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -16,9 +17,9 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   photo: {
-    width: 35,
+    width: 44,
     borderRadius: '50%',
-    marginTop: 5,
+    marginTop: 2,
   },
 });
 
@@ -38,32 +39,34 @@ class UserMenu extends Component {
     this.setState({ anchorEl: null });
   }
 
-  handleRequestLogout = () => {
+  handleLogout = () => {
     this.handleRequestClose();
     logout();
   }
 
   render() {
     const { classes, user } = this.props;
-    const { photoURL } = user;
+    const { photoURL, displayName, email } = user;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
-        <IconButton
-          aria-owns={open ? 'menu-appbar' : null}
-          aria-haspopup="true"
-          onClick={this.handleMenu}
-        >
-          {(photoURL) ?
-            <div>
-              <img src={photoURL} alt="user" className={classes.photo} />
-            </div>
-            :
-            <AccountCircleIcon />
-          }
-        </IconButton>
+        <Tooltip id="tooltip-icon" title={<div>{displayName}<br />{email}</div>}>
+          <IconButton
+            aria-owns={open ? 'menu-appbar' : null}
+            aria-haspopup="true"
+            onClick={this.handleMenu}
+          >
+            {(photoURL) ?
+              <div>
+                <img src={photoURL} alt="user" className={classes.photo} />
+              </div>
+              :
+              <AccountCircleIcon />
+            }
+          </IconButton>
+        </Tooltip>
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
@@ -80,7 +83,7 @@ class UserMenu extends Component {
         >
           <MenuItem button to="/settings" component={Link} onClick={this.handleRequestClose}>My account</MenuItem>
           <Divider />
-          <MenuItem onClick={this.handleRequestLogout}>Logout</MenuItem>
+          <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
     );

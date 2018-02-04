@@ -13,11 +13,11 @@ export {
 } from './firebase';
 
 export {
-  saveUser,
-  auth,
+  // saveUser,
+  // auth,
   logout,
   login,
-  resetPassword,
+  // resetPassword,
   formatUserObj,
 } from './auth';
 

@@ -11,21 +11,30 @@ const styles = () => ({
     display: 'inline-block',
     float: 'right',
   },
+  img: {
+    marginBottom: -6,
+  },
 });
 
 const Footer = (props) => {
   const { classes } = props;
   return (
     <div className="footer">
-      <Typography type="body1" className={classes.left}>
-        By <b>RopaOlle</b><br />
-        <a href="https://github.com/ropaolle/budget">Github repo</a>
-      </Typography>
 
-      <Typography type="body1" className={classes.right}>
-        <b>Budget 2018 </b>
-        <img src="./favicon-32x32.png" alt="logo" />
-      </Typography>
+      <div className={classes.left}>
+        <Typography type="body1">
+        By <b>RopaOlle</b><br />
+          <a href="https://github.com/ropaolle/budget">Github repo</a>
+        </Typography>
+      </div>
+
+      <div className={classes.right}>
+        <Typography type="body1">
+          <span><b>Budget 2018 </b></span>
+          <img className={classes.img} src="./favicon-32x32.png" alt="logo" />
+        </Typography>
+      </div>
+
     </div>
   );
 };
