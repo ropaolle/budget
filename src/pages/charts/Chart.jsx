@@ -7,6 +7,7 @@ import categoriesPerMonth from './charts/CategoriesPerMonth';
 import costIncomePerMonth from './charts/CostIncomePerMonth';
 import costPerMonthPerType from './charts/CostPerMonthPerType';
 import pieOne from './charts/PieOne';
+import pieTwo from './charts/PieTwo';
 
 const styles = theme => ({
   root: {
@@ -69,6 +70,9 @@ class Chart extends Component {
         break;
       case 'pieOne':
         chart = pieOne;
+        break;
+      case 'pieTwo':
+        chart = pieTwo;
         break;
       default:
         chart = categoriesPerYear;
