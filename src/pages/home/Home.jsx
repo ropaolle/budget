@@ -14,9 +14,11 @@ const styles = theme => ({
   },
   wrapper: {
     display: 'inline-block',
+    maxWidth: '100%',
+    marginTop: -30,
   },
   pie: {
-    maxWidth: 400,
+    // maxWidth: 400,
     marginBottom: 20,
   },
 });
@@ -32,14 +34,15 @@ class Home extends Component {
 
     return (
       <div className={classes.root}>
+        {!budget.isLoaded &&
+        <Typography type="display2" gutterBottom>...loading</Typography>}
         <div className={classes.wrapper}>
           <div className={classes.pie}>
             {budget && budget.isLoaded && <div>
               <Chart type={'pieOne'} date={moment()} budget={budget} />
               <Chart type={'pieTwo'} date={moment().subtract(1, 'month')} budget={budget} />
             </div>}
-            {!budget.isLoaded &&
-              <Typography type="display2" gutterBottom>...loading</Typography>}
+
           </div>
         </div>
         {' '}
