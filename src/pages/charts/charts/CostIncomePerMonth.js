@@ -80,11 +80,11 @@ export default function updateChart(ctx, budget, currentDate) {
 
 
   chart.budget = {
-    heading: `Result ${currentDate.year()}`,
+    heading: `Resultat ${currentDate.year()}`,
     params: [
-      { text: 'Costs', data: totalCost(costs) },
-      { text: 'Incomes', data: totalCost(incomes) },
-      { text: 'Results', data: totalCost(results) },
+      { text: 'Kostnader', data: totalCost(costs) },
+      { text: 'Intäckter', data: totalCost(incomes) },
+      { text: 'Resultat', data: totalCost(results) },
     ],
   };
 

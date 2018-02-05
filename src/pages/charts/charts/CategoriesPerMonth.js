@@ -47,9 +47,9 @@ export default function updateChart(ctx, budget, currentDate) {
   });
 
   chart.budget = {
-    heading: `Categories ${currentDate.year()}`,
+    heading: `Kategorier ${currentDate.year()}`,
     params: [
-      { text: 'Total cost', data: totalCost(thisMonth) },
+      { text: 'Total kostnad', data: totalCost(thisMonth) },
     ],
   };
 

@@ -24,6 +24,9 @@ const styles = theme => ({
     marginRight: 10,
     fontWeight: 100,
   },
+  canvas: {
+    // display: 'inline-block',
+  },
 });
 
 class Chart extends Component {
@@ -95,7 +98,7 @@ class Chart extends Component {
       <div className={classes.root}>
         <Typography className={classes.heading} type="display1" gutterBottom>{heading}</Typography>
         <Typography className={classes.subheading} type="title" gutterBottom>{subheading}</Typography>
-        <div>
+        <div className={classes.canvas}>
           <canvas
             ref={(c) => { this.canvas = c; }}
             width={400}

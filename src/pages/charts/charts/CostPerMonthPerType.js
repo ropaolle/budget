@@ -1,14 +1,9 @@
 import Chart from 'chart.js';
 import { red, blue } from 'material-ui/colors';
-import { summarizeCost, summarizeCostsInSEK as totalCost } from './utils';
-
-function variableCostPerMonth(costs, year) {
-  return summarizeCost(costs, year, (type => type === 'oneTime'));
-}
-
-function fixedCostPerMonth(costs, year) {
-  return summarizeCost(costs, year, (type => type !== 'oneTime'));
-}
+import {
+  summarizeCost,
+  summarizeCostsInSEK as totalCost,
+} from './utils';
 
 let chart = null;
 
@@ -32,9 +27,9 @@ export default function updateChart(ctx, budget, currentDate) {
     'Dec',
   ];
 
-  // Cost per category
-  const variableCosts = variableCostPerMonth(costs, currentDate.year());
-  const fixedCosts = fixedCostPerMonth(costs, currentDate.year());
+  // Cost per type
+  const variableCosts = summarizeCost(costs, currentDate.year(), (type => type === 'oneTime'));
+  const fixedCosts = summarizeCost(costs, currentDate.year(), (type => type !== 'oneTime'));
 
   chart = new Chart(ctx, {
     type: 'bar',
@@ -80,10 +75,10 @@ export default function updateChart(ctx, budget, currentDate) {
   });
 
   chart.budget = {
-    heading: `Cost ${currentDate.year()}`,
+    heading: `Kostnad ${currentDate.year()}`,
     params: [
-      { text: 'Fixed', data: totalCost(fixedCosts) },
-      { text: 'Variable', data: totalCost(variableCosts) },
+      { text: 'Fasta kostnader', data: totalCost(fixedCosts) },
+      { text: 'Löpande kostnader', data: totalCost(variableCosts) },
     ],
   };
 
