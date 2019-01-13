@@ -1,32 +1,75 @@
-.App {
-  text-align: center;
+/* Invoices
+.page.invoices .title span {
+  font-weight: 500;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.page.invoices .customer-select {
+  min-width: 300px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.page.invoices .svg-inline--fa {
+  margin: 0 5px;
 }
 
-.App-link {
-  color: #61dafb;
+.page.invoices .save-message {
+  margin-left: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.invoices .list-row {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
 }
+
+.invoices .list-row:first-of-type  {
+  border-top: 1px solid #eee;
+}
+
+.invoices .list-row:nth-child(even) {
+  background: #f7f7f7;
+}
+
+.invoices .list-row:hover {
+  background: #eee;
+}
+
+.invoices .title {
+  margin-left: 16px;
+}
+
+.invoices .badge {
+  margin-left: 6px;
+}
+
+*/
+
+/* Projects
+.page th {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.page.projects tr:hover {
+  cursor: pointer;
+}
+*/
+
+/* Times
+.page.times .svg-inline--fa {
+  cursor: pointer;
+}
+
+.add-time-dialog .input-group-append .btn {
+  border-left: 1px solid #ccc;
+  z-index: 0;
+}
+*/
+
+/* Sms
+.page.sms .customer-select {
+  min-width: 300px;
+}
+
+.page.sms .title {
+  margin-left: 16px;
+}
+*/

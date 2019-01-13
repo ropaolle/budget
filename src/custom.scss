@@ -1,0 +1,244 @@
+// Override default variables before the import
+// $body-bg: #000;
+
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
+
+
+.page {
+  .badge {
+    font-weight: 100;
+    font-size: 11px;
+    vertical-align: super;
+    margin-left: 4px;
+  }
+
+  h1 .badge, h3 .badge {
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  h1 .badge {
+    font-size: 18px;
+  }
+
+  .main-info-box {
+    margin-bottom: 24px;
+  }
+
+  .times-cost-list button.btn-link {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Invoices */
+.page.invoices, .page.billing {
+
+  .customer-select {
+    min-width: 300px;
+  }
+
+  .svg-inline--fa {
+    margin: 0 5px;
+  }
+
+  .save-message {
+    margin-left: 10px;
+  }
+
+  .notes {
+    border: 1px solid #E7E7bb;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-bottom: 24px;
+    margin-top: 6px;
+    background-color: #ffc;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .list-row {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+
+    &:first-of-type  {
+      border-top: 1px solid #eee;
+    }
+
+    &:nth-child(even) {
+      background: #f7f7f7;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+
+    .title {
+      margin-left: 16px;
+      span {
+        font-weight: 500;
+      }
+    }
+
+    .badge {
+      margin-left: 6px;
+    }
+  }
+}
+
+/* Settings */
+.page.settings {
+  .form-check-input {
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    vertical-align: middle;
+    margin-right: 9px;
+  }
+}
+
+/* Projects */
+.page.projects {
+  tr:hover {
+    cursor: pointer;
+  }
+
+  .list-row {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+
+    &:first-of-type  {
+      border-top: 1px solid #eee;
+    }
+
+    &:nth-child(even) {
+      background: #f7f7f7;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+
+    .title {
+      margin-left: 16px;
+      span {
+        font-weight: 500;
+      }
+    }
+
+    .badge {
+      margin-left: 6px;
+    }
+  }
+}
+
+/* Project */
+.page.project {
+
+  .box {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+
+  .subproject {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-top: 36px;
+    border-radius: 5px;
+  }
+
+}
+
+/* Plugin */
+.page.plugin {
+
+  .container-fluid {
+    padding: 0;
+    font-size: 90%;
+      margin-top: 24px;
+  }
+
+}
+
+.page.times {
+
+  .progress {
+    height: 1.5rem;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  .user-row td {
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 24px;
+  }
+
+}
+
+.page.page404 {
+
+  .display-2 {
+    font-size: 10rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ccc;
+  }
+
+  img {
+    max-width: 100%
+  }
+
+}
+
+.page.weekreport {
+
+  tr.sum-row th {
+    font-weight: 500;
+  }
+
+}
+
+
+// Extras
+
+.form-group .is-invalid {
+  color: #dc3545 !important;
+}
+
+.table td.table-subtitle {
+  padding: 0.2rem 0.75rem;
+  background-color: aliceblue;
+  font-weight: 500;
+}
+
+.modal .modal-dialog.modal-lg {
+  max-width: 80%;
+}
+
+.created-by {
+  display: flex;
+  background-color: #fafafa;
+  border-left: 4px solid #eaeaea;
+  color: #333;
+  margin: 10px 0 20px;
+  padding: 6px 10px;
+  font-size: 12px;
+
+  .progress {
+    width: 20%;
+    margin-left: 4px;
+  }
+
+  span {
+    color: #aaa;
+    font-weight: normal;
+    margin-left: 4px;
+    margin-right: 8px;
+  }
+}

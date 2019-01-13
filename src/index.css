@@ -12,3 +12,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+header .nav-link span {
+  vertical-align: top;
+  font-weight: normal;
+}
+
+header .navbar-brand img {
+  width: 24px;
+  vertical-align: sub;
+  margin-right: 6px;
+}
+
+.content {
+  min-height: 50vh;
+  padding: 30px 0;
+  margin-bottom: 60px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  background-color: #eee;
+  padding: 20px 0;
+}
+
+footer img {
+  width: 24px;
+}
