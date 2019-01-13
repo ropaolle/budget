@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import {
   Collapse,
   Navbar,
@@ -14,7 +16,6 @@ import {
   DropdownItem,
   Badge,
 } from 'reactstrap';
-import logo from '../images/logo-light.png';
 
 class AppBar extends Component {
   constructor(props) {
@@ -32,16 +33,14 @@ class AppBar extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { user, settings } = this.props;
-    // const { showCounters, showOpenProjects } = settings;
-    const authenticated = user && user.staff_id;
+    const { user } = this.props;
+    const authenticated = user && user.username;
 
     return (
       <header>
         <Navbar color="dark" dark expand="sm">
           <NavbarBrand tag={Link} to="/">
-            <img src={logo} width="32" alt="logo" />
-            {process.env.REACT_APP_FULLNAME}
+            <FontAwesomeIcon icon={faCreditCard} /> {process.env.REACT_APP_FULLNAME}
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           {!authenticated && (
@@ -59,8 +58,8 @@ class AppBar extends Component {
             <Collapse isOpen={isOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink tag={Link} to="/projekt">
-                    Projekt
+                  <NavLink tag={Link} to="/test">
+                    Test
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -72,7 +71,7 @@ class AppBar extends Component {
               <Nav className="ml-auto" navbar>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    {'user.firstname'}
+                    {user.username}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem tag={Link} to="/wallboard">
@@ -81,7 +80,6 @@ class AppBar extends Component {
                     <DropdownItem tag={Link} to="/veckorapport">
                       Veckorapport
                     </DropdownItem>
-
                     <DropdownItem divider />
                     <DropdownItem tag={Link} to="/settings">
                       Inställningar
