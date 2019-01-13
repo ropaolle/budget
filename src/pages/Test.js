@@ -12,9 +12,7 @@ class Plugin extends Component {
 
   async componentDidMount() {}
 
-  async button() {
-    apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
-  }
+  async button() {}
 
   render() {
     return (
