@@ -10,6 +10,7 @@ class Plugin extends Component {
     this.button = this.button.bind(this);
   }
 
+  // https://www.apollographql.com/docs/react/essentials/get-started.html
   async componentDidMount() {}
 
   async button() {}
