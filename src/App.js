@@ -19,6 +19,7 @@ class App extends Component {
   async componentDidMount() {
     const { user } = this.state;
     // apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
+    // apiPost('/createExpense', {  });
     if (!user) {
       const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
       const { user: auth } = data;

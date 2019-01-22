@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const User = require('./models/User');
+const Expense = require('./models/Expense');
 
 // Enviorment
 // console.log(Object.entries(process.env).filter(([key]) => key.includes('REACT_APP_')));
@@ -49,6 +50,15 @@ app.post('/createUser', (req, res, next) => {
     // console.log(err, user);
     if (err) return next(err);
     return res.json(user);
+  });
+});
+
+app.post('/createExpense', (req, res, next) => {
+  const expense = new Expense(req.body);
+  expense.save(err => {
+    // console.log(err, expense);
+    if (err) return next(err);
+    return res.json(expense);
   });
 });
 
