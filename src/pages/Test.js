@@ -1,32 +1,72 @@
 import React, { Component } from 'react';
-import { Container, Button } from 'reactstrap';
-import { apiPost } from '../lib/api';
+import { Container } from 'reactstrap';
+import { TestDialog, ExpenseDialog } from '../dialogs';
 
-class Plugin extends Component {
+const dialogDefaults = {
+  testDialog: { sel01: '0', sel02: '1' },
+  expenseDialog: {
+    recurrentDate: '',
+    description: '',
+    cost: '0',
+    type: '0',
+    date: '2019-01-10',
+    service: null,
+    category: '0',
+  },
+};
+
+class Test extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null };
+    this.state = {
+      ...dialogDefaults,
+    };
 
-    this.button = this.button.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  // https://www.apollographql.com/docs/react/essentials/get-started.html
-  async componentDidMount() {}
+  handleFieldChange({ value, field, dialog }) {
+    console.log('UPDATE', value, field, dialog);
+    const fieldValue = typeof value === 'object' ? value && value.value : value;
+    this.setState(prevState => {
+      const relatedField = field === 'service' && value && value.category ? { category: value.category } : {};
+      return {
+        [dialog]: { ...prevState[dialog], [field]: fieldValue, ...relatedField },
+      };
+    });
 
-  async button() {}
+    this.setState(prevState => ({
+      [dialog]: { ...prevState[dialog], [field]: fieldValue },
+    }));
+  }
+
+  handleButtonClick({ action, dialog }) {
+    // const { testDialog } = this.state;
+    console.log('SAVE', action, dialog);
+
+    if (action === 'delete') {
+      // TODO: Update db + local state
+    } else if (action === 'save') {
+      // TODO: Update db + local state
+    }
+
+    // Reset dialog
+    this.setState({ [dialog]: dialogDefaults[dialog] });
+  }
 
   render() {
+    const { testDialog, expenseDialog } = this.state;
+    console.log('TEST', this.state);
     return (
-      <div className="page plugin">
-        <Container fluid>
-          <h1>Plugin</h1>
-          <div>
-            <Button onClick={() => this.button()}>Add user</Button>
-          </div>
+      <div className="page">
+        <Container>
+          <ExpenseDialog {...expenseDialog} onChange={this.handleFieldChange} onButtonClick={this.handleButtonClick} />
+          <TestDialog {...testDialog} onChange={this.handleFieldChange} onButtonClick={this.handleButtonClick} />
         </Container>
       </div>
     );
   }
 }
 
-export default Plugin;
+export default Test;
