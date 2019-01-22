@@ -8,6 +8,7 @@ const session = require('express-session');
 
 const User = require('./models/User');
 const Expense = require('./models/Expense');
+const Type = require('./models/Type');
 
 // Enviorment
 // console.log(Object.entries(process.env).filter(([key]) => key.includes('REACT_APP_')));
@@ -59,6 +60,28 @@ app.post('/createExpense', (req, res, next) => {
     // console.log(err, expense);
     if (err) return next(err);
     return res.json(expense);
+  });
+});
+
+app.post('/createType', (req, res, next) => {
+  const type = new Type({ label: 'oneTime' });
+  type.save(err => {
+    // console.log(err, type);
+    if (err) return next(err);
+    return res.json(type);
+  });
+});
+
+app.post('/getTypes', (req, res, next) => {
+  // TODO: Load
+  /*
+https://mongoosejs.com/docs/queries.html
+  */
+
+  Type.find({}, (err, persons) => {
+    if (err) return next(err);
+    console.log(persons);
+    return res.json(persons);
   });
 });
 

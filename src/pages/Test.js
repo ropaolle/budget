@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { TestDialog, ExpenseDialog } from '../dialogs';
+import { apiPost } from '../lib/api';
 
 const dialogDefaults = {
   testDialog: { sel01: '0', sel02: '1' },
@@ -12,6 +13,7 @@ const dialogDefaults = {
     date: '2019-01-10',
     service: null,
     category: '0',
+    isNew: true,
   },
 };
 
@@ -42,13 +44,16 @@ class Test extends Component {
   }
 
   handleButtonClick({ action, dialog }) {
-    // const { testDialog } = this.state;
-    console.log('SAVE', action, dialog);
+    const { expenseDialog } = this.state;
+    console.log('SAVE', action, dialog, expenseDialog);
 
     if (action === 'delete') {
       // TODO: Update db + local state
     } else if (action === 'save') {
       // TODO: Update db + local state
+      // apiPost('/createExpense', expenseDialog);
+      // apiPost('/createType', null);
+      apiPost('/getTypes', null);
     }
 
     // Reset dialog
@@ -57,7 +62,7 @@ class Test extends Component {
 
   render() {
     const { testDialog, expenseDialog } = this.state;
-    console.log('TEST', this.state);
+    // console.log('TEST', this.state);
     return (
       <div className="page">
         <Container>

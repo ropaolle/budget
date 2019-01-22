@@ -34,13 +34,13 @@ const options = {
 const dialog = 'expenseDialog';
 
 function Dialog(props) {
-  const { onChange, onButtonClick, recurrentDate, description, cost, type, date, service, category } = props;
+  const { isNew, onChange, onButtonClick, recurrentDate, description, cost, type, date, service, category } = props;
   return (
     <BaseDialog
       dialog={dialog}
       buttonLabel="Öppna (exp)"
-      title="Ny/upp kostnad"
-      deleteButton
+      title={isNew ? 'Ny kostnad' : 'Uppdatera kostnad'}
+      deleteButton={!isNew}
       saveEnabled
       clearButton
       onButtonClick={onButtonClick}
