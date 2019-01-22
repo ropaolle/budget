@@ -8,7 +8,9 @@ const session = require('express-session');
 
 const User = require('./models/User');
 
-const { REACT_APP_DB, REACT_APP_API_PORT, REACT_APP_API_PATH } = process.env;
+// Enviorment
+// console.log(Object.entries(process.env).filter(([key]) => key.includes('REACT_APP_')));
+const { REACT_APP_DB, REACT_APP_API_PORT, REACT_APP_API_CORS } = process.env;
 
 mongoose.connect(
   REACT_APP_DB,
@@ -20,7 +22,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const app = express();
 
-app.use(cors({ origin: REACT_APP_API_PATH }));
+app.use(cors({ origin: REACT_APP_API_CORS }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
