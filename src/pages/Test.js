@@ -53,7 +53,8 @@ class Test extends Component {
       // TODO: Update db + local state
       // apiPost('/createExpense', expenseDialog);
       // apiPost('/createType', null);
-      apiPost('/getTypes', null);
+      // Skapa standard options, töm först tabeller
+      // apiPost('/createOptions', {}).then(({ data }) => console.log(data));
     }
 
     // Reset dialog

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const serviceSchema = new Schema({
-  label: { type: String },
+  label: { type: String, unique: true },
   color: { type: String },
   title: { type: String },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const typeSchema = new Schema({
-  label: { type: String, requiered: true },
+  label: { type: String, unique: true },
   color: { type: String, default: 'success' },
 });
 

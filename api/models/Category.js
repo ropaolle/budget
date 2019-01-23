@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const categorySchema = new Schema({
-  label: { type: String },
+  label: { type: String, index: true, unique: true },
   title: { type: String },
 });
 
