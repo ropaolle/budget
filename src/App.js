@@ -22,8 +22,9 @@ class App extends Component {
 
     if (!user) {
       const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
-      const { user: auth } = data;
-      this.setState({ user: auth });
+      console.log('LOGIN', data);
+      // const { user: auth } = data;
+      this.setState({ ...data });
     }
   }
 
@@ -43,7 +44,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/om" render={props => <Om {...props} user={user} />} />
-                <Route path="/test" render={props => <Test {...props} user={user} />} />
+                <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
 
                 <Route component={Page404} />
               </Switch>

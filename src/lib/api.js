@@ -6,4 +6,5 @@ export const apiPost = (command = '', params) =>
     .post(process.env.REACT_APP_API_PATH + command, queryString.stringify({ ...params }))
     .catch(err => console.error(err));
 
-export const dummy = () => {};
+export const apiGet = (command = '') =>
+  axios.get(process.env.REACT_APP_API_PATH + command).catch(err => console.error(err));

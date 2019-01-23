@@ -7,8 +7,10 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const User = require('./models/User');
-// const Expense = require('./models/Expense');
-// const Type = require('./models/Type');
+const Category = require('./models/Category');
+const Service = require('./models/Service');
+const Type = require('./models/Type');
+const Expense = require('./models/Expense');
 
 // Enviorment
 // console.log(Object.entries(process.env).filter(([key]) => key.includes('REACT_APP_')));
@@ -46,7 +48,46 @@ app.use('/', require('./routes/options'));
 
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  User.authenticate(email, password, (err, user) => res.json({ err, user }));
+  User.authenticate(email, password, async (err, user) => {
+    if (err) return res.json({ err });
+    // const types = await Type.find({}, (err, data) => data);
+    const allData = await Promise.all([
+      Type.find({}, (err, data) => data),
+      Category.find({}, (err, data) => data),
+      Service.find({}, (err, data) => data),
+    ]);
+    const options = {
+      types: allData[0],
+      categories: allData[1],
+      services: allData[2],
+    };
+
+    res.json({ user, settings: options });
+  });
+});
+
+app.post('/expenses', (req, res) => {
+  const expense = new Expense(req.body);
+  expense.save(err => {
+    // console.log(err, expense);
+    if (err) return res.json({ err });
+    return res.json(expense);
+  });
+});
+
+app.get('/expenses', (req, res) => {
+  // Expense.find({}, (err, data) => {
+  //   if (err) return res.json({ err });
+  //   return res.json(data);
+  // });
+  Expense.find({})
+    .populate('category')
+    .populate('service')
+    .populate('type')
+    .exec((err, data) => {
+      if (err) return res.json({ err });
+      return res.json(data);
+    });
 });
 
 app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
@@ -64,44 +105,5 @@ app.post('/createUser', (req, res, next) => {
   });
 });
 
-app.post('/createExpense', (req, res, next) => {
-  const expense = new Expense(req.body);
-  expense.save(err => {
-    // console.log(err, expense);
-    if (err) return next(err);
-    return res.json(expense);
-  });
-});
 
-app.post('/createType', (req, res, next) => {
-  // const type = new Type({ label: 'oneTime' });
-  // type.save(err => {
-  //   // console.log(err, type);
-  //   if (err) return next(err);
-  //   return res.json(type);
-  // });
-
-  try {
-    Type.bulkWrite([
-      { insertOne: { document: { color: 'success', label: 'oneTime' } } },
-      { insertOne: { document: { color: 'success', label: 'monthly' } } },
-      { insertOne: { document: { color: 'success', label: 'biMonthly' } } },
-      { insertOne: { document: { color: 'success', label: 'quarterly' } } },
-      { insertOne: { document: { color: 'success', label: 'yearly' } } },
-    ]).then(x => {
-      console.log(x);
-      return res.json(x);
-    });
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
-});
-
-app.post('/getTypes', (req, res, next) => {
-  Type.find({}, (err, persons) => {
-    if (err) return next(err);
-    console.log(persons);
-    return res.json(persons);
-  });
-}); */
+*/

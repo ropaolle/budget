@@ -3,42 +3,27 @@ import { Form, Row, Col } from 'reactstrap';
 import BaseDialog from './BaseDialog';
 import { SelectField, DateField, CostField, TextField } from './fields';
 
-const options = {
-  type: [
-    { value: '0', label: 'One time', color: 'success' },
-    { value: '1', label: 'Monthly', color: 'warning' },
-    { value: '2', label: 'Bi monthly', color: 'warning' },
-    { value: '3', label: 'Yearly', color: 'warning' },
-  ],
-  category: [
-    { value: '0', label: 'Mat', title: '' },
-    { value: '1', label: 'Bil', title: '' },
-    { value: '2', label: 'Elektronik', title: '' },
-  ],
-  service: [
-    { value: '0', label: 'Ica', category: '0' },
-    { value: '1', label: 'Coop', category: '0' },
-    { value: '2', label: 'Dustin', category: '2' },
-  ],
-  typeA: [
-    {
-      label: 'Fakturerat',
-      options: [
-        { value: '0', label: 'Fakturerad', color: 'success', title: 'Denna tid har fakturerats.' },
-        { value: '1', label: 'Internfakturerad', color: 'success', title: 'Ingen debitering.' },
-      ],
-    },
-  ],
-};
-
 const dialog = 'expenseDialog';
 
 function Dialog(props) {
-  const { isNew, onChange, onButtonClick, recurrentDate, description, cost, type, date, service, category } = props;
+  const {
+    isNew,
+    onChange,
+    onButtonClick,
+    recurrentDate,
+    description,
+    cost,
+    type,
+    date,
+    service,
+    category,
+    settings,
+  } = props;
+  const { services, categories, types } = settings;
   return (
     <BaseDialog
       dialog={dialog}
-      buttonLabel="Öppna (exp)"
+      buttonLabel="Ny kostnad"
       title={isNew ? 'Ny kostnad' : 'Uppdatera kostnad'}
       deleteButton={!isNew}
       saveEnabled
@@ -49,7 +34,7 @@ function Dialog(props) {
       <Form>
         <Row form>
           <Col md={4}>
-            <CostField id="Cost" label="Kostnad" value={cost} onChange={field => onChange({ ...field, dialog })} />
+            <CostField id="cost" label="Kostnad" value={cost} onChange={field => onChange({ ...field, dialog })} />
           </Col>
           <Col md={8}>
             <DateField id="date" label="Date" value={date} onChange={field => onChange({ ...field, dialog })} />
@@ -67,7 +52,7 @@ function Dialog(props) {
               id="service"
               label="Företag/tjänst"
               value={service}
-              options={options.service}
+              options={services}
               onChange={field => onChange({ ...field, dialog })}
             />
           </Col>
@@ -76,7 +61,7 @@ function Dialog(props) {
               id="category"
               label="Kategori"
               value={category}
-              options={options.category}
+              options={categories}
               onChange={field => onChange({ ...field, dialog })}
             />
           </Col>
@@ -85,7 +70,7 @@ function Dialog(props) {
               id="type"
               label="Type"
               value={type}
-              options={options.type}
+              options={types}
               onChange={field => onChange({ ...field, dialog })}
             />
           </Col>

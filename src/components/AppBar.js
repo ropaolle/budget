@@ -14,7 +14,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Badge,
+  // Badge,
 } from 'reactstrap';
 
 class AppBar extends Component {

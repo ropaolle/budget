@@ -24,9 +24,11 @@ class Dialog extends React.Component {
     const { modal } = this.state;
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>
-          {buttonLabel}
-        </Button>
+        <div className="float-right">
+          <Button color="danger" onClick={this.toggle}>
+            {buttonLabel}
+          </Button>
+        </div>
         <Modal isOpen={modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
           <ModalBody>{children}</ModalBody>
