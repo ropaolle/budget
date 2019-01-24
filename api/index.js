@@ -79,10 +79,16 @@ app.post('/expenses', (req, res) => {
 });
 
 app.get('/expenses', (req, res) => {
+  console.log(req.query);
+  const { order, sort, skip, limit } = req.query;
+
   Expense.find({})
     .populate('category')
     .populate('service')
     .populate('type')
+    .limit(Number(limit))
+    .skip(Number(skip))
+    .sort({ [sort || 'data']: order === 'asc' ? 1 : -1 })
     .exec((err, data) => {
       if (err) return res.json({ err });
       return res.json(data);

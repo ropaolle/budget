@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Table, Badge } from 'reactstrap';
 import format from 'date-fns/format';
 import { ExpenseDialog } from '../dialogs';
+import SortedHeader from '../components/SortedHeader';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
 
 const dialogDefaults = {
@@ -16,6 +17,8 @@ const dialogDefaults = {
     isNew: true,
     show: false,
   },
+  sort: 'date',
+  order: 'asc',
 };
 
 class Test extends Component {
@@ -28,10 +31,11 @@ class Test extends Component {
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleSortClick = this.handleSortClick.bind(this);
   }
 
   async componentDidMount() {
-    const { data: expenses } = await apiGet('/expenses');
+    const { data: expenses } = await apiGet('/expenses', { sort: 'cost' /* , order: 'asc', limit: 4, skip: 10 */ });
     console.log('Expenses', expenses);
     this.setState({ expenses });
   }
@@ -80,6 +84,10 @@ class Test extends Component {
     this.setState({ [dialog]: dialogDefaults[dialog] });
   }
 
+  handleSortClick(sort, order) {
+    this.setState({ sort, order: order === 'asc' ? 'desc' : 'asc' });
+  }
+
   handleRowClick(id) {
     apiGet(`/expenses/${id}`).then(({ data }) => {
       this.setState({
@@ -89,13 +97,13 @@ class Test extends Component {
   }
 
   render() {
-    const { expenseDialog, expenses } = this.state;
+    const { expenseDialog, expenses, sort, order } = this.state;
     const { settings } = this.props;
 
     const typeBadge = type =>
       type && (
         <Badge color={type.color} title={type.title} key={type.value}>
-          {type.color !== 'hidden2' && type.label}
+          {type.label}
         </Badge>
       );
 
@@ -112,9 +120,18 @@ class Test extends Component {
         </tr>
       ));
 
+    const headers = [
+      { id: 'type', label: 'Typ' },
+      { id: 'date', label: 'Datum' },
+      { id: 'cost', label: 'Kostnad' },
+      { id: 'category', label: 'Kategori' },
+      { id: 'service', label: 'Service' },
+      { id: 'description', label: 'Beskrivning' },
+    ];
+
     return (
       <div className="page">
-        <Container>
+        <Container fluid>
           <ExpenseDialog
             // className="pull-right"
             {...expenseDialog}
@@ -124,16 +141,7 @@ class Test extends Component {
           />
           <h1>Kostnader</h1>
           <Table striped hover className="" size="sm" responsive>
-            <thead>
-              <tr>
-                <th>Typ</th>
-                <th>Datum</th>
-                <th>Kostnad</th>
-                <th>Kategori</th>
-                <th>Service</th>
-                <th>Beskrivning</th>
-              </tr>
-            </thead>
+            <SortedHeader headers={headers} sort={sort} order={order} onSort={this.handleSortClick} />
             <tbody>{items}</tbody>
           </Table>
         </Container>
