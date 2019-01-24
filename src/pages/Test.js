@@ -19,6 +19,9 @@ const dialogDefaults = {
   },
   sort: 'date',
   order: 'asc',
+  page: 0,
+  pageSize: 3,
+  // pageCount: 1,
 };
 
 class Test extends Component {
@@ -29,13 +32,32 @@ class Test extends Component {
       expenses: [],
     };
 
+    this.loadData = this.loadData.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSortClick = this.handleSortClick.bind(this);
   }
 
-  async componentDidMount() {
-    const { data: expenses } = await apiGet('/expenses', { sort: 'cost' /* , order: 'asc', limit: 4, skip: 10 */ });
+  componentDidMount() {
+    this.loadData(0);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { sort, order, page, pageSize } = this.state;
+
+    if (
+      page !== prevState.page ||
+      pageSize !== prevState.pageSize ||
+      sort !== prevState.sort ||
+      order !== prevState.order
+    ) {
+      this.loadData(page * pageSize);
+    }
+  }
+
+  async loadData(offset) {
+    const { sort, order, pageSize } = this.state;
+    const { data: expenses } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: offset });
     console.log('Expenses', expenses);
     this.setState({ expenses });
   }
