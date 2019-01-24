@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Container, Table } from 'reactstrap';
+import { Container, Table, Badge } from 'reactstrap';
+import format from 'date-fns/format';
 import { ExpenseDialog } from '../dialogs';
-import { apiPost, apiGet } from '../lib/api';
+import { apiPost, apiGet, apiDelete } from '../lib/api';
 
 const dialogDefaults = {
-  testDialog: { sel01: '0', sel02: '1' },
   expenseDialog: {
     recurrentDate: '',
     description: '',
     cost: '',
     type: '5c4826880b2d2a02f0ed0b65',
-    date: '2019-01-10',
+    date: format(new Date(), 'YYYY-MM-DD'), // Now,
     service: null,
     category: null,
     isNew: true,
@@ -37,7 +37,6 @@ class Test extends Component {
   }
 
   handleFieldChange({ value, field, dialog }) {
-    // console.log('UPDATE', value, field, dialog);
     const fieldValue = typeof value === 'object' ? value && value.value : value;
     this.setState(prevState => {
       const relatedField = field === 'service' && value && value.category ? { category: value.category } : {};
@@ -53,11 +52,28 @@ class Test extends Component {
 
   handleButtonClick({ action, dialog }) {
     const { expenseDialog } = this.state;
-    // console.log('SAVE', action, dialog, expenseDialog);
     if (action === 'delete') {
-      // TODO: Update db + local state
+      apiDelete(`/expenses/${expenseDialog.id}`).then(({ data }) => {
+        this.setState(prevState => {
+          const expenses = [...prevState.expenses];
+          const index = expenses.findIndex(({ id }) => id === data.id);
+          expenses.splice(index, 1);
+          return { expenses };
+        });
+      });
     } else if (action === 'save') {
-      apiPost('/expenses', expenseDialog).then(({ data }) => console.log(data));
+      apiPost('/expenses', expenseDialog).then(({ data }) => {
+        this.setState(prevState => {
+          const expenses = [...prevState.expenses];
+          const index = expenses.findIndex(({ id }) => id === data.id);
+          if (index === -1) {
+            expenses.push(data);
+          } else {
+            expenses.splice(index, 1, data);
+          }
+          return { expenses };
+        });
+      });
     }
 
     // Reset dialog
@@ -66,8 +82,6 @@ class Test extends Component {
 
   handleRowClick(id) {
     apiGet(`/expenses/${id}`).then(({ data }) => {
-      // TODO: Format date
-      console.log(data);
       this.setState({
         expenseDialog: { ...data, show: true },
       });
@@ -78,14 +92,21 @@ class Test extends Component {
     const { expenseDialog, expenses } = this.state;
     const { settings } = this.props;
 
+    const typeBadge = type =>
+      type && (
+        <Badge color={type.color} title={type.title} key={type.value}>
+          {type.color !== 'hidden2' && type.label}
+        </Badge>
+      );
+
     const items =
       expenses &&
       expenses.map(({ _id: id, date, description, cost, category, type, service }) => (
         <tr key={id} onClick={() => this.handleRowClick(id)}>
-          <td>{date.slice(0, -14)}</td>
+          <td>{typeBadge(type)}</td>
+          <td>{date}</td>
           <td>{cost} kr</td>
           <td>{category && category.label}</td>
-          <td>{type && type.label}</td>
           <td>{service && service.label}</td>
           <td>{description}</td>
         </tr>
@@ -105,10 +126,10 @@ class Test extends Component {
           <Table striped hover className="" size="sm" responsive>
             <thead>
               <tr>
+                <th>Typ</th>
                 <th>Datum</th>
                 <th>Kostnad</th>
                 <th>Kategori</th>
-                <th>Typ</th>
                 <th>Service</th>
                 <th>Beskrivning</th>
               </tr>

@@ -67,12 +67,15 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/expenses', (req, res) => {
-  const expense = new Expense(req.body);
-  expense.save(err => {
-    // console.log(err, expense);
-    if (err) return res.json({ err });
-    return res.json(expense);
-  });
+  const { id } = req.body;
+  Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, req.body, { upsert: true, new: true })
+    .populate('service')
+    .populate('category')
+    .populate('type')
+    .exec((err, data) => {
+      if (err) return res.json({ err });
+      return res.json(data);
+    });
 });
 
 app.get('/expenses', (req, res) => {
@@ -87,33 +90,19 @@ app.get('/expenses', (req, res) => {
 });
 
 app.get('/expenses/:id', (req, res) => {
-  // console.log(req.body);
-  // console.log(req.params);
   const { id } = req.params;
-  Expense.findById(id)
-    // .populate('category')
-    // .populate('service')
-    // .populate('type')
-    .exec((err, data) => {
-      if (err) return res.json({ err });
-      return res.json(data);
-    });
-});
-
-app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
-
-/* app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.post('/createUser', (req, res, next) => {
-  const user = new User(req.body);
-  user.save(err => {
-    // console.log(err, user);
-    if (err) return next(err);
-    return res.json(user);
+  Expense.findById(id).exec((err, data) => {
+    if (err) return res.json({ err });
+    return res.json(data);
   });
 });
 
+app.delete('/expenses/:id', (req, res) => {
+  const { id } = req.params;
+  Expense.remove({ _id: id }, err => {
+    if (err) return res.json({ err });
+    return res.json({ id });
+  });
+});
 
-*/
+app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));

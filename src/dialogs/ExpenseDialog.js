@@ -27,7 +27,7 @@ function Dialog(props) {
       buttonLabel="Ny kostnad"
       title={isNew ? 'Ny kostnad' : 'Uppdatera kostnad'}
       deleteButton={!isNew}
-      saveEnabled
+      saveEnabled={date && cost && service && category && type}
       clearButton
       show={show}
       onButtonClick={onButtonClick}
@@ -80,7 +80,7 @@ function Dialog(props) {
             <DateField
               id="recurrentDate"
               label="Löpande kostnad"
-              value={recurrentDate}
+              value={recurrentDate || ''}
               onChange={field => onChange({ ...field, dialog })}
             />
           </Col>
