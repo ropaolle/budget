@@ -10,27 +10,35 @@ class Dialog extends React.Component {
     this.toggle = this.toggle.bind(this);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { show } = nextProps;
+    const { modal } = prevState;
+    if (!modal && show) {
+      return { modal: true };
+    }
+    return null;
+  }
+
   toggle(action) {
     const { modal } = this.state;
     const { onButtonClick, dialog } = this.props;
-    if (['save', 'delete', 'clear'].includes(action)) {
-      onButtonClick({ action, dialog });
-    }
+    onButtonClick({ action, dialog });
     this.setState({ modal: !modal });
   }
 
   render() {
     const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton } = this.props;
     const { modal } = this.state;
+
     return (
       <div>
         <div className="float-right">
-          <Button color="danger" onClick={this.toggle}>
+          <Button color="danger" onClick={() => this.toggle('open')}>
             {buttonLabel}
           </Button>
         </div>
-        <Modal isOpen={modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
+        <Modal isOpen={modal} toggle={() => this.toggle('close')}>
+          <ModalHeader toggle={() => this.toggle('close')}>{title}</ModalHeader>
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
             {deleteButton && (
@@ -47,7 +55,7 @@ class Dialog extends React.Component {
             <Button color="primary" disabled={!saveEnabled} onClick={() => this.toggle('save')}>
               Spara
             </Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>
+            <Button color="secondary" onClick={() => this.toggle('close')}>
               Avbryt
             </Button>
           </ModalFooter>

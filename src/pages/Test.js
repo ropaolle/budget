@@ -14,6 +14,7 @@ const dialogDefaults = {
     service: null,
     category: null,
     isNew: true,
+    show: false,
   },
 };
 
@@ -63,6 +64,16 @@ class Test extends Component {
     this.setState({ [dialog]: dialogDefaults[dialog] });
   }
 
+  handleRowClick(id) {
+    apiGet(`/expenses/${id}`).then(({ data }) => {
+      // TODO: Format date
+      console.log(data);
+      this.setState({
+        expenseDialog: { ...data, show: true },
+      });
+    });
+  }
+
   render() {
     const { expenseDialog, expenses } = this.state;
     const { settings } = this.props;
@@ -70,7 +81,7 @@ class Test extends Component {
     const items =
       expenses &&
       expenses.map(({ _id: id, date, description, cost, category, type, service }) => (
-        <tr key={id}>
+        <tr key={id} onClick={() => this.handleRowClick(id)}>
           <td>{date.slice(0, -14)}</td>
           <td>{cost} kr</td>
           <td>{category && category.label}</td>

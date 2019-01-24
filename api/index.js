@@ -76,14 +76,24 @@ app.post('/expenses', (req, res) => {
 });
 
 app.get('/expenses', (req, res) => {
-  // Expense.find({}, (err, data) => {
-  //   if (err) return res.json({ err });
-  //   return res.json(data);
-  // });
   Expense.find({})
     .populate('category')
     .populate('service')
     .populate('type')
+    .exec((err, data) => {
+      if (err) return res.json({ err });
+      return res.json(data);
+    });
+});
+
+app.get('/expenses/:id', (req, res) => {
+  // console.log(req.body);
+  // console.log(req.params);
+  const { id } = req.params;
+  Expense.findById(id)
+    // .populate('category')
+    // .populate('service')
+    // .populate('type')
     .exec((err, data) => {
       if (err) return res.json({ err });
       return res.json(data);

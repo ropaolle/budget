@@ -18,6 +18,7 @@ function Dialog(props) {
     service,
     category,
     settings,
+    show,
   } = props;
   const { services, categories, types } = settings;
   return (
@@ -28,6 +29,7 @@ function Dialog(props) {
       deleteButton={!isNew}
       saveEnabled
       clearButton
+      show={show}
       onButtonClick={onButtonClick}
     >
       {/* <p>Innehåll i min nya dialog...</p> */}
