@@ -16,12 +16,8 @@ const dialogDefaults = {
     category: null,
     isNew: true,
     show: false,
+    modal: false,
   },
-  sort: 'date',
-  order: 'asc',
-  page: 0,
-  pageSize: 3,
-  pageCount: 1,
 };
 
 class Test extends Component {
@@ -30,9 +26,15 @@ class Test extends Component {
     this.state = {
       ...dialogDefaults,
       expenses: [],
+      sort: 'date',
+      order: 'asc',
+      page: 0,
+      pageSize: 3,
+      pageCount: 1,
     };
 
     this.loadData = this.loadData.bind(this);
+    this.dialogActions = this.dialogActions.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSortClick = this.handleSortClick.bind(this);
@@ -64,6 +66,31 @@ class Test extends Component {
     this.setState({ expenses, pageCount: Math.ceil(totalCount / pageSize) });
   }
 
+  handleSortClick(sort, order) {
+    this.setState({ sort, order: order === 'asc' ? 'desc' : 'asc' });
+  }
+
+  async handleRowClick(id) {
+    // NOTE: Kan standardvärden skickas med dialogAction?
+    try {
+      const { data } = await apiGet(`/expenses/${id}`);
+      this.setState(
+        {
+          expenseDialog: { ...data },
+        },
+        () => {
+          this.dialogActions({ dialog: 'expenseDialog', action: 'open' });
+        }
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handlePagerClick(page) {
+    this.setState({ page });
+  }
+
   handleFieldChange({ value, field, dialog }) {
     const fieldValue = typeof value === 'object' ? value && value.value : value;
     this.setState(prevState => {
@@ -78,7 +105,62 @@ class Test extends Component {
     }));
   }
 
-  handleButtonClick({ action, dialog }) {
+  dialogActions({ dialog, action }) {
+    console.log(dialog, action);
+    this.setState(prevState => {
+      const currDialog = prevState[dialog];
+      return { [dialog]: { ...currDialog, modal: !currDialog.modal } };
+    });
+  }
+
+  async handleButtonClick({ action, dialog }) {
+    const { expenseDialog } = this.state;
+
+    try {
+      let response;
+      if (action === 'delete') {
+        response = await apiDelete(`/expenses/${expenseDialog.id}`);
+      } else if (action === 'save') {
+        response = await apiPost('/expenses', expenseDialog);
+      }
+
+      // console.log(dialogDefaults[dialog]);
+
+      // // Reset dialog
+      // this.setState({ [dialog]: dialogDefaults[dialog] });
+
+      this.setState(prevState => {
+        const expenses = [...prevState.expenses];
+        if (response) {
+          const { data } = response;
+          const index = expenses.findIndex(({ id }) => id === data.id);
+          // console.log('D', data);
+          // console.log(index);
+          if (action === 'delete') {
+            expenses.splice(index, 1);
+          } else if (action === 'save') {
+            if (index === -1) {
+              expenses.push(data);
+            } else {
+              expenses.splice(index, 1, data);
+            }
+          }
+        }
+        console.log('SAVE STAE');
+        return {
+          expenses, // Update state
+          // [dialog]: dialogDefaults[dialog], // Clear dialog
+        };
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Reset dialog
+    // this.setState({ [dialog]: dialogDefaults[dialog] });
+  }
+
+  /*   handleButtonClick({ action, dialog }) {
     const { expenseDialog } = this.state;
     if (action === 'delete') {
       apiDelete(`/expenses/${expenseDialog.id}`).then(({ data }) => {
@@ -107,22 +189,7 @@ class Test extends Component {
     // Reset dialog
     this.setState({ [dialog]: dialogDefaults[dialog] });
   }
-
-  handleSortClick(sort, order) {
-    this.setState({ sort, order: order === 'asc' ? 'desc' : 'asc' });
-  }
-
-  handleRowClick(id) {
-    apiGet(`/expenses/${id}`).then(({ data }) => {
-      this.setState({
-        expenseDialog: { ...data, show: true },
-      });
-    });
-  }
-
-  handlePagerClick(page) {
-    this.setState({ page });
-  }
+ */
 
   render() {
     const { expenseDialog, expenses, sort, order, page, pageCount } = this.state;
@@ -163,6 +230,7 @@ class Test extends Component {
           <ExpenseDialog
             {...expenseDialog}
             settings={settings}
+            onAction={this.dialogActions}
             onChange={this.handleFieldChange}
             onButtonClick={this.handleButtonClick}
           />

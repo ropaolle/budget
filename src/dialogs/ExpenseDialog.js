@@ -7,9 +7,15 @@ const dialog = 'expenseDialog';
 
 function Dialog(props) {
   const {
+    // Base dialog
     isNew,
-    onChange,
+    modal,
     onButtonClick,
+    onAction,
+    // Dialog
+    onChange,
+    settings,
+    // Dialog fields
     recurrentDate,
     description,
     cost,
@@ -17,8 +23,6 @@ function Dialog(props) {
     date,
     service,
     category,
-    settings,
-    show,
   } = props;
   const { services, categories, types } = settings;
   return (
@@ -29,7 +33,8 @@ function Dialog(props) {
       deleteButton={!isNew}
       saveEnabled={date && cost && service && category && type}
       clearButton
-      show={show}
+      modal={modal}
+      onAction={onAction}
       onButtonClick={onButtonClick}
     >
       {/* <p>Innehåll i min nya dialog...</p> */}

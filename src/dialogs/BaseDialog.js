@@ -5,30 +5,19 @@ class Dialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      // modal: false,
     };
-    this.toggle = this.toggle.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { show } = nextProps;
-    const { modal } = prevState;
-    if (!modal && show) {
-      return { modal: true };
-    }
-    return null;
+    // this.toggle = this.toggle.bind(this);
   }
 
   toggle(action) {
-    const { modal } = this.state;
-    const { onButtonClick, dialog } = this.props;
-    onButtonClick({ action, dialog });
-    this.setState({ modal: !modal });
+    const { onAction, dialog } = this.props;
+    onAction({ dialog, action });
   }
 
   render() {
-    const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton } = this.props;
-    const { modal } = this.state;
+    const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton, modal } = this.props;
+    // const { modal } = this.state;
 
     return (
       <div>
