@@ -1,67 +1,73 @@
 import React, { Component } from 'react';
-import { Container, Table, Badge } from 'reactstrap';
+import { Container, Table, Badge, Form, Row, Col } from 'reactstrap';
+import isEqual from 'lodash.isequal';
+import pickBy from 'lodash.pickby';
 import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfMonth from 'date-fns/start_of_month';
+import endOfMonth from 'date-fns/end_of_month';
 import { ExpenseDialog } from '../dialogs';
+import { SelectField, MonthField } from '../dialogs/fields';
 import { SortedHeader, Pager } from '../components';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
-
-const defaultExpenseDialog = {
-  isNew: true,
-  modal: false,
-  fields: {
-    recurrentDate: '',
-    description: '',
-    cost: '',
-    type: '5c4826880b2d2a02f0ed0b65',
-    date: format(new Date(), 'YYYY-MM-DD'), // Now,
-    service: null,
-    category: null,
-  },
-};
 
 class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenseDialog: defaultExpenseDialog,
+      expenseDialog: ExpenseDialog.defaults,
       expenses: [],
       sort: 'date',
       order: 'asc',
+      totalCount: 0,
       page: 0,
-      pageSize: 10,
+      pageSize: 5,
       pageCount: 1,
+      filters: {
+        service: null,
+        month: format(startOfMonth(new Date()), 'YYYY-MM'),
+      },
     };
 
-    this.loadData = this.loadData.bind(this);
     this.dialogActions = this.dialogActions.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSortClick = this.handleSortClick.bind(this);
-    this.handlePagerClick = this.handlePagerClick.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
   componentDidMount() {
-    this.loadData(0);
+    this.loadData();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { sort, order, page, pageSize } = this.state;
-
+    const { sort, order, page, pageSize, filters } = this.state;
     if (
       page !== prevState.page ||
       pageSize !== prevState.pageSize ||
       sort !== prevState.sort ||
-      order !== prevState.order
+      order !== prevState.order ||
+      !isEqual(filters, prevState.filters)
     ) {
-      this.loadData(page * pageSize);
+      this.loadData();
     }
   }
 
-  async loadData(offset) {
-    const { sort, order, pageSize } = this.state;
-    const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: offset });
+  async loadData() {
+    const { sort, order, page, pageSize, filters: rawFilters } = this.state;
+    // Remove null values from filters.
+    const filters = pickBy(rawFilters);
+    // Convert month to date range
+    if (filters.month) {
+      filters.date = {
+        $gte: startOfMonth(parse(filters.month)),
+        $lte: endOfMonth(parse(filters.month)),
+      };
+      delete filters.month;
+    }
+    const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: page * pageSize, filters });
     const { expenses, totalCount } = data;
-    console.log('Expenses', expenses, totalCount);
-    this.setState({ expenses, pageCount: Math.ceil(totalCount / pageSize) });
+    // console.log('Expenses', expenses);
+    this.setState({ expenses, totalCount, pageCount: Math.ceil(totalCount / pageSize) });
   }
 
   handleSortClick(sort, order) {
@@ -81,10 +87,6 @@ class Test extends Component {
     } catch (err) {
       console.error(err);
     }
-  }
-
-  handlePagerClick(page) {
-    this.setState({ page });
   }
 
   handleFieldChange({ value, field, dialog }) {
@@ -135,8 +137,13 @@ class Test extends Component {
     }
   }
 
+  handleFilterChange({ value, field }) {
+    const fieldValue = field === 'month' ? value : value && value.value;
+    this.setState(prevState => ({ filters: { ...prevState.filters, [field]: fieldValue } }));
+  }
+
   render() {
-    const { expenseDialog, expenses, sort, order, page, pageCount } = this.state;
+    const { expenseDialog, expenses, sort, order, page, pageCount, filters, totalCount } = this.state;
     const { settings } = this.props;
 
     const typeBadge = type =>
@@ -178,13 +185,51 @@ class Test extends Component {
             onChange={this.handleFieldChange}
             onButtonClick={this.handleButtonClick}
           />
-          <h1>Kostnader</h1>
+          <h1>Kostnader ({totalCount})</h1>
+
+          <Form>
+            <Row>
+              <Col md={3}>
+                <MonthField id="month" label="Månad" value={filters.month} onChange={this.handleFilterChange} />
+              </Col>
+              <Col md={3}>
+                <SelectField
+                  id="service"
+                  label="Företag/tjänst"
+                  value={filters.service}
+                  options={settings.services}
+                  isClearable
+                  onChange={this.handleFilterChange}
+                />
+              </Col>
+              <Col md={3}>
+                <SelectField
+                  id="category"
+                  label="Kategori"
+                  value={filters.category}
+                  options={settings.categories}
+                  isClearable
+                  onChange={this.handleFilterChange}
+                />
+              </Col>
+              <Col md={3}>
+                <SelectField
+                  id="type"
+                  label="Typ"
+                  value={filters.type}
+                  options={settings.types}
+                  isClearable
+                  onChange={this.handleFilterChange}
+                />
+              </Col>
+            </Row>
+          </Form>
 
           <Table striped hover className="" size="sm" responsive>
             <SortedHeader headers={headers} sort={sort} order={order} onSort={this.handleSortClick} />
             <tbody>{items}</tbody>
           </Table>
-          {pageCount > 1 && <Pager page={page} pageCount={pageCount} onClick={this.handlePagerClick} />}
+          <Pager page={page} pageCount={pageCount} onClick={p => this.setState({ page: p })} />
         </Container>
       </div>
     );

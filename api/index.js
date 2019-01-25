@@ -79,10 +79,11 @@ app.post('/expenses', (req, res) => {
 });
 
 app.get('/expenses', async (req, res) => {
-  const { order, sort, skip, limit } = req.query;
+  const { order, sort, skip, limit, filters = {} } = req.query;
   try {
-    const totalCount = await Expense.countDocuments({});
-    const expenses = await Expense.find({})
+    const query = JSON.parse(filters);
+    const totalCount = await Expense.countDocuments(query);
+    const expenses = await Expense.find(query)
       .populate('category')
       .populate('service')
       .populate('type')

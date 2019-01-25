@@ -38,15 +38,19 @@ class Pager extends Component {
     ));
 
     return (
-      <Pagination>
-        <PaginationItem>
-          <PaginationLink previous onClick={() => this.handleClick('prev')} />
-        </PaginationItem>
-        {pager}
-        <PaginationItem>
-          <PaginationLink next onClick={() => this.handleClick('next')} />
-        </PaginationItem>
-      </Pagination>
+      <React.Fragment>
+        {pageCount > 1 && (
+          <Pagination>
+            <PaginationItem>
+              <PaginationLink previous onClick={() => this.handleClick('prev')} />
+            </PaginationItem>
+            {pager}
+            <PaginationItem>
+              <PaginationLink next onClick={() => this.handleClick('next')} />
+            </PaginationItem>
+          </Pagination>
+        )}
+      </React.Fragment>
     );
   }
 }

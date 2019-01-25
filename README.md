@@ -2,7 +2,8 @@
 
 ## Todo
 
-- [ ] Filter kostnadssidan.
+- [ ] Skapa tjänster och kategorier
+- [ ] camelCase -> startCase för tjänster och kategorier
 
 ## Info
 
@@ -12,22 +13,5 @@
 ## Code
 
 ```js
-Expense.update(
-  { _id: id },
-  req.body,
-  { upsert: true, setDefaultsOnInsert: true },
-  (err, data) => {
-    if (err) return res.json({ err });
-    return res.json(req.body);
-  }
-);
-Expense.findOneAndUpdate(
-  { _id: id },
-  req.body,
-  { upsert: true, new: true },
-  (err, data) => {
-    if (err) return res.json({ err });
-    return res.json(data);
-  }
-);
+
 ```

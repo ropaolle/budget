@@ -1,9 +1,24 @@
 import React from 'react';
 import { Form, Row, Col } from 'reactstrap';
+import format from 'date-fns/format';
 import BaseDialog from './BaseDialog';
 import { SelectField, DateField, CostField, TextField } from './fields';
 
 const dialog = 'expenseDialog';
+
+export const defaults = {
+  isNew: true,
+  modal: false,
+  fields: {
+    recurrentDate: '',
+    description: '',
+    cost: '',
+    type: '5c4826880b2d2a02f0ed0b65',
+    date: format(new Date(), 'YYYY-MM-DD'), // Now,
+    service: null,
+    category: null,
+  },
+};
 
 function Dialog(props) {
   const {
@@ -88,5 +103,7 @@ function Dialog(props) {
     </BaseDialog>
   );
 }
+
+Dialog.defaults = defaults;
 
 export default Dialog;

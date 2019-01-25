@@ -58,8 +58,8 @@ class AppBar extends Component {
             <Collapse isOpen={isOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink tag={Link} to="/test">
-                    Test
+                  <NavLink tag={Link} to="/expenses">
+                    Kostnader
                   </NavLink>
                 </NavItem>
                 <NavItem>

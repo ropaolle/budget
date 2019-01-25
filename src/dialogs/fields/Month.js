@@ -7,7 +7,7 @@ function Field(props) {
     <FormGroup>
       {label && <Label for={id}>{label}</Label>}
       <Input
-        type="date"
+        type="month"
         id={id}
         value={value}
         disabled={disabled}

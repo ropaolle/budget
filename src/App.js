@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Om from './pages/Om';
 import Page404 from './pages/Page404';
-import Test from './pages/Test';
+import Expenses from './pages/Expenses';
 
 class App extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/om" render={props => <Om {...props} user={user} />} />
-                <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
+                <Route path="/expenses" render={props => <Expenses {...props} {...state} user={user} />} />
 
                 <Route component={Page404} />
               </Switch>
