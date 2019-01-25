@@ -5,8 +5,10 @@ import { ExpenseDialog } from '../dialogs';
 import { SortedHeader, Pager } from '../components';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
 
-const dialogDefaults = {
-  expenseDialog: {
+const defaultExpenseDialog = {
+  isNew: true,
+  modal: false,
+  fields: {
     recurrentDate: '',
     description: '',
     cost: '',
@@ -14,9 +16,6 @@ const dialogDefaults = {
     date: format(new Date(), 'YYYY-MM-DD'), // Now,
     service: null,
     category: null,
-    isNew: true,
-    show: false,
-    modal: false,
   },
 };
 
@@ -24,19 +23,18 @@ class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...dialogDefaults,
+      expenseDialog: defaultExpenseDialog,
       expenses: [],
       sort: 'date',
       order: 'asc',
       page: 0,
-      pageSize: 3,
+      pageSize: 10,
       pageCount: 1,
     };
 
     this.loadData = this.loadData.bind(this);
     this.dialogActions = this.dialogActions.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSortClick = this.handleSortClick.bind(this);
     this.handlePagerClick = this.handlePagerClick.bind(this);
   }
@@ -71,15 +69,13 @@ class Test extends Component {
   }
 
   async handleRowClick(id) {
-    // NOTE: Kan standardvärden skickas med dialogAction?
     try {
       const { data } = await apiGet(`/expenses/${id}`);
       this.setState(
-        {
-          expenseDialog: { ...data },
-        },
+        // Update fields
+        prevState => ({ expenseDialog: { ...prevState.expenseDialog, fields: data } }),
         () => {
-          this.dialogActions({ dialog: 'expenseDialog', action: 'open' });
+          this.dialogActions({ dialog: 'expenseDialog', action: 'open' }); // Open dialog
         }
       );
     } catch (err) {
@@ -95,47 +91,28 @@ class Test extends Component {
     const fieldValue = typeof value === 'object' ? value && value.value : value;
     this.setState(prevState => {
       const relatedField = field === 'service' && value && value.category ? { category: value.category } : {};
-      return {
-        [dialog]: { ...prevState[dialog], [field]: fieldValue, ...relatedField },
-      };
-    });
-
-    this.setState(prevState => ({
-      [dialog]: { ...prevState[dialog], [field]: fieldValue },
-    }));
-  }
-
-  dialogActions({ dialog, action }) {
-    console.log(dialog, action);
-    this.setState(prevState => {
       const currDialog = prevState[dialog];
-      return { [dialog]: { ...currDialog, modal: !currDialog.modal } };
+      const fields = { ...currDialog.fields, [field]: fieldValue, ...relatedField };
+      return { [dialog]: { ...currDialog, fields } };
     });
   }
 
-  async handleButtonClick({ action, dialog }) {
+  async dialogActions({ dialog, action }) {
     const { expenseDialog } = this.state;
-
+    const { fields } = expenseDialog;
     try {
       let response;
       if (action === 'delete') {
-        response = await apiDelete(`/expenses/${expenseDialog.id}`);
+        response = await apiDelete(`/expenses/${fields.id}`);
       } else if (action === 'save') {
-        response = await apiPost('/expenses', expenseDialog);
+        response = await apiPost('/expenses', fields);
       }
-
-      // console.log(dialogDefaults[dialog]);
-
-      // // Reset dialog
-      // this.setState({ [dialog]: dialogDefaults[dialog] });
 
       this.setState(prevState => {
         const expenses = [...prevState.expenses];
         if (response) {
           const { data } = response;
           const index = expenses.findIndex(({ id }) => id === data.id);
-          // console.log('D', data);
-          // console.log(index);
           if (action === 'delete') {
             expenses.splice(index, 1);
           } else if (action === 'save') {
@@ -146,50 +123,17 @@ class Test extends Component {
             }
           }
         }
-        console.log('SAVE STAE');
+
+        const currDialog = prevState[dialog];
         return {
           expenses, // Update state
-          // [dialog]: dialogDefaults[dialog], // Clear dialog
+          [dialog]: { ...currDialog, modal: !currDialog.modal }, // Clear dialog
         };
       });
     } catch (err) {
       console.error(err);
     }
-
-    // Reset dialog
-    // this.setState({ [dialog]: dialogDefaults[dialog] });
   }
-
-  /*   handleButtonClick({ action, dialog }) {
-    const { expenseDialog } = this.state;
-    if (action === 'delete') {
-      apiDelete(`/expenses/${expenseDialog.id}`).then(({ data }) => {
-        this.setState(prevState => {
-          const expenses = [...prevState.expenses];
-          const index = expenses.findIndex(({ id }) => id === data.id);
-          expenses.splice(index, 1);
-          return { expenses };
-        });
-      });
-    } else if (action === 'save') {
-      apiPost('/expenses', expenseDialog).then(({ data }) => {
-        this.setState(prevState => {
-          const expenses = [...prevState.expenses];
-          const index = expenses.findIndex(({ id }) => id === data.id);
-          if (index === -1) {
-            expenses.push(data);
-          } else {
-            expenses.splice(index, 1, data);
-          }
-          return { expenses };
-        });
-      });
-    }
-
-    // Reset dialog
-    this.setState({ [dialog]: dialogDefaults[dialog] });
-  }
- */
 
   render() {
     const { expenseDialog, expenses, sort, order, page, pageCount } = this.state;
@@ -235,11 +179,12 @@ class Test extends Component {
             onButtonClick={this.handleButtonClick}
           />
           <h1>Kostnader</h1>
-          <Pager page={page} pageCount={pageCount} onClick={this.handlePagerClick} />
+
           <Table striped hover className="" size="sm" responsive>
             <SortedHeader headers={headers} sort={sort} order={order} onSort={this.handleSortClick} />
             <tbody>{items}</tbody>
           </Table>
+          {pageCount > 1 && <Pager page={page} pageCount={pageCount} onClick={this.handlePagerClick} />}
         </Container>
       </div>
     );

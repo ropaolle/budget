@@ -2,14 +2,6 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Dialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // modal: false,
-    };
-    // this.toggle = this.toggle.bind(this);
-  }
-
   toggle(action) {
     const { onAction, dialog } = this.props;
     onAction({ dialog, action });
@@ -17,8 +9,6 @@ class Dialog extends React.Component {
 
   render() {
     const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton, modal } = this.props;
-    // const { modal } = this.state;
-
     return (
       <div>
         <div className="float-right">

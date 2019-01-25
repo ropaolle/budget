@@ -15,16 +15,10 @@ function Dialog(props) {
     // Dialog
     onChange,
     settings,
-    // Dialog fields
-    recurrentDate,
-    description,
-    cost,
-    type,
-    date,
-    service,
-    category,
+    fields,
   } = props;
   const { services, categories, types } = settings;
+  const { recurrentDate, description, cost, type, date, service, category } = fields;
   return (
     <BaseDialog
       dialog={dialog}

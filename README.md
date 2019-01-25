@@ -2,7 +2,7 @@
 
 ## Todo
 
-- [ ] Pager på kostnadssidan.
+- [ ] Filter kostnadssidan.
 
 ## Info
 
