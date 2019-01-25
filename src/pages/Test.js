@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Table, Badge } from 'reactstrap';
 import format from 'date-fns/format';
 import { ExpenseDialog } from '../dialogs';
-import SortedHeader from '../components/SortedHeader';
+import { SortedHeader, Pager } from '../components';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
 
 const dialogDefaults = {
@@ -21,7 +21,7 @@ const dialogDefaults = {
   order: 'asc',
   page: 0,
   pageSize: 3,
-  // pageCount: 1,
+  pageCount: 1,
 };
 
 class Test extends Component {
@@ -36,6 +36,7 @@ class Test extends Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSortClick = this.handleSortClick.bind(this);
+    this.handlePagerClick = this.handlePagerClick.bind(this);
   }
 
   componentDidMount() {
@@ -57,9 +58,10 @@ class Test extends Component {
 
   async loadData(offset) {
     const { sort, order, pageSize } = this.state;
-    const { data: expenses } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: offset });
-    console.log('Expenses', expenses);
-    this.setState({ expenses });
+    const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: offset });
+    const { expenses, totalCount } = data;
+    console.log('Expenses', expenses, totalCount);
+    this.setState({ expenses, pageCount: Math.ceil(totalCount / pageSize) });
   }
 
   handleFieldChange({ value, field, dialog }) {
@@ -118,8 +120,12 @@ class Test extends Component {
     });
   }
 
+  handlePagerClick(page) {
+    this.setState({ page });
+  }
+
   render() {
-    const { expenseDialog, expenses, sort, order } = this.state;
+    const { expenseDialog, expenses, sort, order, page, pageCount } = this.state;
     const { settings } = this.props;
 
     const typeBadge = type =>
@@ -155,13 +161,13 @@ class Test extends Component {
       <div className="page">
         <Container fluid>
           <ExpenseDialog
-            // className="pull-right"
             {...expenseDialog}
             settings={settings}
             onChange={this.handleFieldChange}
             onButtonClick={this.handleButtonClick}
           />
           <h1>Kostnader</h1>
+          <Pager page={page} pageCount={pageCount} onClick={this.handlePagerClick} />
           <Table striped hover className="" size="sm" responsive>
             <SortedHeader headers={headers} sort={sort} order={order} onSort={this.handleSortClick} />
             <tbody>{items}</tbody>
