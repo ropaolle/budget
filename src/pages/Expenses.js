@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Container, Table, Badge, Form, Row, Col } from 'reactstrap';
 import isEqual from 'lodash.isequal';
 import pickBy from 'lodash.pickby';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfMonth from 'date-fns/start_of_month';
-import endOfMonth from 'date-fns/end_of_month';
+import { format, parse, startOfMonth, endOfMonth } from 'date-fns';
 import { ExpenseDialog } from '../dialogs';
 import { SelectField, MonthField } from '../dialogs/fields';
 import { SortedHeader, Pager } from '../components';
@@ -25,6 +22,8 @@ class Test extends Component {
       pageCount: 1,
       filters: {
         service: null,
+        category: null,
+        type: null,
         month: format(startOfMonth(new Date()), 'YYYY-MM'),
       },
     };
