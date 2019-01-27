@@ -44,7 +44,7 @@ app.use(
   })
 );
 
-app.use('/', require('./routes/options'));
+// app.use('/', require('./routes/options'));
 
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
