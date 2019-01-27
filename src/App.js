@@ -8,6 +8,7 @@ import Om from './pages/Om';
 import Page404 from './pages/Page404';
 import Expenses from './pages/Expenses';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -19,11 +20,10 @@ class App extends Component {
   async componentDidMount() {
     const { user } = this.state;
     // apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
-
+    await apiPost('/createOptions');
     if (!user) {
       const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
       console.log('LOGIN', data);
-      // const { user: auth } = data;
       this.setState({ ...data });
     }
   }
