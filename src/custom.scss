@@ -29,6 +29,10 @@
   .times-cost-list button.btn-link {
     padding: 0 0.5rem;
   }
+
+  .pagination {
+    justify-content: center;
+  }
 }
 
 /* Invoices */
@@ -87,100 +91,6 @@
   }
 }
 
-/* Settings */
-.page.settings {
-  .form-check-input {
-    position: relative;
-    margin-top: 0;
-    margin-left: 0;
-    vertical-align: middle;
-    margin-right: 9px;
-  }
-}
-
-/* Projects */
-.page.projects {
-  tr:hover {
-    cursor: pointer;
-  }
-
-  .list-row {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-
-    &:first-of-type  {
-      border-top: 1px solid #eee;
-    }
-
-    &:nth-child(even) {
-      background: #f7f7f7;
-    }
-
-    &:hover {
-      background: #eee;
-    }
-
-    .title {
-      margin-left: 16px;
-      span {
-        font-weight: 500;
-      }
-    }
-
-    .badge {
-      margin-left: 6px;
-    }
-  }
-}
-
-/* Project */
-.page.project {
-
-  .box {
-    border: 1px solid #ccc;
-    padding: 6px 12px;
-    border-radius: 4px;
-    margin-top: 12px;
-  }
-
-  .subproject {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-top: 36px;
-    border-radius: 5px;
-  }
-
-}
-
-/* Plugin */
-.page.plugin {
-
-  .container-fluid {
-    padding: 0;
-    font-size: 90%;
-      margin-top: 24px;
-  }
-
-}
-
-.page.times {
-
-  .progress {
-    height: 1.5rem;
-  }
-
-  a {
-    color: #fff;
-  }
-
-  .user-row td {
-    font-size: 18px;
-    font-weight: 700;
-    padding-top: 24px;
-  }
-
-}
-
 .page.page404 {
 
   .display-2 {
@@ -194,51 +104,4 @@
     max-width: 100%
   }
 
-}
-
-.page.weekreport {
-
-  tr.sum-row th {
-    font-weight: 500;
-  }
-
-}
-
-
-// Extras
-
-.form-group .is-invalid {
-  color: #dc3545 !important;
-}
-
-.table td.table-subtitle {
-  padding: 0.2rem 0.75rem;
-  background-color: aliceblue;
-  font-weight: 500;
-}
-
-.modal .modal-dialog.modal-lg {
-  max-width: 80%;
-}
-
-.created-by {
-  display: flex;
-  background-color: #fafafa;
-  border-left: 4px solid #eaeaea;
-  color: #333;
-  margin: 10px 0 20px;
-  padding: 6px 10px;
-  font-size: 12px;
-
-  .progress {
-    width: 20%;
-    margin-left: 4px;
-  }
-
-  span {
-    color: #aaa;
-    font-weight: normal;
-    margin-left: 4px;
-    margin-right: 8px;
-  }
 }

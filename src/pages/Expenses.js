@@ -18,7 +18,7 @@ class Test extends Component {
       order: 'asc',
       totalCount: 0,
       page: 0,
-      pageSize: 15,
+      pageSize: 50,
       pageCount: 1,
       filters: {
         service: null,

@@ -27,7 +27,6 @@ class App extends Component {
     super(props);
 
     this.state = { user: null, settings: {} };
-    // this.updateBilling = this.updateBilling.bind(this);
   }
 
   async componentDidMount() {
@@ -35,8 +34,6 @@ class App extends Component {
     if (!user) {
       const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
       console.log('LOGIN', data);
-      const maxLength = 9;
-      console.log(Math.floor(maxLength / 2), maxLength % 2);
       this.setState({ ...data, settings: prepareAutocomplete(data.settings) });
     }
   }

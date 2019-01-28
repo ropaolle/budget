@@ -2,11 +2,11 @@
 
 ## Todo
 
-- [ ] Exportera till Excel.
-- [ ] Importera från Excel.
 - [ ] Kortare pager.
 
-maxLength
+## Later
+
+- [ ] Exportera/importera till Excel.
 
 ## Info
 
