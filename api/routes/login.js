@@ -7,6 +7,8 @@ const Expense = require('../models/Expense');
 
 const router = express.Router();
 
+// apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
   User.authenticate(email, password, async (err, user) => {

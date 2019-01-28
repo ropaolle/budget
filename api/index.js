@@ -40,6 +40,7 @@ app.use(
 
 app.use('/', require('./routes/login'));
 app.use('/', require('./routes/expenses'));
+app.use('/', require('./routes/services'));
 app.use('/', require('./routes/test'));
 
 app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));

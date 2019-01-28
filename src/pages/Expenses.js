@@ -107,14 +107,12 @@ class Test extends Component {
       if (action === 'delete') {
         response = await apiDelete(`/expenses/${fields.id}`);
       } else if (action === 'save') {
-        // TODO: ?
+        // NOTE: Updates default category in db, cached settings.services is not updated.
         const service = settings.services.find(({ value }) => value === fields.service);
         if (service && service.category !== fields.category) {
-          console.log('A1', fields.category, service);
+          await apiPost('/services', { ...service, category: fields.category });
         }
-        // console.log('A1', expenseDialog);
-        // console.log('A1', service);
-
+        // Save expense
         response = await apiPost('/expenses', fields);
       }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Row, Col } from 'reactstrap';
 import format from 'date-fns/format';
 import BaseDialog from './BaseDialog';
-import { SelectField, DateField, CostField } from './fields';
+import { SelectField, DateField, CostField, CreatableSelectField } from './fields';
 
 const dialog = 'expenseDialog';
 
@@ -34,7 +34,7 @@ function Dialog(props) {
   } = props;
   const { services, categories, types, autocomplete } = settings;
   const { recurrentDate, description, cost, type, date, service, category } = fields;
-  console.log(isNew, date, cost, service, category, type);
+
   return (
     <BaseDialog
       dialog={dialog}
@@ -57,13 +57,7 @@ function Dialog(props) {
             <DateField id="date" label="Date" value={date} onChange={field => onChange({ ...field, dialog })} />
           </Col>
           <Col md={12}>
-            {/* <TextField
-              id="description"
-              label="Beskrivning"
-              value={description}
-              onChange={field => onChange({ ...field, dialog })}
-            /> */}
-            <SelectField
+            <CreatableSelectField
               id="description"
               label="Beskrivning"
               value={description}
@@ -73,7 +67,7 @@ function Dialog(props) {
             />
           </Col>
           <Col md={6}>
-            <SelectField
+            <CreatableSelectField
               id="service"
               label="Företag/tjänst"
               value={service}
@@ -82,7 +76,7 @@ function Dialog(props) {
             />
           </Col>
           <Col md={6}>
-            <SelectField
+            <CreatableSelectField
               id="category"
               label="Kategori"
               value={category}

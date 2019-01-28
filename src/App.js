@@ -9,8 +9,18 @@ import Page404 from './pages/Page404';
 import Expenses from './pages/Expenses';
 import Test from './pages/Test';
 
-const sortStringsByLength = (a, b) => a.length - b.length;
-const sortStrings = (a, b) => a.localeCompare(b, 'sv');
+function prepareAutocomplete(settings) {
+  const sortStringsByLength = (a, b) => a && a.length - b.length;
+  const sortStrings = (a, b) => a && a.localeCompare(b, 'sv');
+  return {
+    ...settings,
+    autocomplete: settings.autocomplete
+      .sort(sortStrings)
+      .sort(sortStringsByLength)
+      // INFO: https://github.com/JedWatson/react-select/issues/3087
+      .map(v => ({ value: v || '', label: v || '' })),
+  };
+}
 
 class App extends Component {
   constructor(props) {
@@ -22,22 +32,12 @@ class App extends Component {
 
   async componentDidMount() {
     const { user } = this.state;
-    // apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
-
     if (!user) {
       const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
-
-      // Sort and prepare autocomplete
-      const settings = {
-        ...data.settings,
-        autocomplete: data.settings.autocomplete
-          .sort(sortStrings)
-          .sort(sortStringsByLength)
-          .map((v, i) => ({ value: i, label: v })),
-      };
-
       console.log('LOGIN', data);
-      this.setState({ ...data, settings });
+      const maxLength = 9;
+      console.log(Math.floor(maxLength / 2), maxLength % 2);
+      this.setState({ ...data, settings: prepareAutocomplete(data.settings) });
     }
   }
 

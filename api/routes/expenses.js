@@ -1,12 +1,32 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Expense = require('../models/Expense');
+const Category = require('../models/Category');
+const Service = require('../models/Service');
 
 const router = express.Router();
 
-router.post('/expenses', (req, res) => {
-  const { id } = req.body;
-  console.log(req.body);
+router.post('/expenses', async (req, res) => {
+  const { id, category, service } = req.body;
+
+  // If Category is not an objectId and a string, then create new Category.
+  if (!mongoose.Types.ObjectId.isValid(category) && typeof category === 'string' && category.length > 0) {
+    const c = new Category({ label: category });
+    await c.save(err => {
+      if (err) return console.error(err);
+      req.body.category = c.id;
+    });
+  }
+
+  // If Service is not an objectId and a string, then create new Service.
+  if (!mongoose.Types.ObjectId.isValid(service) && typeof service === 'string' && service.length > 0) {
+    const s = new Service({ label: service, category: req.body.category });
+    await s.save(err => {
+      if (err) return console.error(err);
+      req.body.service = s.id;
+    });
+  }
+
   Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, req.body, { upsert: true, new: true })
     .populate('service')
     .populate('category')
