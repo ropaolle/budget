@@ -63,8 +63,8 @@ class AppBar extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} to="/tider">
-                    Mina tider
+                  <NavLink tag={Link} to="/test">
+                    Test
                   </NavLink>
                 </NavItem>
               </Nav>

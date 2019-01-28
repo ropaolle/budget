@@ -78,7 +78,7 @@ class Test extends Component {
       const { data } = await apiGet(`/expenses/${id}`);
       this.setState(
         // Update fields
-        prevState => ({ expenseDialog: { ...prevState.expenseDialog, fields: data } }),
+        prevState => ({ expenseDialog: { ...prevState.expenseDialog, fields: data, isNew: false } }),
         () => {
           this.dialogActions({ dialog: 'expenseDialog', action: 'open' }); // Open dialog
         }
@@ -101,11 +101,20 @@ class Test extends Component {
   async dialogActions({ dialog, action }) {
     const { expenseDialog } = this.state;
     const { fields } = expenseDialog;
+    const { settings } = this.props;
     try {
       let response;
       if (action === 'delete') {
         response = await apiDelete(`/expenses/${fields.id}`);
       } else if (action === 'save') {
+        // TODO: ?
+        const service = settings.services.find(({ value }) => value === fields.service);
+        if (service && service.category !== fields.category) {
+          console.log('A1', fields.category, service);
+        }
+        // console.log('A1', expenseDialog);
+        // console.log('A1', service);
+
         response = await apiPost('/expenses', fields);
       }
 
