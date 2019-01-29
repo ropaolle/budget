@@ -5,5 +5,6 @@ import TextField from './Text';
 import DateField from './Date';
 import DateTimeField from './DateTime';
 import MonthField from './Month';
+import PasswordField from './Password';
 
-export { SelectField, DateField, DateTimeField, CostField, TextField, MonthField, CreatableSelectField };
+export { SelectField, DateField, DateTimeField, CostField, TextField, MonthField, CreatableSelectField, PasswordField };

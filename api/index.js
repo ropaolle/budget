@@ -19,7 +19,6 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const app = express();
-// const router = express.Router();
 
 app.use(cors({ origin: REACT_APP_API_CORS }));
 

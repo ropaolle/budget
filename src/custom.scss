@@ -35,62 +35,21 @@
   }
 }
 
-/* Invoices */
-.page.invoices, .page.billing {
+// Login
+.page.login {
 
-  .customer-select {
-    min-width: 300px;
+  margin: 40px 20px 0 20px;
+
+  .container-fluid {
+    max-width: 400px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 6px;
   }
 
-  .svg-inline--fa {
-    margin: 0 5px;
-  }
-
-  .save-message {
-    margin-left: 10px;
-  }
-
-  .notes {
-    border: 1px solid #E7E7bb;
-    border-radius: 4px;
-    padding: 6px 12px;
-    margin-bottom: 24px;
-    margin-top: 6px;
-    background-color: #ffc;
-    &:empty {
-      display: none;
-    }
-  }
-
-  .list-row {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-
-    &:first-of-type  {
-      border-top: 1px solid #eee;
-    }
-
-    &:nth-child(even) {
-      background: #f7f7f7;
-    }
-
-    &:hover {
-      background: #eee;
-    }
-
-    .title {
-      margin-left: 16px;
-      span {
-        font-weight: 500;
-      }
-    }
-
-    .badge {
-      margin-left: 6px;
-    }
-  }
 }
 
+// 404
 .page.page404 {
 
   .display-2 {

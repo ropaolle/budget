@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Om from './pages/Om';
 import Page404 from './pages/Page404';
 import Expenses from './pages/Expenses';
+import Login from './pages/Login';
 import Test from './pages/Test';
 
 function prepareAutocomplete(settings) {
@@ -31,11 +32,11 @@ class App extends Component {
 
   async componentDidMount() {
     const { user } = this.state;
-    if (!user) {
-      const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
-      console.log('LOGIN', data);
-      this.setState({ ...data, settings: prepareAutocomplete(data.settings) });
-    }
+    // if (!user) {
+    //   const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
+    //   console.log('LOGIN', data);
+    //   this.setState({ ...data, settings: prepareAutocomplete(data.settings) });
+    // }
   }
 
   render() {
@@ -49,7 +50,7 @@ class App extends Component {
           <AppBar user={user} settings={settings} />
           <div className="content">
             {!authenticated ? (
-              <Route path="/" component={Home} />
+              <Route path="/" component={Login} />
             ) : (
               <Switch>
                 <Route exact path="/" component={Home} />
