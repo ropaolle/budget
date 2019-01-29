@@ -17,7 +17,7 @@ class Test extends Component {
       sort: 'date',
       order: 'asc',
       totalCount: 0,
-      page: 0,
+      page: 1,
       pageSize: 2,
       pageCount: 1,
       filters: {
@@ -63,7 +63,7 @@ class Test extends Component {
       };
       delete filters.month;
     }
-    const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: page * pageSize, filters });
+    const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: (page - 1) * pageSize, filters });
     const { expenses, totalCount } = data;
     // console.log('Expenses', expenses);
     this.setState({ expenses, totalCount, pageCount: Math.ceil(totalCount / pageSize) });
