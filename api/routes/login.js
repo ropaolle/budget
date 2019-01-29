@@ -11,7 +11,7 @@ const Expense = require('../models/Expense');
 class HandlerGenerator {
   // eslint-disable-next-line
   login(req, res) {
-    console.log('HALLÅ');
+    console.log('Handler', req.body);
     const { username, password } = req.body;
     // For the given username fetch user from DB
     const mockedUsername = 'admin';
@@ -31,6 +31,8 @@ class HandlerGenerator {
           token,
         });
       } else {
+        console.log('403');
+
         res.send(403).json({
           success: false,
           message: 'Incorrect username or password',
@@ -46,10 +48,10 @@ class HandlerGenerator {
 
   // eslint-disable-next-line
   index(req, res) {
-    res.json({
-      success: true,
-      message: 'Index page',
-    });
+    // res.json({
+    //   success: true,
+    //   message: 'Index page',
+    // });
   }
 }
 
@@ -60,27 +62,31 @@ const router = express.Router();
 const handlers = new HandlerGenerator();
 router.post('/login2', handlers.login);
 
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  User.authenticate(email, password, async (err, user) => {
-    if (err) return res.json({ err });
+// router.post('/login2', (req, res) => {
+//   console.log('asd');
+// });
 
-    const allData = await Promise.all([
-      Type.find({}),
-      Category.find({}),
-      Service.find({}),
-      Expense.distinct('description'),
-    ]);
+// router.post('/login', (req, res) => {
+//   const { email, password } = req.body;
+//   User.authenticate(email, password, async (err, user) => {
+//     if (err) return res.json({ err });
 
-    const settings = {
-      types: allData[0],
-      categories: allData[1],
-      services: allData[2],
-      autocomplete: allData[3],
-    };
+//     const allData = await Promise.all([
+//       Type.find({}),
+//       Category.find({}),
+//       Service.find({}),
+//       Expense.distinct('description'),
+//     ]);
 
-    res.json({ user, settings });
-  });
-});
+//     const settings = {
+//       types: allData[0],
+//       categories: allData[1],
+//       services: allData[2],
+//       autocomplete: allData[3],
+//     };
+
+//     res.json({ user, settings });
+//   });
+// });
 
 module.exports = router;

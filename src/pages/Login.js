@@ -24,7 +24,7 @@ class Login extends Component {
   async handleLogin() {
     const { username, password } = this.state;
     console.log('Login', username, password);
-    const { data } = await apiPost('/login2', { password, email: username });
+    const data = await apiPost('/login2', { password, username });
     console.log('Login', data);
   }
 
