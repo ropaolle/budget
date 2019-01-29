@@ -3,9 +3,9 @@
 ## Todo
 
 - [ ] Mobilvy, ej tabell
-- [ ] Loading icon
-- [ ] DefaultPage
+- [ ] DefaultPage, loading icon
 - [ ] Ladda data på sidan test
+- [ ] 
 
 ## Later
 
