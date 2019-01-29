@@ -2,7 +2,10 @@
 
 ## Todo
 
-- [ ] Kortare pager.
+- [ ] Mobilvy, ej tabell
+- [ ] Loading icon
+- [ ] DefaultPage
+- [ ] Ladda data på sidan test
 
 ## Later
 

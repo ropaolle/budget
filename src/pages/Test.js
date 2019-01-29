@@ -9,9 +9,9 @@ class Test extends Component {
   }
 
   async componentDidMount() {
-    const { data } = await apiGet('/test');
-    console.log('Test', data);
-    this.setState({ ...data });
+    // const { data } = await apiGet('/test');
+    // console.log('Test', data);
+    // this.setState({ ...data });
   }
 
   render() {

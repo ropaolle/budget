@@ -18,13 +18,13 @@ class Test extends Component {
       order: 'asc',
       totalCount: 0,
       page: 1,
-      pageSize: 2,
+      pageSize: 50,
       pageCount: 1,
       filters: {
         service: null,
         category: null,
         type: null,
-        month: '2018-11', // format(startOfMonth(new Date()), 'YYYY-MM'),
+        month: format(startOfMonth(new Date()), 'YYYY-MM'),
       },
     };
 
@@ -191,8 +191,8 @@ class Test extends Component {
             onChange={this.handleFieldChange}
             onButtonClick={this.handleButtonClick}
           />
-          <h1>Kostnader ({totalCount})</h1>
-          <div>&ctdot; &#x022EF; &#8943;</div>
+          <h1>Kostnader</h1>
+
           <Form>
             <Row>
               <Col md={3}>
@@ -230,11 +230,19 @@ class Test extends Component {
               </Col>
             </Row>
           </Form>
-          <Pager page={page} pageCount={pageCount} onClick={p => this.setState({ page: p })} />
-          <Table striped hover className="" size="sm" responsive>
+
+          <div className="mb-4">
+            Antal poster: <strong>{totalCount}</strong>
+          </div>
+
+          <Table striped hover size="sm" responsive>
             <SortedHeader headers={headers} sort={sort} order={order} onSort={this.handleSortClick} />
             <tbody>{items}</tbody>
           </Table>
+
+          <div className="mt-4">
+            <Pager page={page} pageCount={pageCount} onClick={p => this.setState({ page: p })} />
+          </div>
         </Container>
       </div>
     );

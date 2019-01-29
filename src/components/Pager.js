@@ -2,27 +2,8 @@ import React, { Component } from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 function getPagerItems(pageCount, maxLength, offset) {
-  // Pager annvänds ej, dvs. en sida
-  if (pageCount < 2) {
-    return [];
-  }
-
-  const getRange = (count, indexOffset) => [...Array(count)].map((val, i) => i + indexOffset);
-
-  // Alla sidor kan visas i pager
-  if (pageCount <= maxLength) {
-    return getRange(pageCount, 1);
-  }
-
-  // Alla de sista sidorna får plats
-  const firstVisible = 1 + maxLength * offset;
-  if (pageCount - firstVisible < maxLength) {
-    const startRange = getRange(pageCount - firstVisible + 1, firstVisible);
-    return [...startRange];
-  }
-
-  const startRange = getRange(maxLength - 4, firstVisible).filter(v => v < pageCount - 2);
-  return [...startRange, '...', pageCount - 2, pageCount - 1, pageCount];
+  const indexOffset = pageCount <= maxLength ? 1 : maxLength * offset + 1;
+  return pageCount < 2 ? [] : [...Array(maxLength)].map((val, i) => i + indexOffset).filter(v => v < pageCount + 1);
 }
 
 class Pager extends Component {
@@ -54,26 +35,33 @@ class Pager extends Component {
       let nextOffset = offset;
       let nextPager = pager;
 
-      // console.log(action, newPage, index, nextIndex, pager[nextIndex]);
-
       if (action === 'first') {
         nextIndex = 0;
         nextOffset = 0;
+        nextPager = getPagerItems(pageCount, maxLength, nextOffset);
+      } else if (action === 'prev' && index === 0 && offset > 0) {
+        nextIndex = 9;
+        nextOffset -= 1;
+        nextPager = getPagerItems(pageCount, maxLength, nextOffset);
+      } else if (action === 'next' && index === maxLength - 1) {
+        nextIndex = 0;
+        nextOffset += 1;
+        nextPager = getPagerItems(pageCount, maxLength, nextOffset);
       } else if (action === 'prev' && index > 0) {
-        if (pager[index - 1] === '...') {
-          nextOffset += 1;
-          nextPager = getPagerItems(pageCount, maxLength, nextOffset);
-        }
-        nextIndex -= pager[index - 1] === '...' ? 2 : 1;
+        nextIndex -= 1;
       } else if (action === 'next' && index < pager.length - 1) {
-        nextIndex += pager[index + 1] === '...' ? 2 : 1;
+        nextIndex += 1;
+      } else if (action === 'last') {
+        const lastOffset = Math.floor(pageCount / maxLength);
+        nextPager = getPagerItems(pageCount, maxLength, lastOffset);
+        nextIndex = nextPager.length - 1;
       } else if (newPage) {
         nextIndex = newPage - 1;
       }
 
       if (nextIndex !== index) {
-        onClick(pager[nextIndex]);
-        return { index: nextIndex };
+        onClick(nextPager[nextIndex]);
+        return { index: nextIndex, pager: nextPager, offset: nextOffset };
       }
       return null;
     });
@@ -81,14 +69,13 @@ class Pager extends Component {
 
   render() {
     const { pageCount, page } = this.props;
-    const { index, pager } = this.state;
-    console.log(pageCount, page, this.state);
+    const { pager } = this.state;
 
     const items =
       pager &&
-      pager.map(val => (
+      pager.map((val, index) => (
         <PaginationItem disabled={val === '...'} key={val} active={val === page}>
-          <PaginationLink onClick={() => this.handleClick('page', val)}>{val}</PaginationLink>
+          <PaginationLink onClick={() => this.handleClick('page', index + 1)}>{val}</PaginationLink>
         </PaginationItem>
       ));
 
@@ -121,33 +108,3 @@ class Pager extends Component {
 }
 
 export default Pager;
-
-/*
- getPagerItems() {
-    const { pageCount } = this.props;
-    // const pageCount = 11;
-    const { maxLength, pagerPage } = this.state;
-
-    // Pager annvänds ej, dvs. en sida
-    if (pageCount < 2) {
-      return [];
-    }
-
-    const getRange = (count, offset) => [...Array(count)].map((val, i) => i + offset);
-
-    // Alla sidor kan visas i pager
-    if (pageCount <= maxLength) {
-      return getRange(pageCount, 1);
-    }
-
-    // Alla de sista sidorna får plats
-    const firstVisible = 1 + maxLength * pagerPage;
-    if (pageCount - firstVisible < maxLength) {
-      const startRange = getRange(pageCount - firstVisible + 1, firstVisible);
-      return [...startRange];
-    }
-
-    const startRange = getRange(maxLength - 4, firstVisible).filter(v => v < pageCount - 2);
-    return [...startRange, '...', pageCount - 2, pageCount - 1, pageCount];
-  }
-*/
