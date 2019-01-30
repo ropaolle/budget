@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { apiPost } from './lib/api';
+import jwt from 'jsonwebtoken';
+import { apiGet } from './lib/api';
 import AppBar from './components/AppBar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -8,6 +9,7 @@ import Om from './pages/Om';
 import Page404 from './pages/Page404';
 import Expenses from './pages/Expenses';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import Test from './pages/Test';
 
 function prepareAutocomplete(settings) {
@@ -26,37 +28,52 @@ function prepareAutocomplete(settings) {
 class App extends Component {
   constructor(props) {
     super(props);
+    const token = localStorage.getItem('token');
+    this.state = {
+      user: token ? jwt.decode(token) : null,
+      settings: null,
+    };
 
-    this.state = { user: null, settings: {} };
+    this.login = this.login.bind(this);
+    this.loadSettings = this.loadSettings.bind(this);
   }
 
   async componentDidMount() {
-    const { user } = this.state;
-    // if (!user) {
-    //   const { data } = await apiPost('/login', { password: 'pass1234', email: 'ropaolle@gmail.com' });
-    //   console.log('LOGIN', data);
-    //   this.setState({ ...data, settings: prepareAutocomplete(data.settings) });
-    // }
+    const { user, settings } = this.state;
+    if (user && !settings) {
+      this.loadSettings();
+    }
+  }
+
+  async loadSettings() {
+    const { data } = await apiGet('/login/settings');
+    console.info('SETTINGS', data);
+    this.setState({ settings: prepareAutocomplete(data) });
+  }
+
+  login(user) {
+    this.setState({ user });
+    this.loadSettings();
   }
 
   render() {
     const { state } = this;
     const { user, settings } = state;
-    const authenticated = user && user.username;
 
     return (
-      <Router /* basename="/tor" */>
+      <Router>
         <div className="app">
-          <AppBar user={user} settings={settings} />
+          <AppBar user={user} settings={settings} logout={this.logout} />
           <div className="content">
-            {!authenticated ? (
-              <Route path="/" component={Login} />
+            {!user ? (
+              <Route path="/" render={() => <Login login={this.login} />} />
             ) : (
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/om" render={props => <Om {...props} user={user} />} />
                 <Route path="/expenses" render={props => <Expenses {...props} {...state} user={user} />} />
                 <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
+                <Route path="/logout" render={() => <Logout logout={() => this.setState({ user: null })} />} />
 
                 <Route component={Page404} />
               </Switch>

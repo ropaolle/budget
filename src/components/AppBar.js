@@ -31,6 +31,12 @@ class AppBar extends Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
+  logout() {
+    const { history } = this.props;
+    localStorage.removeItem('token');
+    history.push('/');
+  }
+
   render() {
     const { isOpen } = this.state;
     const { user } = this.props;
@@ -47,7 +53,7 @@ class AppBar extends Component {
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href={process.env.REACT_APP_PATH_LOGIN} target="_blank">
+                  <NavLink tag={Link} to="/login">
                     Logga in
                   </NavLink>
                 </NavItem>
@@ -88,7 +94,9 @@ class AppBar extends Component {
                       Om
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem href={process.env.REACT_APP_PATH_LOGOUT}>Logga ut</DropdownItem>
+                    <DropdownItem tag={Link} to="/logout">
+                      Logga ut
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>

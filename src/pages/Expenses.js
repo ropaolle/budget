@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Table, Badge, Form, Row, Col } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import isEqual from 'lodash.isequal';
 import pickBy from 'lodash.pickby';
 import { format, parse, startOfMonth, endOfMonth } from 'date-fns';
@@ -12,6 +14,7 @@ class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       expenseDialog: ExpenseDialog.defaults,
       expenses: [],
       sort: 'date',
@@ -52,6 +55,7 @@ class Test extends Component {
   }
 
   async loadData() {
+    this.setState({ loading: true });
     const { sort, order, page, pageSize, filters: rawFilters } = this.state;
     // Remove null values from filters.
     const filters = pickBy(rawFilters);
@@ -66,7 +70,7 @@ class Test extends Component {
     const { data } = await apiGet('/expenses', { sort, order, limit: pageSize, skip: (page - 1) * pageSize, filters });
     const { expenses, totalCount } = data;
     // console.log('Expenses', expenses);
-    this.setState({ expenses, totalCount, pageCount: Math.ceil(totalCount / pageSize) });
+    this.setState({ loading: false, expenses, totalCount, pageCount: Math.ceil(totalCount / pageSize) });
   }
 
   handleSortClick(sort, order) {
@@ -149,7 +153,7 @@ class Test extends Component {
   }
 
   render() {
-    const { expenseDialog, expenses, sort, order, page, pageCount, filters, totalCount } = this.state;
+    const { expenseDialog, expenses, sort, order, page, pageCount, filters, totalCount, loading } = this.state;
     const { settings } = this.props;
 
     const typeBadge = type =>
@@ -184,52 +188,56 @@ class Test extends Component {
     return (
       <div className="page">
         <Container fluid>
-          <ExpenseDialog
-            {...expenseDialog}
-            settings={settings}
-            onAction={this.dialogActions}
-            onChange={this.handleFieldChange}
-            onButtonClick={this.handleButtonClick}
-          />
-          <h1>Kostnader</h1>
+          {settings && (
+            <ExpenseDialog
+              {...expenseDialog}
+              settings={settings}
+              onAction={this.dialogActions}
+              onChange={this.handleFieldChange}
+              onButtonClick={this.handleButtonClick}
+            />
+          )}
+          <h1>Kostnader {loading && <FontAwesomeIcon icon={faSpinner} spin />}</h1>
 
-          <Form>
-            <Row>
-              <Col md={3}>
-                <MonthField id="month" label="Månad" value={filters.month} onChange={this.handleFilterChange} />
-              </Col>
-              <Col md={3}>
-                <SelectField
-                  id="service"
-                  label="Företag/tjänst"
-                  value={filters.service}
-                  options={settings.services}
-                  isClearable
-                  onChange={this.handleFilterChange}
-                />
-              </Col>
-              <Col md={3}>
-                <SelectField
-                  id="category"
-                  label="Kategori"
-                  value={filters.category}
-                  options={settings.categories}
-                  isClearable
-                  onChange={this.handleFilterChange}
-                />
-              </Col>
-              <Col md={3}>
-                <SelectField
-                  id="type"
-                  label="Typ"
-                  value={filters.type}
-                  options={settings.types}
-                  isClearable
-                  onChange={this.handleFilterChange}
-                />
-              </Col>
-            </Row>
-          </Form>
+          {settings && (
+            <Form>
+              <Row>
+                <Col md={3}>
+                  <MonthField id="month" label="Månad" value={filters.month} onChange={this.handleFilterChange} />
+                </Col>
+                <Col md={3}>
+                  <SelectField
+                    id="service"
+                    label="Företag/tjänst"
+                    value={filters.service}
+                    options={settings.services}
+                    isClearable
+                    onChange={this.handleFilterChange}
+                  />
+                </Col>
+                <Col md={3}>
+                  <SelectField
+                    id="category"
+                    label="Kategori"
+                    value={filters.category}
+                    options={settings.categories}
+                    isClearable
+                    onChange={this.handleFilterChange}
+                  />
+                </Col>
+                <Col md={3}>
+                  <SelectField
+                    id="type"
+                    label="Typ"
+                    value={filters.type}
+                    options={settings.types}
+                    isClearable
+                    onChange={this.handleFilterChange}
+                  />
+                </Col>
+              </Row>
+            </Form>
+          )}
 
           <div className="mb-4">
             Antal poster: <strong>{totalCount}</strong>

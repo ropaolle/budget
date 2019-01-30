@@ -7,33 +7,34 @@ const Service = require('../models/Service');
 const router = express.Router();
 
 router.post('/expenses', async (req, res) => {
-  const { id, category, service } = req.body;
+  const { data } = req.body;
+  const { id, category, service } = data;
 
   // If Category is not an objectId and a string, then create new Category.
   if (!mongoose.Types.ObjectId.isValid(category) && typeof category === 'string' && category.length > 0) {
     const c = new Category({ label: category });
     await c.save(err => {
       if (err) return console.error(err);
-      req.body.category = c.id;
+      data.category = c.id;
     });
   }
 
   // If Service is not an objectId and a string, then create new Service.
   if (!mongoose.Types.ObjectId.isValid(service) && typeof service === 'string' && service.length > 0) {
-    const s = new Service({ label: service, category: req.body.category });
+    const s = new Service({ label: service, category: data.category });
     await s.save(err => {
       if (err) return console.error(err);
-      req.body.service = s.id;
+      data.service = s.id;
     });
   }
 
-  Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, req.body, { upsert: true, new: true })
+  Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, data, { upsert: true, new: true })
     .populate('service')
     .populate('category')
     .populate('type')
-    .exec((err, data) => {
+    .exec((err, result) => {
       if (err) return res.json({ err });
-      return res.json(data);
+      return res.json(result);
     });
 });
 
