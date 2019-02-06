@@ -52,14 +52,14 @@ class Pager extends Component {
       } else if (action === 'next' && index < pager.length - 1) {
         nextIndex += 1;
       } else if (action === 'last') {
-        const lastOffset = Math.floor(pageCount / maxLength);
-        nextPager = getPagerItems(pageCount, maxLength, lastOffset);
+        nextOffset = Math.ceil(pageCount / maxLength) - 1; // lastOffset
+        nextPager = getPagerItems(pageCount, maxLength, nextOffset);
         nextIndex = nextPager.length - 1;
       } else if (newPage) {
         nextIndex = newPage - 1;
       }
 
-      if (nextIndex !== index) {
+      if (nextPager[nextIndex] !== pager[index]) {
         onClick(nextPager[nextIndex]);
         return { index: nextIndex, pager: nextPager, offset: nextOffset };
       }
