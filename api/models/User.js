@@ -25,8 +25,8 @@ userSchema.pre('save', async function callback() {
 
 // authenticate input against database
 userSchema.statics.authenticate = async (email, password) => {
-  console.log(email, password);
   try {
+    // eslint-disable-next-line
     const user = await User.findOne({ email });
     if (!user) {
       return Promise.reject(new Error('User not found.'));
@@ -34,7 +34,6 @@ userSchema.statics.authenticate = async (email, password) => {
 
     const valid = await new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, result) => {
-        console.log(err, result);
         if (err) reject(err);
         resolve(result);
       });
@@ -51,7 +50,6 @@ userSchema.statics.authenticate = async (email, password) => {
 
       return Promise.resolve(token);
     }
-
     return Promise.reject(new Error('Wrong password.'));
   } catch (err) {
     return Promise.reject(err);
