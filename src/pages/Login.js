@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Container, Form, Button } from 'reactstrap';
-import jwt from 'jsonwebtoken';
 import { TextField, PasswordField } from '../dialogs/fields';
 import { apiPost } from '../lib/api';
 
@@ -18,12 +17,13 @@ class Login extends Component {
   }
 
   handleLogin() {
-    // const { email, password } = this.state;
+    // TODO: const { email, password } = this.state;
     const email = 'ropaolle@gmail.com';
     const password = 'pass1234';
     const { login } = this.props;
+
     apiPost('/login', { password, email }).then(({ data }) => {
-      login(jwt.decode(data));
+      login(data);
       localStorage.setItem('token', data);
     });
   }
@@ -31,6 +31,7 @@ class Login extends Component {
   render() {
     const { email, password } = this.state;
     const token = localStorage.getItem('token');
+
     return token ? (
       <Redirect to="/" />
     ) : (

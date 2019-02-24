@@ -40,6 +40,7 @@ class App extends Component {
 
   async componentDidMount() {
     const { user, settings } = this.state;
+    console.info(user, settings);
     if (user && !settings) {
       this.loadSettings();
     }
@@ -47,12 +48,11 @@ class App extends Component {
 
   async loadSettings() {
     const { data } = await apiGet('/login/settings');
-    console.info('SETTINGS', data);
     this.setState({ settings: prepareAutocomplete(data) });
   }
 
-  login(user) {
-    this.setState({ user });
+  login(token) {
+    this.setState({ user: jwt.decode(token) });
     this.loadSettings();
   }
 

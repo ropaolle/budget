@@ -20,8 +20,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/login/settings', async (req, res) => {
-  // const token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
-  // console.log('T', token);
   const allData = await Promise.all([
     Type.find({}),
     Category.find({}),

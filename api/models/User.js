@@ -25,6 +25,7 @@ userSchema.pre('save', async function callback() {
 
 // authenticate input against database
 userSchema.statics.authenticate = async (email, password) => {
+  console.log(email, password);
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -33,6 +34,7 @@ userSchema.statics.authenticate = async (email, password) => {
 
     const valid = await new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, result) => {
+        console.log(err, result);
         if (err) reject(err);
         resolve(result);
       });

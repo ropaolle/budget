@@ -6,6 +6,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
+const middleware = require('./middleware');
+
 // Enviorment
 // console.log(Object.entries(process.env).filter(([key]) => key.includes('REACT_APP_')));
 const { REACT_APP_DB, REACT_APP_API_PORT, REACT_APP_API_CORS } = process.env;
@@ -38,8 +40,8 @@ app.use(
 );
 
 app.use('/', require('./routes/login'));
-app.use('/', require('./routes/expenses'));
-app.use('/', require('./routes/services'));
-app.use('/', require('./routes/test'));
+app.use('/', middleware.checkToken, require('./routes/expenses'));
+app.use('/', middleware.checkToken, require('./routes/services'));
+app.use('/', middleware.checkToken, require('./routes/test'));
 
 app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
