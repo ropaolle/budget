@@ -3,12 +3,11 @@
 ## Todo
 
 - [ ] Mobilvy, ej tabell
-- [ ] DefaultPage
-- [ ] API-validation
-
-## Later
-
-- [ ] Exportera/importera till Excel.
+- [X] DefaultPage
+- [X] API-validation
+- [ ] Exportera till Excel
+- [ ] Importera till Excel
+- [ ] Backup
 
 ## Info
 [localeStorage](https://www.robinwieruch.de/local-storage-react/)

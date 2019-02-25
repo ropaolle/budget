@@ -52,7 +52,21 @@ router.get('/expenses', async (req, res) => {
       .sort({ [sort || 'data']: order === 'asc' ? 1 : -1 });
     return res.json({ expenses, totalCount });
   } catch (err) {
-    return res.json({ err });
+    return res.json({ error: err.message });
+  }
+});
+
+router.get('/expenses/export', async (req, res) => {
+  try {
+    const expenses = await Expense.find()
+      .populate('category')
+      .populate('service')
+      .populate('type')
+      // .limit(5)
+      .sort({ date: -1 });
+    return res.json({ expenses });
+  } catch (err) {
+    return res.json({ error: err.message });
   }
 });
 

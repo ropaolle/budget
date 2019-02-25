@@ -10,12 +10,11 @@ class Dialog extends React.Component {
   render() {
     const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton, modal } = this.props;
     return (
-      <div>
-        <div className="float-right">
-          <Button color="danger" onClick={() => this.toggle('open')}>
-            {buttonLabel}
-          </Button>
-        </div>
+      <>
+        <Button color="danger" onClick={() => this.toggle('open')}>
+          {buttonLabel}
+        </Button>
+
         <Modal isOpen={modal} toggle={() => this.toggle('close')}>
           <ModalHeader toggle={() => this.toggle('close')}>{title}</ModalHeader>
           <ModalBody>{children}</ModalBody>
@@ -39,7 +38,7 @@ class Dialog extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
-      </div>
+      </>
     );
   }
 }

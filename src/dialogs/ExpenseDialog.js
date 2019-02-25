@@ -38,7 +38,7 @@ function Dialog(props) {
   return (
     <BaseDialog
       dialog={dialog}
-      buttonLabel="Ny kostnad"
+      buttonLabel="Ny"
       title={isNew ? 'Ny kostnad' : 'Uppdatera kostnad'}
       deleteButton={!isNew}
       saveEnabled={date && cost && service && category && type}

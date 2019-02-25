@@ -7,7 +7,7 @@ import pickBy from 'lodash.pickby';
 import { format, parse, startOfMonth, endOfMonth } from 'date-fns';
 import { ExpenseDialog } from '../dialogs';
 import { SelectField, MonthField } from '../dialogs/fields';
-import { SortedHeader, Pager } from '../components';
+import { SortedHeader, Pager, ExportExpensesButton } from '../components';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
 
 class Test extends Component {
@@ -189,14 +189,18 @@ class Test extends Component {
       <div className="page">
         <Container fluid>
           {settings && (
-            <ExpenseDialog
-              {...expenseDialog}
-              settings={settings}
-              onAction={this.dialogActions}
-              onChange={this.handleFieldChange}
-              onButtonClick={this.handleButtonClick}
-            />
+            <div className="float-right">
+              <ExpenseDialog
+                {...expenseDialog}
+                settings={settings}
+                onAction={this.dialogActions}
+                onChange={this.handleFieldChange}
+                onButtonClick={this.handleButtonClick}
+              />{' '}
+              <ExportExpensesButton />
+            </div>
           )}
+
           <h1>Kostnader {loading && <FontAwesomeIcon icon={faSpinner} spin />}</h1>
 
           {settings && (
