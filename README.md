@@ -5,7 +5,8 @@
 - [ ] Mobilvy, ej tabell
 - [X] DefaultPage
 - [X] API-validation
-- [ ] Exportera till Excel
+- [X] Exportera till Excel
+- [X] Exportera till Json
 - [ ] Importera till Excel
 - [ ] Backup
 
