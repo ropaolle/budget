@@ -1,8 +1,5 @@
-const fs = require('fs');
-const format = require('date-fns/format');
 const express = require('express');
 const mongoose = require('mongoose');
-
 const Expense = require('../models/Expense');
 const Category = require('../models/Category');
 const Service = require('../models/Service');
@@ -62,48 +59,13 @@ router.get('/expenses', async (req, res) => {
 router.get('/expenses/export', async (req, res) => {
   try {
     const expenses = await Expense.find()
-      .populate('category')
-      .populate('service')
-      .populate('type')
-      // .limit(5)
-      .sort({ date: -1 });
-    return res.json({ expenses });
-  } catch (err) {
-    return res.json({ error: err.message });
-  }
-});
-
-const writeFile = (path, data, opts = 'utf8') =>
-  new Promise((resolve, reject) => {
-    fs.writeFile(path, data, opts, err => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
-
-router.get('/expenses/export/:filetype', async (req, res) => {
-  try {
-    const { filetype } = req.params;
-
-    const expenses = await Expense.find()
       .lean()
       .populate('category')
       .populate('service')
       .populate('type')
-      // .limit(5)
       .sort({ date: -1 });
 
-    if (filetype === 'json') {
-      const path = `./api/backup/expenses_${format(new Date(), 'YYYYMMDD-HHmmss')}.json`;
-      await writeFile(path, JSON.stringify(expenses, null, 4));
-      return res.json({ backup: 'ok' });
-    }
-
-    if (filetype === 'excel') {
-      return res.json({ expenses });
-    }
-
-    return res.send(200);
+    return res.json({ expenses });
   } catch (err) {
     return res.json({ error: err.message });
   }

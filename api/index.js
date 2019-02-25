@@ -42,6 +42,7 @@ app.use(
 app.use('/', require('./routes/login'));
 app.use('/', middleware.checkToken, require('./routes/expenses'));
 app.use('/', middleware.checkToken, require('./routes/services'));
+app.use('/', middleware.checkToken, require('./routes/backup'));
 app.use('/', middleware.checkToken, require('./routes/test'));
 
 app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));

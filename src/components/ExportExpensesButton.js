@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { exportExpenses } from '../lib/export';
+import { exportExpenses } from '../lib/excel';
 
 class ExportExpensesButton extends Component {
   constructor(props) {

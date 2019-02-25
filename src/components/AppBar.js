@@ -17,14 +17,23 @@ import {
   // Badge,
 } from 'reactstrap';
 
+import { apiGet } from '../lib/api';
+import { exportExpenses } from '../lib/excel';
+
+const backup = async () => {
+  try {
+    await apiGet('/backup');
+    console.info('backup done');
+  } catch (err) {
+    console.info('backup failed:', err.message);
+  }
+};
+
 class AppBar extends Component {
   constructor(props) {
     super(props);
-
+    this.state = { isOpen: false };
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-    };
   }
 
   toggle() {
@@ -80,16 +89,13 @@ class AppBar extends Component {
                     {user.username}
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem tag={Link} to="/wallboard">
-                      Wallboard
+                    <DropdownItem tag={Link} to="#" onClick={backup}>
+                      Databasbackup
                     </DropdownItem>
-                    <DropdownItem tag={Link} to="/veckorapport">
-                      Veckorapport
+                    <DropdownItem tag={Link} to="#" onClick={exportExpenses}>
+                      Exportera till Excel
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem tag={Link} to="/settings">
-                      Inställningar
-                    </DropdownItem>
                     <DropdownItem tag={Link} to="/om">
                       Om
                     </DropdownItem>

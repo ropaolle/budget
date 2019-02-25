@@ -4,7 +4,7 @@ import { apiGet } from './api';
 
 export const exportExpenses = async () => {
   try {
-    const { data } = await apiGet('/expenses/export/excel');
+    const { data } = await apiGet('/expenses/export');
 
     const headers = ['Datum', 'Kostnad', 'Beskrivning', 'Typ', 'Service', 'Kategori', 'Återkommande', 'Id'];
     const columnsWidth = [15, 15, 35, 25, 25, 25, 15, 25];

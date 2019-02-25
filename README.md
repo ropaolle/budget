@@ -7,8 +7,8 @@
 - [X] API-validation
 - [X] Exportera till Excel
 - [X] Exportera till Json
-- [ ] Importera till Excel
-- [ ] Backup
+- [ ] Importera från Excel
+- [X] Backup till en json-fil
 
 ## Info
 [localeStorage](https://www.robinwieruch.de/local-storage-react/)
