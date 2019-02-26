@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import { apiGet } from './lib/api';
-import AppBar from './components/AppBar';
-import Footer from './components/Footer';
+import { AppBar, Footer, AppAlert } from './components';
 import Home from './pages/Home';
 import Om from './pages/Om';
 import Page404 from './pages/Page404';
@@ -32,8 +31,10 @@ class App extends Component {
     this.state = {
       user: token ? jwt.decode(token) : null,
       settings: null,
+      alerts: [],
     };
 
+    this.setAlert = this.setAlert.bind(this);
     this.login = this.login.bind(this);
     this.loadSettings = this.loadSettings.bind(this);
   }
@@ -44,6 +45,13 @@ class App extends Component {
     if (user && !settings) {
       this.loadSettings();
     }
+  }
+
+  setAlert(alert) {
+    this.setState(prevState => {
+      prevState.alerts.push(alert);
+      return { alerts: prevState.alerts };
+    });
   }
 
   async loadSettings() {
@@ -58,12 +66,14 @@ class App extends Component {
 
   render() {
     const { state } = this;
-    const { user, settings } = state;
+    const { user, settings, alerts } = state;
+    const appAlerts = alerts.map(alert => <AppAlert alert={alert} />);
 
     return (
       <Router>
         <div className="app">
-          <AppBar user={user} settings={settings} logout={this.logout} />
+          <AppBar user={user} settings={settings} logout={this.logout} setAlert={this.setAlert} />
+          {appAlerts}
           <div className="content">
             {!user ? (
               <Route path="/" render={() => <Login login={this.login} />} />

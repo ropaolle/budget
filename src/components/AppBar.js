@@ -14,36 +14,38 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  // Badge,
 } from 'reactstrap';
 
 import { apiGet } from '../lib/api';
 import { exportExpenses } from '../lib/excel';
 
-const backup = async () => {
-  try {
-    await apiGet('/backup');
-    console.info('backup done');
-  } catch (err) {
-    console.info('backup failed:', err.message);
-  }
-};
-
 class AppBar extends Component {
   constructor(props) {
     super(props);
+
     this.state = { isOpen: false };
+
     this.toggle = this.toggle.bind(this);
+    this.backup = this.backup.bind(this);
   }
 
   toggle() {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
-  logout() {
-    const { history } = this.props;
-    localStorage.removeItem('token');
-    history.push('/');
+  async backup() {
+    const { setAlert } = this.props;
+    try {
+      const { data } = await apiGet('/backup');
+      const { error /* , result */, path } = data;
+      if (error) {
+        setAlert({ color: 'warning', message: `Backup misslyckades: ${error}` });
+      } else {
+        setAlert({ color: 'success', message: `Backup har sparats till ${path}.` });
+      }
+    } catch (err) {
+      setAlert({ color: 'danger', message: `Backup misslyckades: ${err.message}` });
+    }
   }
 
   render() {
@@ -89,13 +91,16 @@ class AppBar extends Component {
                     {user.username}
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem tag={Link} to="#" onClick={backup}>
-                      Databasbackup
-                    </DropdownItem>
                     <DropdownItem tag={Link} to="#" onClick={exportExpenses}>
-                      Exportera till Excel
+                      Exportera kostnader
+                    </DropdownItem>
+                    <DropdownItem tag={Link} to="/import">
+                      Importera kostnader
                     </DropdownItem>
                     <DropdownItem divider />
+                    <DropdownItem tag={Link} to="#" onClick={this.backup}>
+                      Databasbackup
+                    </DropdownItem>
                     <DropdownItem tag={Link} to="/om">
                       Om
                     </DropdownItem>

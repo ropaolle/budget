@@ -4,6 +4,11 @@
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 
+.app {
+  .alert {
+    margin-bottom: 0;
+  }
+}
 
 .page {
   .badge {

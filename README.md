@@ -1,14 +1,9 @@
 # Budget
 
 ## Todo
-- [ ] App alert bar
 - [ ] Mobilvy, ej tabell
-- [X] DefaultPage
-- [X] API-validation
-- [X] Exportera till Excel
-- [X] Exportera till Json
+- [ ] DefaultPage
 - [ ] Importera från Excel
-- [X] Backup till en json-fil
 
 ## Info
 [localeStorage](https://www.robinwieruch.de/local-storage-react/)
@@ -19,6 +14,18 @@
 ## Code
 
 ```js
+label med forHtml till input
 
+// TODO: FileReader
+const importExpenses = file => {
+  const fileReader = new FileReader();
+
+  fileReader.onloadend = () => {
+    const content = fileReader.result;
+    console.log(content);
+  };
+
+  fileReader.readAsText(file);
+};
 
 ```

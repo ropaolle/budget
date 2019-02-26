@@ -37,9 +37,9 @@ router.get('/backup', async (req, res) => {
     };
 
     const path = `./api/backup/${format(new Date(), 'YYYYMMDD-HHmmss')}.json`;
-    await writeFile(path, JSON.stringify(dataObject, null, 4));
+    const result = await writeFile(path, JSON.stringify(dataObject, null, 4));
 
-    return res.json({ backup: 'ok' });
+    return res.json({ result, path });
   } catch (err) {
     return res.json({ error: err.message });
   }
