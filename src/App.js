@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
+import uuid from 'uuid/v1';
 import { apiGet } from './lib/api';
 import { AppBar, Footer, AppAlert } from './components';
 import Home from './pages/Home';
@@ -48,10 +49,7 @@ class App extends Component {
   }
 
   setAlert(alert) {
-    this.setState(prevState => {
-      prevState.alerts.push(alert);
-      return { alerts: prevState.alerts };
-    });
+    this.setState(prevState => ({ alerts: [...prevState.alerts, { ...alert, id: uuid() }] }));
   }
 
   async loadSettings() {
@@ -67,7 +65,7 @@ class App extends Component {
   render() {
     const { state } = this;
     const { user, settings, alerts } = state;
-    const appAlerts = alerts.map(alert => <AppAlert alert={alert} />);
+    const appAlerts = alerts.map(alert => <AppAlert key={alert.id} alert={alert} />);
 
     return (
       <Router>
