@@ -1,7 +1,7 @@
 # Budget
 
 ## Todo
-
+- [ ] App alert bar
 - [ ] Mobilvy, ej tabell
 - [X] DefaultPage
 - [X] API-validation

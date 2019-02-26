@@ -7,7 +7,7 @@ import pickBy from 'lodash.pickby';
 import { format, parse, startOfMonth, endOfMonth } from 'date-fns';
 import { ExpenseDialog } from '../dialogs';
 import { SelectField, MonthField } from '../dialogs/fields';
-import { SortedHeader, Pager, ExportExpensesButton } from '../components';
+import { SortedHeader, Pager } from '../components';
 import { apiPost, apiGet, apiDelete } from '../lib/api';
 
 class Test extends Component {
@@ -196,8 +196,7 @@ class Test extends Component {
                 onAction={this.dialogActions}
                 onChange={this.handleFieldChange}
                 onButtonClick={this.handleButtonClick}
-              />{' '}
-              <ExportExpensesButton />
+              />
             </div>
           )}
 
