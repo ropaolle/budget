@@ -4,13 +4,7 @@ import jwt from 'jsonwebtoken';
 import uuid from 'uuid/v1';
 import { apiGet } from './lib/api';
 import { AppBar, Footer, AppAlert } from './components';
-import Home from './pages/Home';
-import Om from './pages/Om';
-import Page404 from './pages/Page404';
-import Expenses from './pages/Expenses';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import Test from './pages/Test';
+import { Expenses, Home, Import, Login, Logout, Om, Page404, Test } from './pages';
 
 function prepareAutocomplete(settings) {
   const sortStringsByLength = (a, b) => a && a.length - b.length;
@@ -81,6 +75,7 @@ class App extends Component {
                 <Route path="/om" render={props => <Om {...props} user={user} />} />
                 <Route path="/expenses" render={props => <Expenses {...props} {...state} user={user} />} />
                 <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
+                <Route path="/import" render={props => <Import {...props} {...state} user={user} />} />
                 <Route path="/logout" render={() => <Logout logout={() => this.setState({ user: null })} />} />
 
                 <Route component={Page404} />
