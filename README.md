@@ -4,6 +4,8 @@
 - [ ] Mobilvy, ej tabell
 - [ ] DefaultPage
 - [ ] Importera från Excel
+- [ ] Dialog rensas ej då Ny trycks.
+- [ ] Knappen rensa fungerar ej.
 
 ## Info
 [localeStorage](https://www.robinwieruch.de/local-storage-react/)
@@ -13,19 +15,40 @@
 
 ## Code
 
+### Load text file
+
 ```js
-label med forHtml till input
+  <Label hidden for="importFile">
+    Ladda fil som ska importeras
+  </Label>
+  <CustomInput
+    type="file"
+    onChange={e => this.loadFile(e.target.files[0])}
+    id="importFile"
+    name="importFile"
+    label={file ? file.name : 'Välj fil...'}
+  />
+  
+  loadFile(file) {
+    const fileReader = new FileReader();
 
-// TODO: FileReader
-const importExpenses = file => {
-  const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      const workbook = XLSX.read(fileReader.result, { type: 'binary', cellDates: true, cellStyles: true });
+      console.log(workbook);
+    };
 
-  fileReader.onloadend = () => {
-    const content = fileReader.result;
-    console.log(content);
-  };
+    fileReader.readAsText(file);
+  }
+```
 
-  fileReader.readAsText(file);
-};
+### For loops
 
+```js
+for (const x of [...Array(5).keys()]) {
+  console.log(x);
+}
+
+for (let i = 0; i < length; i++) {
+  binary += String.fromCharCode(bytes[i]);
+}
 ```

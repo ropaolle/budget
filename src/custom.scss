@@ -69,3 +69,9 @@
   }
 
 }
+
+.page.import {
+  .select-invalid > div {
+    border-color: #dc3545;
+  }
+}

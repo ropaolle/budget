@@ -8,7 +8,7 @@ export const valueFromOptionsWithFixedLabels = (value, options) =>
     .find(val => val.value === value);
 
 function Field(props) {
-  const { value, id, options, disabled, label, onChange, isClearable, placeholder, onCreateOption } = props;
+  const { value, id, options, disabled, label, onChange, isClearable, placeholder, onCreateOption, invalid } = props;
   return (
     <FormGroup>
       {label && <Label for={id}>{label}</Label>}
@@ -21,6 +21,7 @@ function Field(props) {
         placeholder={placeholder}
         options={options}
         isDisabled={disabled}
+        className={invalid ? 'select-invalid' : 'select-valid'}
         onCreateOption={onCreateOption}
         onChange={v => onChange({ value: v, field: id })}
       />

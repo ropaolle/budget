@@ -6,6 +6,12 @@ const Service = require('../models/Service');
 
 const router = express.Router();
 
+router.post('/expenses/import', async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  return res.json({ ok: 'ok' });
+});
+
 router.post('/expenses', async (req, res) => {
   const data = req.body;
   const { id, category, service } = data;
