@@ -129,7 +129,7 @@ class Test extends Component {
             expenses.splice(index, 1);
           } else if (action === 'save') {
             if (index === -1) {
-              expenses.push(data);
+              expenses.unshift(data);
             } else {
               expenses.splice(index, 1, data);
             }
