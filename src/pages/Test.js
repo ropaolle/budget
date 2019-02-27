@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { apiGet } from '../lib/api';
+// import { apiGet } from '../lib/api';
 
 class Test extends Component {
   constructor(props) {

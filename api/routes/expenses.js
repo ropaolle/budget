@@ -7,7 +7,7 @@ const Service = require('../models/Service');
 const router = express.Router();
 
 router.post('/expenses', async (req, res) => {
-  const { data } = req.body;
+  const data = req.body;
   const { id, category, service } = data;
 
   // If Category is not an objectId and a string, then create new Category.
