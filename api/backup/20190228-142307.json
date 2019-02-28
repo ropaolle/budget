@@ -320,7 +320,7 @@
         {
             "_id": "5c4d95e3a202431a548a96a8",
             "label": "Elgiganten",
-            "category": "5c4d7368b648553f0c6f630b"
+            "category": "5c4d7368b648553f0c6f6312"
         },
         {
             "_id": "5c4d95e3a202431a548a96a9",
@@ -431,6 +431,11 @@
             "_id": "5c4d95e3a202431a548a96be",
             "label": "ICA Häggvik",
             "category": "5c4d7368b648553f0c6f630e"
+        },
+        {
+            "_id": "5c7793b1a2ccc64e58d94913",
+            "label": "apa10",
+            "__v": 0
         },
         {
             "_id": "5c4d95e3a202431a548a96bf",
@@ -886,6 +891,48 @@
             "_id": "5c4d95e3a202431a548a9719",
             "label": "Ö&B",
             "category": "5c4d7368b648553f0c6f6314"
+        },
+        {
+            "_id": "5c77d1f81cb5a42920f9f672",
+            "label": "Tapio",
+            "category": "5c4d7368b648553f0c6f630e",
+            "__v": 0
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f674",
+            "label": "Akkurat",
+            "category": "5c4d7368b648553f0c6f630d",
+            "__v": 0
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f678",
+            "label": "Attundahälsan",
+            "category": "5c4d7368b648553f0c6f630f",
+            "__v": 0
+        },
+        {
+            "_id": "5c77d5b51cb5a42920f9f67e",
+            "label": "Computer Sälg",
+            "category": "5c4d7368b648553f0c6f6312",
+            "__v": 0
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f685",
+            "label": "Dustin",
+            "category": "5c4d7368b648553f0c6f6312",
+            "__v": 0
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f68d",
+            "label": "Fellini Pizza",
+            "category": "5c4d7368b648553f0c6f6310",
+            "__v": 0
+        },
+        {
+            "_id": "5c77dc289eaeec895cc7b2bd",
+            "label": "Netflix.com",
+            "category": "5c4d7368b648553f0c6f6311",
+            "__v": 0
         }
     ],
     "expenses": [
@@ -2790,12 +2837,13 @@
         },
         {
             "_id": "5c4d962fc5a01b3430cdcddd",
-            "cost": 1290,
-            "description": "Mikrovågsugn",
+            "cost": 0,
+            "description": "Mikrovågsugn (returnerad)",
             "service": "5c4d95e3a202431a548a96a8",
             "type": "5c4d7368b648553f0c6f631f",
             "date": "2018-11-24T00:00:00.000Z",
-            "category": "5c4d7368b648553f0c6f6312"
+            "category": "5c4d7368b648553f0c6f6312",
+            "recurring": null
         },
         {
             "_id": "5c4d962fc5a01b3430cdcdde",
@@ -6901,8 +6949,24 @@
             "category": "5c4d7368b648553f0c6f6311"
         },
         {
-            "_id": "5c51c6849c3e2335dcd6f53e",
-            "__v": 0
+            "_id": "5c77d1f81cb5a42920f9f671",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 98,
+            "date": "2019-02-16T00:00:00.000Z",
+            "description": "Lunch",
+            "service": "5c4d95e3a202431a548a9681",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f67a",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630b",
+            "cost": 198.7,
+            "date": "2019-02-20T00:00:00.000Z",
+            "description": "Diverse",
+            "service": "5c4d95e3a202431a548a968d",
+            "type": "5c4d7368b648553f0c6f631f"
         },
         {
             "_id": "5c4d962fc5a01b3430cdcfa7",
@@ -7913,6 +7977,925 @@
             "type": "5c4d7368b648553f0c6f631f",
             "date": "2018-08-29T00:00:00.000Z",
             "category": "5c4d7368b648553f0c6f6314"
+        },
+        {
+            "_id": "5c77aa47b03a09189c936e56",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 98,
+            "date": "2018-02-16T00:00:00.000Z",
+            "description": "El",
+            "service": "5c4d95e3a202431a548a9681",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77aa73f57aae4b98c94e40",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 98,
+            "date": "2018-02-16T00:00:00.000Z",
+            "description": "El",
+            "service": "5c4d95e3a202431a548a9681",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77aafef737413e70715728",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 98,
+            "date": "2018-02-16T00:00:00.000Z",
+            "description": "El",
+            "service": "5c4d95e3a202431a548a9681",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f673",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 750,
+            "date": "2018-12-07T00:00:00.000Z",
+            "description": "Kött 10 kg",
+            "service": "5c77d1f81cb5a42920f9f672",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f675",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 450,
+            "date": "2018-12-21T00:00:00.000Z",
+            "description": "Moose Brothers",
+            "service": "5c77d1f91cb5a42920f9f674",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f676",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630f",
+            "cost": 60.49,
+            "date": "2019-01-26T00:00:00.000Z",
+            "description": "Blodtrycksmedicin",
+            "service": "5c4d95e3a202431a548a9686",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f677",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6314",
+            "cost": 698,
+            "date": "2018-12-29T00:00:00.000Z",
+            "description": "Kattmat 10 kg",
+            "service": "5c4d95e3a202431a548a9687",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f679",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630f",
+            "cost": 300,
+            "date": "2019-01-08T00:00:00.000Z",
+            "description": "Vaccinering influensa",
+            "service": "5c77d1f91cb5a42920f9f678",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f67b",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6318",
+            "cost": 2865,
+            "date": "2018-12-30T00:00:00.000Z",
+            "description": "Hyra",
+            "service": "5c4d95e3a202431a548a96ad",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77d1f91cb5a42920f9f67c",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6318",
+            "cost": 2865,
+            "date": "2019-01-31T00:00:00.000Z",
+            "description": "Hyra",
+            "service": "5c4d95e3a202431a548a96ad",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77d1fa1cb5a42920f9f67d",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630c",
+            "cost": 742.56,
+            "date": "2018-12-08T00:00:00.000Z",
+            "description": "Bensin 95",
+            "service": "5c4d95e3a202431a548a9698",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d5b51cb5a42920f9f67f",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 1050,
+            "date": "2019-01-12T00:00:00.000Z",
+            "description": "Chromecast Audio + Eltandborste",
+            "service": "5c77d5b51cb5a42920f9f67e",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f682",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 2130.99,
+            "date": "2019-01-12T00:00:00.000Z",
+            "description": "AOC Q3279VWFD8 32\" Bildskärm",
+            "service": "5c77d5b51cb5a42920f9f67e",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f683",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 95,
+            "date": "2019-02-15T00:00:00.000Z",
+            "description": "Mobiltelefon",
+            "service": "5c4d95e3a202431a548a969b",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f684",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6315",
+            "cost": 856,
+            "date": "2018-12-01T00:00:00.000Z",
+            "description": "Seglarjacka",
+            "service": "5c4d95e3a202431a548a96a0",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f686",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 2215,
+            "date": "2019-01-17T00:00:00.000Z",
+            "description": "Apple TV 4K 32GB",
+            "service": "5c77d6691cb5a42920f9f685",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f687",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 1390,
+            "date": "2018-12-17T00:00:00.000Z",
+            "description": "SAMSUNG MICRO 800W",
+            "service": "5c4d95e3a202431a548a96a8",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f688",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 365,
+            "date": "2019-01-02T00:00:00.000Z",
+            "description": "Diverse",
+            "service": "5c4d95e3a202431a548a96a8",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f689",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 899,
+            "date": "2019-01-12T00:00:00.000Z",
+            "description": "Elgato CamLink",
+            "service": "5c4d95e3a202431a548a96a8",
+            "type": "5c4d7368b648553f0c6f631f",
+            "recurring": null
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f68a",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 899,
+            "date": "2019-02-02T00:00:00.000Z",
+            "description": "Sollentuna med Andreas och Mats",
+            "service": "5c4d95e3a202431a548a96e5",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f68b",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 35,
+            "date": "2018-12-27T00:00:00.000Z",
+            "description": "Enkla vardag",
+            "service": "5c4d95e3a202431a548a96f4",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f68c",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 35,
+            "date": "2019-01-30T00:00:00.000Z",
+            "description": "Enkla vardag",
+            "service": "5c4d95e3a202431a548a96f4",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77d66a1cb5a42920f9f68e",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 90,
+            "date": "2019-01-10T00:00:00.000Z",
+            "description": "Lunch",
+            "service": "5c77d66a1cb5a42920f9f68d",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77d6691cb5a42920f9f681",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 90,
+            "date": "2019-02-04T00:00:00.000Z",
+            "description": "Lunch",
+            "recurring": null,
+            "service": "5c77d66a1cb5a42920f9f68d",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f690",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 158.4,
+            "date": "2019-02-07T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a96c3",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f691",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630b",
+            "cost": 398.9,
+            "date": "2019-01-28T00:00:00.000Z",
+            "description": "Lysrör sovrum",
+            "service": "5c4d95e3a202431a548a96c8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f692",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630b",
+            "cost": 179.2,
+            "date": "2019-02-19T00:00:00.000Z",
+            "description": "Liten bokhylla sovrum",
+            "service": "5c4d95e3a202431a548a96c8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f693",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630b",
+            "cost": 221.4,
+            "date": "2019-02-20T00:00:00.000Z",
+            "description": "Projektorfäste sovrum",
+            "service": "5c4d95e3a202431a548a96c8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f694",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630b",
+            "cost": 69.9,
+            "date": "2019-02-21T00:00:00.000Z",
+            "description": "Kabellist",
+            "service": "5c4d95e3a202431a548a96c8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f695",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 699,
+            "date": "2019-02-19T00:00:00.000Z",
+            "description": "HDMI-audio extractor",
+            "service": "5c4d95e3a202431a548a96cb",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f696",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 0,
+            "date": "2018-12-02T00:00:00.000Z",
+            "description": " Sennheiser Trådlös hörlur RS 175 (pappa)",
+            "service": "5c4d95e3a202431a548a9712",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f697",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 1090,
+            "date": "2019-01-12T00:00:00.000Z",
+            "description": "Bose Companion 2 Series III Multimedia Datorhögtalare",
+            "service": "5c4d95e3a202431a548a9712",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab71cb5a42920f9f698",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 590,
+            "date": "2019-02-05T00:00:00.000Z",
+            "description": "Logitech Z333 Multimedia Högtalare (pappa)",
+            "service": "5c4d95e3a202431a548a96cc",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f699",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 9379,
+            "date": "2019-02-17T00:00:00.000Z",
+            "description": "Acer DLP Projektor H6517ABD + Elite Screen 100",
+            "service": "5c4d95e3a202431a548a96cc",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69a",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 150,
+            "date": "2018-12-04T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69b",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 150,
+            "date": "2018-12-07T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69c",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 145,
+            "date": "2018-12-11T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69d",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 130,
+            "date": "2018-12-18T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69e",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 250,
+            "date": "2018-12-28T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f69f",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 100,
+            "date": "2019-01-02T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f6a0",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 310,
+            "date": "2019-01-04T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f6a1",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 250,
+            "date": "2019-01-07T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab81cb5a42920f9f6a2",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 450,
+            "date": "2019-01-11T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a3",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 150,
+            "date": "2019-01-15T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a4",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 150,
+            "date": "2019-01-26T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a5",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 80,
+            "date": "2019-01-17T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a6",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 360,
+            "date": "2019-01-22T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a7",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 259,
+            "date": "2019-01-25T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a8",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 200,
+            "date": "2019-02-01T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6a9",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 150,
+            "date": "2019-02-01T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dab91cb5a42920f9f6aa",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6310",
+            "cost": 210,
+            "date": "2019-02-20T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96b9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dbd59eaeec895cc7b2bc",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6313",
+            "cost": 200,
+            "date": "2019-01-23T00:00:00.000Z",
+            "description": "Reskassa",
+            "service": "5c4d95e3a202431a548a96f9",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dc289eaeec895cc7b2be",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 109,
+            "date": "2019-02-12T00:00:00.000Z",
+            "description": "Netflix",
+            "service": "5c77dc289eaeec895cc7b2bd",
+            "type": "5c4d7368b648553f0c6f6320",
+            "recurring": null
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2bf",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 139,
+            "date": "2019-01-04T00:00:00.000Z",
+            "description": "Domännamn",
+            "service": "5c4d95e3a202431a548a96d3",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c0",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6317",
+            "cost": 2263,
+            "date": "2019-01-02T00:00:00.000Z",
+            "description": "Hemförsäkring",
+            "service": "5c4d95e3a202431a548a96d4",
+            "type": "5c4d7368b648553f0c6f6323"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c1",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f631b",
+            "cost": 30182,
+            "date": "2018-12-25T00:00:00.000Z",
+            "description": "Lön",
+            "service": "5c4d95e3a202431a548a9707",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c2",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f631b",
+            "cost": 30498,
+            "date": "2019-01-25T00:00:00.000Z",
+            "description": "Lön",
+            "service": "5c4d95e3a202431a548a9707",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c3",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f631b",
+            "cost": 23641,
+            "date": "2019-02-25T00:00:00.000Z",
+            "description": "Lön",
+            "service": "5c4d95e3a202431a548a9707",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c4",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 799,
+            "date": "2019-02-17T00:00:00.000Z",
+            "description": "Nokia Body+ Våg",
+            "service": "5c4d95e3a202431a548a96e0",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c5",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 32,
+            "date": "2018-12-10T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de749eaeec895cc7b2c6",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 64,
+            "date": "2018-12-11T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2c7",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 64,
+            "date": "2018-12-12T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2c8",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 96,
+            "date": "2018-12-18T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2c9",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 84,
+            "date": "2018-12-20T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2ca",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 74,
+            "date": "2019-01-07T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2cb",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 37,
+            "date": "2019-01-09T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2cc",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 37,
+            "date": "2019-01-25T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2cd",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 82,
+            "date": "2019-02-01T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2ce",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 381,
+            "date": "2019-02-01T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2cf",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 164,
+            "date": "2019-02-06T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de759eaeec895cc7b2d0",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 418,
+            "date": "2019-02-08T00:00:00.000Z",
+            "description": "Öl",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d1",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630d",
+            "cost": 728,
+            "date": "2019-01-31T00:00:00.000Z",
+            "description": "El",
+            "service": "5c4d95e3a202431a548a96e8",
+            "type": "5c4d7368b648553f0c6f6321"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d2",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 99,
+            "date": "2018-12-23T00:00:00.000Z",
+            "description": "Spotify",
+            "service": "5c4d95e3a202431a548a96fc",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d3",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 99,
+            "date": "2019-01-23T00:00:00.000Z",
+            "description": "Spotify",
+            "service": "5c4d95e3a202431a548a96fc",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d4",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 99,
+            "date": "2019-02-23T00:00:00.000Z",
+            "description": "Spotify",
+            "service": "5c4d95e3a202431a548a96fc",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d5",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 348.7,
+            "date": "2018-12-02T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d6",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 241.48,
+            "date": "2018-12-09T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d7",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 863.3,
+            "date": "2019-01-02T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d8",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 282.01,
+            "date": "2019-01-05T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de769eaeec895cc7b2d9",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 434.7,
+            "date": "2019-01-06T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2da",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 321.01,
+            "date": "2019-01-12T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2db",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 102.39,
+            "date": "2019-01-21T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2dc",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 1979.76,
+            "date": "2019-01-27T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2dd",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 392.88,
+            "date": "2019-02-09T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2de",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 91.7,
+            "date": "2019-02-17T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2df",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630e",
+            "cost": 158.43,
+            "date": "2018-12-24T00:00:00.000Z",
+            "description": "Mat",
+            "service": "5c4d95e3a202431a548a969c",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2e0",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6312",
+            "cost": 1018,
+            "date": "2019-02-01T00:00:00.000Z",
+            "description": "Kardborreband och sladdar",
+            "service": "5c4d95e3a202431a548a96a1",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2e1",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 145,
+            "date": "2019-01-27T00:00:00.000Z",
+            "description": "Mobiltelefon",
+            "service": "5c4d95e3a202431a548a969b",
+            "type": "5c4d7368b648553f0c6f6320",
+            "recurring": null
+        },
+        {
+            "_id": "5c77de779eaeec895cc7b2e2",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f630c",
+            "cost": 22,
+            "date": "2019-01-02T00:00:00.000Z",
+            "description": "Trängselskatt",
+            "service": "5c4d95e3a202431a548a9714",
+            "type": "5c4d7368b648553f0c6f631f"
+        },
+        {
+            "_id": "5c77dff99eaeec895cc7b2e3",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 145,
+            "date": "2019-02-27T00:00:00.000Z",
+            "description": "Mobiltelefon",
+            "service": "5c4d95e3a202431a548a969b",
+            "type": "5c4d7368b648553f0c6f6320"
+        },
+        {
+            "_id": "5c77e02f9eaeec895cc7b2e4",
+            "__v": 0,
+            "category": "5c4d7368b648553f0c6f6311",
+            "cost": 145,
+            "date": "2018-12-27T00:00:00.000Z",
+            "description": "Mobiltelefon",
+            "service": "5c4d95e3a202431a548a969b",
+            "type": "5c4d7368b648553f0c6f6320"
         }
     ]
 }
