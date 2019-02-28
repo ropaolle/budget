@@ -25,7 +25,7 @@ function Dialog(props) {
     // Base dialog
     isNew,
     modal,
-    onButtonClick,
+    // onButtonClick,
     onAction,
     // Dialog
     onChange,
@@ -45,7 +45,7 @@ function Dialog(props) {
       clearButton
       modal={modal}
       onAction={onAction}
-      onButtonClick={onButtonClick}
+      // onButtonClick={onButtonClick}
     >
       {/* <p>Innehåll i min nya dialog...</p> */}
       <Form>

@@ -136,10 +136,12 @@ class Test extends Component {
           }
         }
 
-        const currDialog = prevState[dialog];
+        // Update state
         return {
-          expenses, // Update state
-          [dialog]: { ...currDialog, modal: !currDialog.modal }, // Clear dialog
+          expenses,
+          // Load dialog valus and alter modal to hide the dialog.
+          [dialog]:
+            action === 'close' ? ExpenseDialog.defaults : { ...prevState[dialog], modal: !prevState[dialog].modal },
         };
       });
     } catch (err) {
@@ -195,7 +197,7 @@ class Test extends Component {
                 settings={settings}
                 onAction={this.dialogActions}
                 onChange={this.handleFieldChange}
-                onButtonClick={this.handleButtonClick}
+                // onButtonClick={this.handleButtonClick}
               />
             </div>
           )}

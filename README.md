@@ -3,9 +3,7 @@
 ## Todo
 - [ ] Mobilvy, ej tabell
 - [ ] DefaultPage
-- [ ] Importera från Excel
-- [ ] Dialog rensas ej då Ny trycks.
-- [ ] Knappen rensa fungerar ej.
+- [ ] Knappen rensa fungerar ej (ersätt clearButton med clearFunction).
 
 ## Info
 [localeStorage](https://www.robinwieruch.de/local-storage-react/)
