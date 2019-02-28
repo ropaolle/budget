@@ -8,7 +8,19 @@ export const valueFromOptionsWithFixedLabels = (value, options) =>
     .find(val => val.value === value);
 
 function Field(props) {
-  const { value, id, options, disabled, label, onChange, isClearable, placeholder, onCreateOption, invalid } = props;
+  const {
+    value,
+    defaultValue,
+    id,
+    options,
+    disabled,
+    label,
+    onChange,
+    isClearable,
+    placeholder,
+    onCreateOption,
+    invalid,
+  } = props;
   return (
     <FormGroup>
       {label && <Label for={id}>{label}</Label>}
@@ -16,6 +28,7 @@ function Field(props) {
         id={id}
         isClearable={isClearable}
         value={valueFromOptionsWithFixedLabels(value, options)}
+        defaultValue={defaultValue}
         getOptionLabel={option => option.label}
         getOptionValue={option => option.value}
         placeholder={placeholder}

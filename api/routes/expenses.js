@@ -6,42 +6,55 @@ const Service = require('../models/Service');
 
 const router = express.Router();
 
-router.post('/expenses/import', async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  return res.json({ ok: 'ok' });
-});
+function createNewCategoryOrService(val) {
+  // If none empty string and not objectId
+  return !mongoose.Types.ObjectId.isValid(val) && typeof val === 'string' && val.length > 0;
+}
 
-router.post('/expenses', async (req, res) => {
-  const data = req.body;
-  const { id, category, service } = data;
+async function createExpense(expense) {
+  const { id, category, service } = expense;
 
-  // If Category is not an objectId and a string, then create new Category.
-  if (!mongoose.Types.ObjectId.isValid(category) && typeof category === 'string' && category.length > 0) {
-    const c = new Category({ label: category });
-    await c.save(err => {
-      if (err) return console.error(err);
-      data.category = c.id;
-    });
+  // Create new Category if missing
+  if (createNewCategoryOrService(category)) {
+    const newCategory = new Category({ label: category });
+    const savedCategory = await newCategory.save();
+    expense.category = savedCategory.id;
   }
 
-  // If Service is not an objectId and a string, then create new Service.
-  if (!mongoose.Types.ObjectId.isValid(service) && typeof service === 'string' && service.length > 0) {
-    const s = new Service({ label: service, category: data.category });
-    await s.save(err => {
-      if (err) return console.error(err);
-      data.service = s.id;
-    });
+  // Create new Service if missing
+  if (createNewCategoryOrService(service)) {
+    const newService = new Service({ label: service, category: expense.category });
+    const savedService = await newService.save();
+    expense.service = savedService.id;
   }
 
-  Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, data, { upsert: true, new: true })
+  return Expense.findOneAndUpdate({ _id: id || new mongoose.mongo.ObjectID() }, expense, {
+    upsert: true,
+    new: true,
+  })
     .populate('service')
     .populate('category')
     .populate('type')
-    .exec((err, result) => {
-      if (err) return res.json({ err });
-      return res.json(result);
-    });
+    .exec();
+}
+
+router.post('/expenses', async (req, res) => {
+  try {
+    res.json(await createExpense(req.body));
+  } catch (err) {
+    return res.json({ error: err.message });
+  }
+});
+
+router.post('/expenses/import', async (req, res) => {
+  try {
+    for (const expense of req.body) {
+      await createExpense(expense);
+    }
+    return res.json({ result: 'success', count: req.body.length });
+  } catch (err) {
+    return res.json({ error: err.message });
+  }
 });
 
 router.get('/expenses', async (req, res) => {

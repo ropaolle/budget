@@ -18,7 +18,7 @@ class Test extends Component {
       expenseDialog: ExpenseDialog.defaults,
       expenses: [],
       sort: 'date',
-      order: 'asc',
+      order: 'desc',
       totalCount: 0,
       page: 1,
       pageSize: 50,

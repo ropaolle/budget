@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Container, Form, FormGroup, Label, CustomInput, Row, Col, Button } from 'reactstrap';
 import XLSX from 'xlsx';
 import format from 'date-fns/format';
+import addDays from 'date-fns/add_days';
 import { SelectField, DateField, CostField, CreatableSelectField } from '../dialogs/fields';
-// import { apiGet } from '../lib/api';
+import { AppAlert } from '../components';
+import { apiPost } from '../lib/api';
 
 const loadFile = async file =>
   new Promise((resolve, reject) => {
@@ -40,15 +42,15 @@ class Import extends Component {
     this.state = {
       filename: '',
       expenses: [],
+      alert: null,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.openFile = this.openFile.bind(this);
+    this.handleImport = this.handleImport.bind(this);
   }
 
   handleFieldChange({ index, value, field }) {
-    console.log(index, value, field);
-
     this.setState(prevState => {
       const fieldValue = typeof value === 'object' ? value && value.value : value;
       const relatedField = field === 'service' && value && value.category ? { category: value.category } : {};
@@ -60,24 +62,22 @@ class Import extends Component {
     });
   }
 
-  // await apiPost('/expenses', fields);
-
-  /*
-{ _id: '5c4d962fc5a01b3430cdcefb',
-  cost: '2237',
-  description: 'Hemförsäkring',
-  service: '5c4d95e3a202431a548a96d4',
-  type: '5c4d7368b648553f0c6f6323',
-  date: '2017-01-01',
-  category: '5c4d7368b648553f0c6f6317',
-  recurring: '',
-  id: '5c4d962fc5a01b3430cdcefb' }
-  */
+  async handleImport() {
+    const { expenses } = this.state;
+    try {
+      const { data } = await apiPost('/expenses/import', expenses);
+      this.setState({ alert: { color: 'success', message: `${data.count} kostnader importerades.` } });
+    } catch (err) {
+      this.setState({ alert: { color: 'danger', message: err.message } });
+    }
+  }
 
   async openFile(file) {
     const sheet = await loadFile(file).catch(err => console.error(err));
     const expenses = sheet.map(({ date, description, text, cost }) => ({
-      date: format(date, 'YYYY-MM-DD'),
+      date1: date,
+      // INFO: Fel datum Efter Excel-konvertering (- 1 dag).
+      date: format(addDays(date, 1), 'YYYY-MM-DD'),
       cost: Math.abs(cost),
       description: null,
       type: Number(cost < 0) ? '5c4d7368b648553f0c6f631f' : null,
@@ -85,14 +85,21 @@ class Import extends Component {
       category: null,
       text: `${description}${text ? ` (${text})` : ''}`,
     }));
+
     this.setState({ expenses, filename: file.name });
   }
 
   render() {
-    const { filename, expenses } = this.state;
+    const { filename, expenses, alert } = this.state;
     const { settings } = this.props;
-    console.log(filename);
-    console.log(expenses);
+
+    const invalid =
+      expenses.length === 0 ||
+      expenses.some(e => {
+        const copy = { ...e };
+        delete copy.text;
+        return Object.values(copy).some(v => !v);
+      });
 
     const list =
       settings &&
@@ -100,34 +107,34 @@ class Import extends Component {
         const { services, categories, types, autocomplete } = settings;
         return (
           <Row form key={index}>
-            <Col md={1}>
+            <Col md={2}>
               <DateField
                 id="date"
                 value={date}
-                // invalid={!date}
+                invalid={!date}
                 onChange={field => this.handleFieldChange({ ...field, index })}
               />
             </Col>
-            <Col md={1}>
+            <Col md={2}>
               <CostField
                 id="cost"
                 value={cost}
-                // invalid={!cost}
+                invalid={!cost}
                 onChange={field => this.handleFieldChange({ ...field, index })}
               />
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <CreatableSelectField
                 id="description"
                 value={description}
+                defaultValue={{ label: text, value: 'dummy-string' }}
                 invalid={!description}
                 isClearable
                 options={autocomplete}
                 onChange={field => this.handleFieldChange({ ...field, index })}
               />
             </Col>
-            <Col md={4}>{text}</Col>
-            <Col md={1}>
+            <Col md={2}>
               <CreatableSelectField
                 id="service"
                 value={service}
@@ -165,7 +172,8 @@ class Import extends Component {
           <ol>
             <li>Ladda ner Excelfil från SEB.</li>
             <li>
-              Ta bort kolumnerna, <code>Valutadatum</code>, <code>Verifikationsnummer</code> och <code>Saldo</code>.
+              Följande kolumner krävs <code>date</code>, <code>description</code>, <code>text</code> och{' '}
+              <code>cost</code>.
             </li>
             <li>Sortera på belopp och ta bort alla intäckter utom lön.</li>
             <li>Sortera på text/datum och uppdatera.</li>
@@ -188,7 +196,7 @@ class Import extends Component {
                     </FormGroup>
                   </Col>
 
-                  <Button color="primary" disabled onClick={() => this.toggle('close')}>
+                  <Button color="primary" disabled={invalid} onClick={this.handleImport}>
                     Importera värden
                   </Button>
                 </Row>
@@ -196,20 +204,20 @@ class Import extends Component {
             </li>
           </ol>
 
+          <AppAlert alert={alert} />
+
           <h3>Kostnader</h3>
           {settings && (
             <Form>
               <Row form>
                 <Col md={2}>Datum</Col>
                 <Col md={2}>Kostnad</Col>
-                <Col md={2}>Beskrivning</Col>
-                <Col md={3}>Info</Col>
-                <Col md={1}>Tjänst</Col>
+                <Col md={4}>Beskrivning</Col>
+                <Col md={2}>Tjänst</Col>
                 <Col md={1}>Kategori</Col>
                 <Col md={1}>Typ</Col>
               </Row>
               {list}
-              {/* {row(settings)} */}
             </Form>
           )}
         </Container>

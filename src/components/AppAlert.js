@@ -23,12 +23,14 @@ class AppAlert extends Component {
   render() {
     const { visible } = this.state;
     const { alert } = this.props;
-    const { color, message } = alert;
+    // const { color, message } = alert;
     return (
       <div>
-        <Alert color={color} isOpen={visible} toggle={this.onDismiss} fade={false}>
-          <div dangerouslySetInnerHTML={{ __html: message }} />
-        </Alert>
+        {alert && (
+          <Alert color={alert.color} isOpen={visible} toggle={this.onDismiss} fade={false}>
+            <div dangerouslySetInnerHTML={{ __html: alert.message }} />
+          </Alert>
+        )}
       </div>
     );
   }

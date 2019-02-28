@@ -36,7 +36,7 @@ class App extends Component {
 
   async componentDidMount() {
     const { user, settings } = this.state;
-    console.info(user, settings);
+    console.info(user);
     if (user && !settings) {
       this.loadSettings();
     }
@@ -48,6 +48,7 @@ class App extends Component {
 
   async loadSettings() {
     const { data } = await apiGet('/login/settings');
+    console.info(data);
     this.setState({ settings: prepareAutocomplete(data) });
   }
 
