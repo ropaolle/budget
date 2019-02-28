@@ -8,7 +8,7 @@ class Dialog extends React.Component {
   }
 
   render() {
-    const { buttonLabel, title, children, deleteButton, saveEnabled, clearButton, modal } = this.props;
+    const { buttonLabel, title, children, deleteButton, saveEnabled, modal } = this.props;
     return (
       <>
         <Button color="danger" onClick={() => this.toggle('open')}>
@@ -25,11 +25,6 @@ class Dialog extends React.Component {
               </Button>
             )}
             <div className=" flex-grow-1" />
-            {clearButton && (
-              <Button color="link" onClick={() => this.toggle('clear')}>
-                Rensa
-              </Button>
-            )}{' '}
             <Button color="primary" disabled={!saveEnabled} onClick={() => this.toggle('save')}>
               Spara
             </Button>{' '}

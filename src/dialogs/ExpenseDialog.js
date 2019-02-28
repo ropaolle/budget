@@ -25,7 +25,6 @@ function Dialog(props) {
     // Base dialog
     isNew,
     modal,
-    // onButtonClick,
     onAction,
     // Dialog
     onChange,
@@ -42,10 +41,8 @@ function Dialog(props) {
       title={isNew ? 'Ny kostnad' : 'Uppdatera kostnad'}
       deleteButton={!isNew}
       saveEnabled={date && cost && service && category && type}
-      clearButton
       modal={modal}
       onAction={onAction}
-      // onButtonClick={onButtonClick}
     >
       {/* <p>Innehåll i min nya dialog...</p> */}
       <Form>

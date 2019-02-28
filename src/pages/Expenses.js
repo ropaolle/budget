@@ -197,7 +197,6 @@ class Test extends Component {
                 settings={settings}
                 onAction={this.dialogActions}
                 onChange={this.handleFieldChange}
-                // onButtonClick={this.handleButtonClick}
               />
             </div>
           )}
