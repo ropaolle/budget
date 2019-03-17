@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
-import { Container, Button } from 'reactstrap';
-import { apiPost } from '../lib/api';
+import { Container } from 'reactstrap';
+// import { apiGet } from '../lib/api';
 
-class Plugin extends Component {
+class Test extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null };
-
-    this.button = this.button.bind(this);
+    this.state = {};
   }
 
-  async componentDidMount() {}
-
-  async button() {
-    apiPost('/createUser', { username: 'ropaolle', password: 'pass1234', email: 'ropaolle@gmail.com' });
+  async componentDidMount() {
+    // const { data } = await apiGet('/test');
+    // console.log('Test', data);
+    // this.setState({ ...data });
   }
 
   render() {
     return (
-      <div className="page plugin">
+      <div className="page test">
         <Container fluid>
-          <h1>Plugin</h1>
-          <div>
-            <Button onClick={() => this.button()}>Add user</Button>
-          </div>
+          <h1>Test</h1>
         </Container>
       </div>
     );
   }
 }
 
-export default Plugin;
+export default Test;

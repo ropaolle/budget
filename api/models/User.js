@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
+
+const { REACT_APP_JWT_SECRET } = process.env;
 
 const { Schema } = mongoose;
 
@@ -21,23 +24,36 @@ userSchema.pre('save', async function callback() {
 });
 
 // authenticate input against database
-userSchema.statics.authenticate = (email, password, callback) => {
-  User.findOne({ email }).exec((err, user) => {
-    if (err) {
-      return callback(err);
-    }
+userSchema.statics.authenticate = async (email, password) => {
+  try {
+    // eslint-disable-next-line
+    const user = await User.findOne({ email });
     if (!user) {
-      const newErr = new Error('User not found.');
-      newErr.status = 401;
-      return callback(newErr);
+      return Promise.reject(new Error('User not found.'));
     }
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (result === true) {
-        return callback(null, user);
-      }
-      return callback();
+
+    const valid = await new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      });
     });
-  });
+
+    if (valid === true) {
+      const userInfo = {
+        username: user.username,
+        email: user.email,
+        id: user.id,
+      };
+
+      const token = jwt.sign(userInfo, REACT_APP_JWT_SECRET, { expiresIn: '24h' });
+
+      return Promise.resolve(token);
+    }
+    return Promise.reject(new Error('Wrong password.'));
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
 
 const User = mongoose.model('User', userSchema);

@@ -14,21 +14,38 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Badge,
 } from 'reactstrap';
+
+import { apiGet } from '../lib/api';
+import { exportExpenses } from '../lib/excel';
 
 class AppBar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { isOpen: false };
+
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-    };
+    this.backup = this.backup.bind(this);
   }
 
   toggle() {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+  }
+
+  async backup() {
+    const { setAlert } = this.props;
+    try {
+      const { data } = await apiGet('/backup');
+      const { error /* , result */, path } = data;
+      if (error) {
+        setAlert({ color: 'warning', message: `Backup misslyckades: ${error}` });
+      } else {
+        setAlert({ color: 'success', message: `Backup har sparats till ${path}.` });
+      }
+    } catch (err) {
+      setAlert({ color: 'danger', message: `Backup misslyckades: ${err.message}` });
+    }
   }
 
   render() {
@@ -47,7 +64,7 @@ class AppBar extends Component {
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href={process.env.REACT_APP_PATH_LOGIN} target="_blank">
+                  <NavLink tag={Link} to="/login">
                     Logga in
                   </NavLink>
                 </NavItem>
@@ -58,13 +75,13 @@ class AppBar extends Component {
             <Collapse isOpen={isOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink tag={Link} to="/test">
-                    Test
+                  <NavLink tag={Link} to="/expenses">
+                    Kostnader
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} to="/tider">
-                    Mina tider
+                  <NavLink tag={Link} to="/test">
+                    Test
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -74,21 +91,23 @@ class AppBar extends Component {
                     {user.username}
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem tag={Link} to="/wallboard">
-                      Wallboard
+                    <DropdownItem tag={Link} to="#" onClick={exportExpenses}>
+                      Exportera kostnader
                     </DropdownItem>
-                    <DropdownItem tag={Link} to="/veckorapport">
-                      Veckorapport
+                    <DropdownItem tag={Link} to="/import">
+                      Importera kostnader
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem tag={Link} to="/settings">
-                      Inställningar
+                    <DropdownItem tag={Link} to="#" onClick={this.backup}>
+                      Databasbackup
                     </DropdownItem>
                     <DropdownItem tag={Link} to="/om">
                       Om
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem href={process.env.REACT_APP_PATH_LOGOUT}>Logga ut</DropdownItem>
+                    <DropdownItem tag={Link} to="/logout">
+                      Logga ut
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
