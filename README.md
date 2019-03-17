@@ -40,21 +40,37 @@ openssl req -nodes -new -x509 -keyout budget-api.key -out budget-api.cert
 ```
 
 ```js
-const fs = require('fs');
-const https = require('https');
+const fs = require("fs");
+const https = require("https");
 
 https
   .createServer(
     {
-      key: fs.readFileSync('/home/olle/.ssh/budget-api.key'),
-      cert: fs.readFileSync('/home/olle/.ssh/budget-api.cert'),
+      key: fs.readFileSync("/home/olle/.ssh/budget-api.key"),
+      cert: fs.readFileSync("/home/olle/.ssh/budget-api.cert")
     },
     app
   )
-  .listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
+  .listen(REACT_APP_API_PORT, () =>
+    console.info(`Example app listening on port ${REACT_APP_API_PORT}!`)
+  );
 ```
 
 ## Code
+
+###
+
+### Console.log
+
+```js
+// Raw
+console.log(String.raw`Hello\nWorld`);
+
+// Group
+console.group("process.env.REACT_APP_*");
+console.log(process.env.REACT_APP_API_PATH);
+console.groupEnd();
+```
 
 ### Load text file
 
@@ -92,4 +108,14 @@ for (const x of [...Array(5).keys()]) {
 for (let i = 0; i < length; i++) {
   binary += String.fromCharCode(bytes[i]);
 }
+```
+
+### Destructuring Nested Objects
+
+```js
+const y = { o: { x: 2 } };
+const {
+  o: { x }
+} = y;
+console.log(x);
 ```
