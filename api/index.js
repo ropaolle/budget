@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const fs = require('fs');
+const https = require('https');
 
 const middleware = require('./middleware');
 
@@ -45,4 +47,16 @@ app.use('/', middleware.checkToken, require('./routes/services'));
 app.use('/', middleware.checkToken, require('./routes/backup'));
 app.use('/', middleware.checkToken, require('./routes/test'));
 
+// HTTP
 app.listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
+
+// HTTPS
+// https
+//   .createServer(
+//     {
+//       key: fs.readFileSync('/home/olle/.ssh/budget-api.key'),
+//       cert: fs.readFileSync('/home/olle/.ssh/budget-api.cert'),
+//     },
+//     app
+//   )
+//   .listen(REACT_APP_API_PORT, () => console.info(`Example app listening on port ${REACT_APP_API_PORT}!`));
