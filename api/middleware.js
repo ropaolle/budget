@@ -8,7 +8,7 @@ const checkToken = (req, res, next) => {
   }
 
   if (token) {
-    jwt.verify(token, process.env.REACT_APP_JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.BUDGET_API_JWT_SECRET, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

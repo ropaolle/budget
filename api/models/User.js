@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 
-const { REACT_APP_JWT_SECRET } = process.env;
+const { BUDGET_API_JWT_SECRET } = process.env;
 
 const { Schema } = mongoose;
 
@@ -46,7 +46,7 @@ userSchema.statics.authenticate = async (email, password) => {
         id: user.id,
       };
 
-      const token = jwt.sign(userInfo, REACT_APP_JWT_SECRET, { expiresIn: '24h' });
+      const token = jwt.sign(userInfo, BUDGET_API_JWT_SECRET, { expiresIn: '24h' });
 
       return Promise.resolve(token);
     }
