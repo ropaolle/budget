@@ -2,6 +2,17 @@
 
 ## Todo
 
+- [ ] Move api to custom repo
+- [ ] Add cert to server
+
+
+sudo apt-get install certbot
+sudo certbot certonly --manual
+ropaolle@gmail.com
+api.budget.ropaolle.se
+https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
+
+
 - [ ] Mobilvy, ej tabell
 - [ ] DefaultPage
 - [ ] Knappen rensa fungerar ej (ersätt clearButton med clearFunction).
@@ -67,7 +78,7 @@ https
 console.log(String.raw`Hello\nWorld`);
 
 // Group
-console.group("process.env.REACT_APP_*");
+console.group("process.env");
 console.log(process.env.REACT_APP_API_PATH);
 console.groupEnd();
 ```
