@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import React, { Component } from 'react';
 import { Container, Table, Badge, Form, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -119,7 +120,7 @@ class Test extends Component {
         // Save expense
         response = await apiPost('/expenses', fields);
       }
-
+      console.log(action.apa.ost);
       this.setState(prevState => {
         const expenses = [...prevState.expenses];
         if (response) {
@@ -145,6 +146,7 @@ class Test extends Component {
         };
       });
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   }

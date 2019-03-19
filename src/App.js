@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import uuid from 'uuid/v1';
 import { apiGet } from './lib/api';
-import { AppBar, Footer, AppAlert } from './components';
+import { AppBar, Footer, AppAlert, ExampleBoundary } from './components';
 import { Expenses, Home, Import, Login, Logout, Om, Page404, Test } from './pages';
 
 function prepareAutocomplete(settings) {
@@ -63,29 +63,31 @@ class App extends Component {
     const appAlerts = alerts.map(alert => <AppAlert key={alert.id} alert={alert} />);
 
     return (
-      <Router>
-        <div className="app">
-          <AppBar user={user} settings={settings} logout={this.logout} setAlert={this.setAlert} />
-          {appAlerts}
-          <div className="content">
-            {!user ? (
-              <Route path="/" render={() => <Login login={this.login} />} />
-            ) : (
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/om" render={props => <Om {...props} user={user} />} />
-                <Route path="/expenses" render={props => <Expenses {...props} {...state} user={user} />} />
-                <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
-                <Route path="/import" render={props => <Import {...props} {...state} user={user} />} />
-                <Route path="/logout" render={() => <Logout logout={() => this.setState({ user: null })} />} />
+      <ExampleBoundary>
+        <Router>
+          <div className="app">
+            <AppBar user={user} settings={settings} logout={this.logout} setAlert={this.setAlert} />
+            {appAlerts}
+            <div className="content">
+              {!user ? (
+                <Route path="/" render={() => <Login login={this.login} />} />
+              ) : (
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/om" render={props => <Om {...props} user={user} />} />
+                  <Route path="/expenses" render={props => <Expenses {...props} {...state} user={user} />} />
+                  <Route path="/test" render={props => <Test {...props} {...state} user={user} />} />
+                  <Route path="/import" render={props => <Import {...props} {...state} user={user} />} />
+                  <Route path="/logout" render={() => <Logout logout={() => this.setState({ user: null })} />} />
 
-                <Route component={Page404} />
-              </Switch>
-            )}
+                  <Route component={Page404} />
+                </Switch>
+              )}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Router>
+        </Router>
+      </ExampleBoundary>
     );
   }
 }
