@@ -15,7 +15,10 @@
 ### API
 
 ```bash
-git submodule add https://github.com/ropaolle/budget-api.git api
+git submodule add https://github.com/ropaolle/budget-api.git api # Install
+git clone --recursive https://github.com/ropaolle/budget.git # Clone main repo with submodules
+git submodule update --init # Download submodule
+# Add .env from Lastpass
 ```
 
 ## Code
