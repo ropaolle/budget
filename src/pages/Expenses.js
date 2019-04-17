@@ -120,7 +120,7 @@ class Test extends Component {
         // Save expense
         response = await apiPost('/expenses', fields);
       }
-      console.log(action.apa.ost);
+
       this.setState(prevState => {
         const expenses = [...prevState.expenses];
         if (response) {
