@@ -1,14 +1,6 @@
 import React from 'react';
 import { Container, Jumbotron /* , Button */ } from 'reactstrap';
 
-function createMarkup() {
-  return { __html: '<iframe src="https://212.247.123.218:8081/webb_mobil/" width="540" height="450"></iframe>' };
-}
-
-function createMarkup2() {
-  return { __html: '<iframe src="https://assist.sergelkliniken.com/webb_mobil/" width="540" height="450"></iframe>' };
-}
-
 function Home() {
   return (
     <div className="page">
@@ -28,8 +20,6 @@ function Home() {
             Logga in
           </a>
         </Jumbotron>
-        <div dangerouslySetInnerHTML={createMarkup()} />;
-        <div dangerouslySetInnerHTML={createMarkup2()} />;
       </Container>
     </div>
   );
